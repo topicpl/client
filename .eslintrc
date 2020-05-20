@@ -7,5 +7,8 @@
     "jest": true,
     "commonjs": true,
     "es6": true
+  },
+  "globals": {
+    "__": true
   }
 }
