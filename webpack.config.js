@@ -13,6 +13,7 @@ module.exports = TRANSLATIONS.map(({ lang, translation }) => ({
   output: {
     path: path.join(__dirname, '/public/' + lang),
     filename: `[name].${lang}.js`,
+    // remove public path when using state management
     publicPath: '/' + lang,
   },
   devServer: {
