@@ -1,0 +1,9 @@
+{
+  "presets": ["@babel/preset-env", "@babel/preset-react"],
+  "plugins": [
+    [
+      "styled-components",
+      { "ssr": false, "displayName": true, "preprocess": false, "pure": true }
+    ]
+  ]
+}

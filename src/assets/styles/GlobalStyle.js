@@ -21,22 +21,21 @@ const GlobalStyle = createGlobalStyle`
 		height: 100vh;
 		width: 100vw;
 		font-size: 1rem;
+		overflow-x: hidden;
 		-webkit-font-smoothing: antialiased;
   	-moz-osx-font-smoothing: grayscale;
   	-webkit-touch-callout: none;
+ 		user-select: none;
   	-ms-user-select: none;
   	-webkit-user-select: none;
   	-khtml-user-select: none;
   	-moz-user-select: none;
   	-o-user-select: none;
-  	user-select: none;
+  	user-drag: none;
   	-webkit-user-drag: none;
   	-khtml-user-drag: none;
   	-moz-user-drag: none;
 		-o-user-drag: none;
-  	user-drag: none;
- 		user-select: none;
-		overflow-x: hidden;
 	}
 	
 	a {
