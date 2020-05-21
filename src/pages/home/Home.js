@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Home = () => {
-  return <div>home is {__('lang')}</div>;
+  return <div>home issss</div>;
 };
 
 export default Home;

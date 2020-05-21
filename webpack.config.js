@@ -1,19 +1,12 @@
 const path = require('path');
 const glob = require('glob');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const I18nPlugin = require('i18n-webpack-plugin');
 
-const TRANSLATIONS = glob.sync('./src/assets/locales/*.json').map((file) => ({
-  lang: path.basename(file, path.extname(file)),
-  translation: require(file),
-}));
-
-module.exports = TRANSLATIONS.map(({ lang, translation }) => ({
+module.exports = {
   entry: './src/index.js',
   output: {
-    path: path.join(__dirname, '/public/' + lang),
-    filename: `[name].${lang}.js`,
-    publicPath: '/' + lang,
+    path: path.join(__dirname, '/public'),
+    filename: 'bundle.js',
   },
   devServer: {
     contentBase: path.join(__dirname, '/public'),
@@ -25,7 +18,6 @@ module.exports = TRANSLATIONS.map(({ lang, translation }) => ({
     new HtmlWebpackPlugin({
       template: './public/index.html',
     }),
-    new I18nPlugin(translation),
   ],
   module: {
     rules: [
@@ -39,4 +31,4 @@ module.exports = TRANSLATIONS.map(({ lang, translation }) => ({
       },
     ],
   },
-}));
+};
