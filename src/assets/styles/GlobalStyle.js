@@ -8,16 +8,14 @@ const GlobalStyle = createGlobalStyle`
   }
 
 	html,
-	body {
+	body,
+	#root {
     background: ${({ theme }) => theme.color.grey};
 		color: ${({ theme }) => theme.color.white};
 		font-family: ${({ theme }) => theme.font.family};
+		font-weight: ${({ theme }) => theme.font.weight.regular};
     margin: 0 !important;
 		padding: 0 !important;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
 		height: 100vh;
 		width: 100vw;
 		font-size: 1rem;
