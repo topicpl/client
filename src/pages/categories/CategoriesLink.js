@@ -10,7 +10,7 @@ const Link = ({ Icon, text }) => {
           <Icon color="#141414" size="22px" />
           <Text>{text}</Text>
         </Inner>
-        <Separator></Separator>
+        <Separator className="separator"></Separator>
       </Container>
     </Hyperlink>
   );
@@ -22,6 +22,12 @@ const Container = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
+
+  @media (min-width: 1024px) {
+    .separator {
+      display: none;
+    }
+  }
 `;
 const Inner = styled.div`
   width: 100%;

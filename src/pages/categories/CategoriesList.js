@@ -61,5 +61,16 @@ const List = () => {
 export default List;
 
 const Container = styled.div`
-  margin-top: 50px;
+  @media (min-width: 1024px) {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-column-gap: 50px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  @media (min-width: 1280px) {
+    grid-column-gap: 120px;
+  }
 `;
