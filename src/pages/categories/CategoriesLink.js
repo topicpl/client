@@ -1,11 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useDispatch } from 'react-redux';
 import { Link as Hyperlink } from 'react-router-dom';
 
-const Link = ({ Icon, text }) => {
+const Link = ({ Icon, text, href }) => {
+  const dispatch = useDispatch();
+
+  const save = () => {
+    dispatch({ type: 'ADD_CATEGORY', category: href });
+  };
+
   return (
-    <Hyperlink to="">
-      <Container>
+    <Hyperlink to={'/' + href}>
+      <Container onClick={() => save()}>
         <Inner>
           <Icon color="#141414" size="22px" />
           <Text>{text}</Text>
