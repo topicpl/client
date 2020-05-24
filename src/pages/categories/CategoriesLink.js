@@ -2,9 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link as Hyperlink } from 'react-router-dom';
 
-const Link = ({ Icon, text }) => {
+const Link = ({ Icon, text, urlKey }) => {
   return (
-    <Hyperlink to="">
+    <Hyperlink to={`category/${urlKey}`}>
       <Container>
         <Inner>
           <Icon color="#141414" size="22px" />
