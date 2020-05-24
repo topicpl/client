@@ -4,7 +4,7 @@ import { Link as Hyperlink } from 'react-router-dom';
 
 const Link = ({ Icon, text, urlKey }) => {
   return (
-    <Hyperlink to={`category/${urlKey}`}>
+    <Hyperlink to={urlKey}>
       <Container>
         <Inner>
           <Icon color="#141414" size="22px" />
