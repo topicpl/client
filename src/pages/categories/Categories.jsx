@@ -1,16 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
-import __t from '../../i18n/translator.js';
-import List from './CategoriesList.js';
+import __t from '../../i18n/translator';
+import List from './CategoriesList';
 
-const Categories = () => {
-  return (
-    <Container>
-      <Heading>{__t('categories.heading')}</Heading>
-      <List />
-    </Container>
-  );
-};
+const Categories = () => (
+  <Container>
+    <Heading>{__t('categories.heading')}</Heading>
+    <List />
+  </Container>
+);
 
 export default Categories;
 

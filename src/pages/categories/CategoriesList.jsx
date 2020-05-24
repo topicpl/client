@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-import Link from './CategoriesLink.js';
-import __t from '../../i18n/translator.js';
 import { BsBuilding } from 'react-icons/bs';
+import Link from './CategoriesLink';
+import __t from '../../i18n/translator';
 
 const categoriesList = [
-  { urlKey: 'architecture', icon: BsBuilding, text: __t('categories.li.0'), },
+  { urlKey: 'architecture', icon: BsBuilding, text: __t('categories.li.0') },
   { urlKey: 'art-and-literature', icon: BsBuilding, text: __t('categories.li.1') },
   { urlKey: 'automotive', icon: BsBuilding, text: __t('categories.li.2') },
   { urlKey: 'business-and-finance', icon: BsBuilding, text: __t('categories.li.3') },
@@ -27,15 +27,13 @@ const categoriesList = [
   { urlKey: 'travel', icon: BsBuilding, text: __t('categories.li.19') },
 ];
 
-const List = () => {
-  return (
-    <Container>
-      {categoriesList.map((item) => (
-        <Link key={item.urlKey} Icon={item.icon} urlKey={item.urlKey} text={item.text} />
-      ))}
-    </Container>
-  );
-};
+const List = () => (
+  <Container>
+    {categoriesList.map((item) => (
+      <Link key={item.urlKey} Icon={item.icon} urlKey={item.urlKey} text={item.text} />
+    ))}
+  </Container>
+);
 
 export default List;
 

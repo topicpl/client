@@ -2,19 +2,17 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link as Hyperlink } from 'react-router-dom';
 
-const Link = ({ Icon, text, urlKey }) => {
-  return (
-    <Hyperlink to={urlKey}>
-      <Container>
-        <Inner>
-          <Icon color="#141414" size="22px" />
-          <Text>{text}</Text>
-        </Inner>
-        <Separator></Separator>
-      </Container>
-    </Hyperlink>
-  );
-};
+const Link = ({ Icon, text, urlKey }) => (
+  <Hyperlink to={urlKey}>
+    <Container>
+      <Inner>
+        <Icon color="#141414" size="22px" />
+        <Text>{text}</Text>
+      </Inner>
+      <Separator />
+    </Container>
+  </Hyperlink>
+);
 
 export default Link;
 

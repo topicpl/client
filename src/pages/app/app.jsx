@@ -3,11 +3,11 @@ import { useDispatch } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import detectBrowserLanguage from 'detect-browser-language';
 import { I18nProvider } from '../../i18n';
-import MasterStyle from '../../assets/styles/MasterStyle.js';
+import MasterStyle from '../../assets/styles/MasterStyle';
 
-import Home from '../home/Home.js';
-import Video from '../Video.js';
-import Categories from '../categories/Categories.js';
+import Home from '../home/Home';
+import Video from '../Video';
+import Categories from '../categories/Categories';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -15,7 +15,7 @@ const App = () => {
   const overrideLang = () => {
     const lang = detectBrowserLanguage();
     if (lang === 'en-US') return 'en';
-    else return lang;
+    return lang;
   };
 
   useEffect(() => {
