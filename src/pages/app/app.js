@@ -6,6 +6,7 @@ import { I18nProvider } from '../../i18n';
 import MasterStyle from '../../assets/styles/MasterStyle.js';
 
 import Home from '../home/Home.js';
+import Video from '../Video.js';
 import Categories from '../categories/Categories.js';
 
 const App = () => {
@@ -27,6 +28,8 @@ const App = () => {
         <Router>
           <Switch>
             <Route path="/" exact component={Categories} />
+            <Route path="/test" exact component={Home} />
+            <Route path="/:category" component={Video} />
           </Switch>
         </Router>
       </MasterStyle>
