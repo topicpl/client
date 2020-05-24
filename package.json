@@ -9,6 +9,7 @@
     "axios": "^0.19.2",
     "babel-jest": "^26.0.1",
     "detect-browser-language": "0.0.2",
+    "eslint-config-airbnb": "^18.1.0",
     "flat": "^5.0.0",
     "husky": "^4.2.5",
     "react": "^16.13.1",
