@@ -15,14 +15,13 @@ const Room = ({ roomName, token, handleLogout }) => {
       setParticipants((prevParticipants) => prevParticipants.filter((p) => p !== participant));
     };
 
-    Video.connect(token, {
-      name: roomName,
-    }).then((room) => {
-      setRoom(room);
-      room.on('participantConnected', participantConnected);
-      room.on('participantDisconnected', participantDisconnected);
-      room.participants.forEach(participantConnected);
-    });
+    Video.connect(token, { name: roomName })
+      .then((roomData) => {
+        setRoom(roomData);
+        roomData.on('participantConnected', participantConnected);
+        roomData.on('participantDisconnected', participantDisconnected);
+        roomData.participants.forEach(participantConnected);
+      });
 
     return () => {
       setRoom((currentRoom) => {
@@ -48,13 +47,11 @@ const Room = ({ roomName, token, handleLogout }) => {
       </h2>
       <button onClick={handleLogout}>Log out</button>
       <div className="local-participant">
-        {room ? (
+        {room && (
           <Participant
             key={room.localParticipant.sid}
             participant={room.localParticipant}
           />
-        ) : (
-          ''
         )}
       </div>
       <h3>Remote Participants</h3>
