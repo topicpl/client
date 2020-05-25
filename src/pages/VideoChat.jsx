@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import Room from '../components/Room';
+import appConfig from '../../appConfig';
 
 const VideoChat = () => {
   const { category } = useParams();
@@ -11,7 +12,7 @@ const VideoChat = () => {
   const [token, setToken] = useState(null);
 
   const connect = () => {
-    axios.get(`http://localhost:3000/token/${userName}/${roomName}`)
+    axios.get(`${appConfig.serverUrl}/token/${userName}/${roomName}`)
       .then((res) => {
         setToken(res.data.token);
       });
