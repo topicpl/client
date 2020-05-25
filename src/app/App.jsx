@@ -5,7 +5,6 @@ import detectBrowserLanguage from 'detect-browser-language';
 import { I18nProvider } from '../i18n';
 import MasterStyle from '../assets/styles/MasterStyle';
 
-import Home from '../pages/home/Home';
 import VideoChat from '../pages/VideoChat';
 import Categories from '../pages/categories/Categories';
 
@@ -28,7 +27,6 @@ const App = () => {
         <Router>
           <Switch>
             <Route path="/" exact component={Categories} />
-            <Route path="/test" exact component={Home} />
             <Route path="/:category" component={VideoChat} />
           </Switch>
         </Router>
