@@ -7,11 +7,11 @@ const VideoChat = () => {
   const { category } = useParams();
   const roomName = category;
 
-  const [username, setUsername] = useState('');
+  const [userName, setUsername] = useState('');
   const [token, setToken] = useState(null);
 
   const connect = () => {
-    axios.get(`http://localhost:3000/token/${username}/${roomName}`)
+    axios.get(`http://localhost:3000/token/${userName}/${roomName}`)
       .then((res) => {
         setToken(res.data.token);
       });
@@ -29,10 +29,10 @@ const VideoChat = () => {
     render = (
       <div>
         <div>{`Category: ${roomName}`}</div>
-        <div style={{ marginBottom: '20px' }}>{`user name: ${username}`}</div>
+        <div style={{ marginBottom: '20px' }}>{`user name: ${userName}`}</div>
         user Name:
         <input onChange={(e) => setUsername(e.target.value)} onKeyDown={(event) => (event.key === 'Enter' ? connect() : null)} />
-        <button disabled={!username} onClick={connect}>Connect</button>
+        <button disabled={!userName} onClick={connect}>Connect</button>
       </div>
     );
   }
