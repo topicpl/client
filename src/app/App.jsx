@@ -2,12 +2,12 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import detectBrowserLanguage from 'detect-browser-language';
-import { I18nProvider } from '../../i18n';
-import MasterStyle from '../../assets/styles/MasterStyle';
+import { I18nProvider } from '../i18n';
+import MasterStyle from '../assets/styles/MasterStyle';
 
-import Home from '../home/Home';
-import VideoChat from '../VideoChat';
-import Categories from '../categories/Categories';
+import Home from '../pages/home/Home';
+import VideoChat from '../pages/VideoChat';
+import Categories from '../pages/categories/Categories';
 
 const App = () => {
   const dispatch = useDispatch();
