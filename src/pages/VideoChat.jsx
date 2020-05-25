@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import Room from './Room';
+import Room from '../components/Room';
 
 const VideoChat = () => {
   const { category } = useParams();
