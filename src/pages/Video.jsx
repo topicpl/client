@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import Video from 'twilio-video';
+import VideoChat from './VideoChat';
 
 const VideoComp = (props) => {
   const { category } = useParams();
@@ -84,6 +85,10 @@ const VideoComp = (props) => {
       <input onChange={(e) => setUserName(e.target.value)} />
       <button disabled={!(userName)} onClick={connect}>connect</button>
       <div video-id="video-wrapper" />
+      <div>
+        testid
+        <VideoChat />
+      </div>
     </div>
   );
 };
