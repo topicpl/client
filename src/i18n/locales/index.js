@@ -1,8 +1,8 @@
-import en from './en.js';
-import es from './es.js';
-import fr from './fr.js';
-import de from './de.js';
-import pl from './pl.js';
+import en from './en';
+import es from './es';
+import fr from './fr';
+import de from './de';
+import pl from './pl';
 
 export default {
   ...en,

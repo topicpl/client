@@ -1,4 +1,4 @@
-import { LOCALES } from '../locales.js';
+import { LOCALES } from '../locales';
 
 export default {
   [LOCALES.ENGLISH]: {
