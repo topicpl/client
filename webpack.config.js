@@ -1,9 +1,9 @@
 const path = require('path');
-const glob = require('glob');
+
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: './src/index.js',
+  entry: './src/index.jsx',
   output: {
     path: path.join(__dirname, '/public'),
     filename: 'bundle.js',
@@ -23,9 +23,12 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.js|jsx$/,
         exclude: /node_modules/,
         loader: 'babel-loader',
+        resolve: {
+          extensions: ['.js', '.jsx'],
+        },
         query: {
           presets: ['@babel/preset-env', '@babel/preset-react'],
         },

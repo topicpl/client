@@ -11,13 +11,13 @@ const Link = ({ Icon, text, href }) => {
   };
 
   return (
-    <Hyperlink to={'/' + href}>
+    <Hyperlink to={href}>
       <Container onClick={() => save()}>
         <Inner>
           <Icon color="#141414" size="22px" />
           <Text>{text}</Text>
         </Inner>
-        <Separator className="separator"></Separator>
+        <Separator className="separator" />
       </Container>
     </Hyperlink>
   );

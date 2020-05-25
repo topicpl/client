@@ -1,2 +1,2 @@
-export { default as I18nProvider } from './provider.js';
-export { LOCALES } from './locales.js';
+export { default as I18nProvider } from './provider';
+export { LOCALES } from './locales';

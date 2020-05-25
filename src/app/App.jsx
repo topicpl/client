@@ -2,11 +2,11 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import detectBrowserLanguage from 'detect-browser-language';
-import { I18nProvider } from '../../i18n';
-import MasterStyle from '../../assets/styles/MasterStyle.js';
+import { I18nProvider } from '../i18n';
+import MasterStyle from '../assets/styles/MasterStyle';
 
-import Home from '../home/Home.js';
-import Categories from '../categories/Categories.js';
+import VideoChat from '../pages/VideoChat';
+import Categories from '../pages/categories/Categories';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -14,7 +14,7 @@ const App = () => {
   const overrideLang = () => {
     const lang = detectBrowserLanguage();
     if (lang === 'en-US') return 'en';
-    else return lang;
+    return lang;
   };
 
   useEffect(() => {
@@ -27,6 +27,7 @@ const App = () => {
         <Router>
           <Switch>
             <Route path="/" exact component={Categories} />
+            <Route path="/:category" component={VideoChat} />
           </Switch>
         </Router>
       </MasterStyle>

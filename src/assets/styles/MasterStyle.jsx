@@ -1,7 +1,7 @@
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
-import GlobalStyle from './GlobalStyle.js';
-import { theme } from './theme.js';
+import GlobalStyle from './GlobalStyle';
+import { theme } from './theme';
 
 const MasterStyle = ({ children }) => (
   <>

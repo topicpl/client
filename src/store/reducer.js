@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
-import app from '../pages/app/appReducer.js';
-import categories from '../pages/categories/categoriesReducer.js';
+import app from '../app/appReducer';
+import categories from '../pages/categories/categoriesReducer';
 
 export default combineReducers({
   app,
