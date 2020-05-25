@@ -1,18 +1,27 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useDispatch } from 'react-redux';
 import { Link as Hyperlink } from 'react-router-dom';
 
-const Link = ({ Icon, text, urlKey }) => (
-  <Hyperlink to={urlKey}>
-    <Container>
-      <Inner>
-        <Icon color="#141414" size="22px" />
-        <Text>{text}</Text>
-      </Inner>
-      <Separator />
-    </Container>
-  </Hyperlink>
-);
+const Link = ({ Icon, text, href }) => {
+  const dispatch = useDispatch();
+
+  const save = () => {
+    dispatch({ type: 'ADD_CATEGORY', category: href });
+  };
+
+  return (
+    <Hyperlink to={href}>
+      <Container onClick={() => save()}>
+        <Inner>
+          <Icon color="#141414" size="22px" />
+          <Text>{text}</Text>
+        </Inner>
+        <Separator className="separator" />
+      </Container>
+    </Hyperlink>
+  );
+};
 
 export default Link;
 
@@ -20,6 +29,12 @@ const Container = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
+
+  @media (min-width: 1024px) {
+    .separator {
+      display: none;
+    }
+  }
 `;
 const Inner = styled.div`
   width: 100%;

@@ -17,9 +17,25 @@ const Container = styled.div`
   color: ${({ theme }) => theme.color.grey};
   padding: 32px;
   width: 100%;
+
+  @media (min-width: 500px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  @media (min-width: 1024px) {
+    height: 100%;
+  }
 `;
 
 const Heading = styled.div`
   font-size: 2rem;
   font-weight: ${({ theme }) => theme.font.weight.bold};
+
+  margin: 50px 0;
+
+  @media (min-width: 1024px) {
+    font-size: 2.5rem;
+  }
 `;
