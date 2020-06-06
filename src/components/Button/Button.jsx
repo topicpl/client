@@ -12,7 +12,8 @@ const ButtonStyles = styled.button`
   padding: 0.25em 1em;
   transition: 0.5s all ease-out;
   font-weight: ${({ theme }) => theme.font.weight.medium};
-
+  cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
+  
   &:hover {
     background: ${({ theme }) => theme.color.green[600]};
     border-color: ${({ theme }) => theme.color.green[500]};
@@ -20,7 +21,10 @@ const ButtonStyles = styled.button`
   }
 `;
 
-const Button = ({ children, ...rest }) => <ButtonStyles {...rest}>{children}</ButtonStyles>;
+const Button = ({ children, isLoading, ...rest }) => {
+  const loadingComponent = 'Loading...';
+  return <ButtonStyles {...rest}>{isLoading ? loadingComponent : children}</ButtonStyles>;
+};
 
 
 export default Button;
