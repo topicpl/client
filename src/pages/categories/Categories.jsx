@@ -14,7 +14,7 @@ export default Categories;
 
 const Container = styled.div`
   background: ${({ theme }) => theme.color.white};
-  color: ${({ theme }) => theme.color.grey};
+  color: ${({ theme }) => theme.color.grey[950]};
   padding: 32px;
   width: 100%;
 
