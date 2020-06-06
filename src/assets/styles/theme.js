@@ -2,7 +2,13 @@ export const theme = {
   color: {
     main: '#F44336',
     white: '#ffffff',
-    grey: '#141414',
+    green: {
+      500: '#01da73',
+      600: '#03a257',
+    },
+    grey: {
+      950: '#141414',
+    },
   },
 
   font: {
