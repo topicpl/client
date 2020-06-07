@@ -1,11 +1,17 @@
 import React from 'react';
-import renderer from 'react-test-renderer';
 import Button from './Button';
+import { mountWithTheme } from '../../utils/jestHelpers';
 
 describe('Button', () => {
-  test('should match snapshot', () => {
-    const component = renderer.create(<Button id="testid">my button</Button>);
-    const tree = component.toJSON();
+  test('should match variant - default', () => {
+    const wrapper = mountWithTheme(<Button>my button</Button>);
+    const tree = wrapper.toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+
+  test('should match variant - success', () => {
+    const wrapper = mountWithTheme(<Button variant="success">my button</Button>);
+    const tree = wrapper.toJSON();
     expect(tree).toMatchSnapshot();
   });
 });

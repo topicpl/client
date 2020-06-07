@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { useParams, Link as Hyperlink } from 'react-router-dom';
 import axios from 'axios';
+import styled from 'styled-components';
 import Room from '../components/Room';
 import appConfig from '../../appConfig';
+import Button from '../components/Button';
 
 
 const VideoChat = () => {
@@ -20,6 +22,7 @@ const VideoChat = () => {
         setRoomName(res.data.room.uniqueName);
         setToken(res.data.token);
       })
+      .catch(console.error)
       .finally(() => setIsLoading(false));
   };
 
@@ -33,17 +36,28 @@ const VideoChat = () => {
     );
   } else {
     render = (
-      <div>
-        <button>
-          <Hyperlink to="/">Back to categories</Hyperlink>
-        </button>
-        <div>{`Category: ${category}`}</div>
-        <button disabled={isLoading} onClick={connect}>Connect</button>
-        <div>{isLoading && 'Loading...'}</div>
-      </div>
+      <Container>
+        <Button>
+          <Hyperlink to="/">Back to Categories</Hyperlink>
+        </Button>
+        <Heading>{`Category: ${category}`}</Heading>
+        <Button variant="success" disabled={isLoading} isLoading={isLoading} onClick={connect}>Connect</Button>
+      </Container>
     );
   }
   return render;
 };
+
+const Container = styled.div`
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+`;
+
+const Heading = styled.h1`
+  font-weight: ${({ theme }) => theme.font.weight.medium}
+`;
 
 export default VideoChat;

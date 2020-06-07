@@ -10,7 +10,7 @@ const GlobalStyle = createGlobalStyle`
     html,
     body,
     #root {
-      background: ${({ theme }) => theme.color.grey};
+      background: ${({ theme }) => theme.color.grey[950]};
       color: ${({ theme }) => theme.color.white};
       font-family: ${({ theme }) => theme.font.family};
       font-weight: ${({ theme }) => theme.font.weight.regular};
