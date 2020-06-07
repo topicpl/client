@@ -54,7 +54,7 @@ ButtonStyles.defaultProps = {
 };
 
 ButtonStyles.propTypes = {
-  variant: PropTypes.oneOf(['default', 'primary', 'success', 'warning']),
+  variant: PropTypes.oneOf(['default', 'success']),
 };
 
 const Button = ({ children, isLoading, variant = 'default', ...rest }) => {
