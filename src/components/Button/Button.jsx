@@ -4,31 +4,30 @@ import themes from 'styled-theming';
 import PropTypes from 'prop-types';
 
 const backgroundBorderColor = themes('variant', {
-  default: ({ theme }) => theme.color.grey[300],
-  success: ({ theme }) => theme.color.green[500],
+  default: ({ theme, disabled }) => (disabled ? theme.color.grey[500] : theme.color.grey[400]),
+  success: ({ theme, disabled }) => (disabled ? theme.color.green[800] : theme.color.green[500]),
 });
 
 const color = themes('variant', {
-  default: ({ theme }) => theme.color.black,
-  success: ({ theme }) => theme.color.white,
+  default: ({ theme, disabled }) => (disabled ? theme.color.grey[800] : theme.color.black),
+  success: ({ theme, disabled }) => (disabled ? theme.color.grey[500] : theme.color.white),
 });
 
 // hover
 const hoverBorderColor = themes('variant', {
-  default: ({ theme, disabled }) => (disabled ? theme.color.grey[300] : theme.color.black),
-  success: ({ theme }) => theme.color.green[500],
+  default: ({ theme, disabled }) => (disabled ? theme.color.grey[500] : theme.color.black),
+  success: ({ theme, disabled }) => theme.color.green[disabled ? 800 : 500],
 });
 
 const hoverBgColor = themes('variant', {
-  default: ({ theme }) => theme.color.grey[500],
-  success: ({ theme }) => theme.color.green[600],
+  default: ({ theme, disabled }) => (disabled ? theme.color.grey[500] : theme.color.grey[200]),
+  success: ({ theme, disabled }) => theme.color.green[disabled ? 800 : 600],
 });
 
 const hoverColor = themes('variant', {
-  default: ({ theme }) => theme.color.black,
-  success: ({ theme }) => theme.color.grey[400],
+  default: ({ theme, disabled }) => (disabled ? theme.color.grey[800] : theme.color.black),
+  success: ({ theme, disabled }) => theme.color.grey[disabled ? 500 : 400],
 });
-
 
 
 const ButtonStyles = styled.button`
@@ -44,9 +43,9 @@ const ButtonStyles = styled.button`
   cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
 
   &:hover {
-    background: ${({ disabled }) => (disabled ? '' : hoverBgColor)};
+    background: ${hoverBgColor};
     border-color: ${hoverBorderColor};
-    color: ${({ disabled }) => (disabled ? '' : hoverColor)};
+    color: ${hoverColor};
   }
 `;
 
