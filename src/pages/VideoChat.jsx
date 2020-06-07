@@ -3,7 +3,7 @@ import { useParams, Link as Hyperlink } from 'react-router-dom';
 import axios from 'axios';
 import Room from '../components/Room';
 import appConfig from '../../appConfig';
-
+import Button from '../components/Button';
 
 const VideoChat = () => {
   const { category } = useParams();
@@ -34,12 +34,11 @@ const VideoChat = () => {
   } else {
     render = (
       <div>
-        <button>
-          <Hyperlink to="/">Back to categories</Hyperlink>
-        </button>
+        <Button>
+          <Hyperlink to="/">Categories</Hyperlink>
+        </Button>
         <div>{`Category: ${category}`}</div>
-        <button disabled={isLoading} onClick={connect}>Connect</button>
-        <div>{isLoading && 'Loading...'}</div>
+        <Button variant="success" disabled={isLoading} onClick={connect}>Connect</Button>
       </div>
     );
   }

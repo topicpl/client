@@ -62,7 +62,6 @@ const Button = ({ children, isLoading, variant = 'default', ...rest }) => {
   return (
     <ThemeProvider theme={{ variant }}>
       <ButtonStyles {...rest}>{isLoading ? loadingComponent : children}</ButtonStyles>
-      ;
     </ThemeProvider>
   );
 };
