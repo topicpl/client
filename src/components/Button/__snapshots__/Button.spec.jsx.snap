@@ -1,13 +1,16 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Button should match snapshot 1`] = `
+exports[`Button should match variant - default 1`] = `
 <button
-  id="testid"
-  style={
-    Object {
-      "margin": "10px 10px 10px 0",
-    }
-  }
+  className="Button__ButtonStyles-bFYiJu bBNfOj"
+>
+  my button
+</button>
+`;
+
+exports[`Button should match variant - success 1`] = `
+<button
+  className="Button__ButtonStyles-bFYiJu ewQbZy"
 >
   my button
 </button>
