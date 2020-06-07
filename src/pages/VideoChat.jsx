@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { useParams, Link as Hyperlink } from 'react-router-dom';
 import axios from 'axios';
+import styled from 'styled-components';
 import Room from '../components/Room';
 import appConfig from '../../appConfig';
 import Button from '../components/Button';
+
 
 const VideoChat = () => {
   const { category } = useParams();
@@ -33,16 +35,28 @@ const VideoChat = () => {
     );
   } else {
     render = (
-      <div>
+      <Container>
         <Button>
-          <Hyperlink to="/">Categories</Hyperlink>
+          <Hyperlink to="/">Back to Categories</Hyperlink>
         </Button>
-        <div>{`Category: ${category}`}</div>
+        <Heading>{`Category: ${category}`}</Heading>
         <Button variant="success" disabled={isLoading} onClick={connect}>Connect</Button>
-      </div>
+      </Container>
     );
   }
   return render;
 };
+
+const Container = styled.div`
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+`;
+
+const Heading = styled.h1`
+  font-weight: ${({ theme }) => theme.font.weight.medium}
+`;
 
 export default VideoChat;
