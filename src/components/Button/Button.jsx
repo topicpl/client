@@ -31,13 +31,13 @@ const color = themes('variant', {
 
 const ButtonStyles = styled.button`
   cursor: pointer;
-  background: ${backgroundBorderColor};
   font-size: 16px;
   border-radius: 3px;
-  color: ${color};
-  border: 1px solid ${backgroundBorderColor};
   padding: 0.25em 1em;
   transition: 0.5s all ease-out;
+  background: ${backgroundBorderColor};
+  border: 1px solid ${backgroundBorderColor};
+  color: ${color};
   font-weight: ${({ theme }) => theme.font.weight.medium};
   cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
 
