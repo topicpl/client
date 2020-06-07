@@ -22,6 +22,7 @@ const VideoChat = () => {
         setRoomName(res.data.room.uniqueName);
         setToken(res.data.token);
       })
+      .catch(console.error)
       .finally(() => setIsLoading(false));
   };
 
@@ -40,7 +41,7 @@ const VideoChat = () => {
           <Hyperlink to="/">Back to Categories</Hyperlink>
         </Button>
         <Heading>{`Category: ${category}`}</Heading>
-        <Button variant="success" disabled={isLoading} onClick={connect}>Connect</Button>
+        <Button variant="success" disabled={isLoading} isLoading={isLoading} onClick={connect}>Connect</Button>
       </Container>
     );
   }

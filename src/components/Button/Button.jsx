@@ -57,11 +57,11 @@ ButtonStyles.propTypes = {
   variant: PropTypes.oneOf(['default', 'success']),
 };
 
-const Button = ({ children, isLoading, variant = 'default', ...rest }) => {
+const Button = ({ children, isLoading, disabled, variant = 'default', ...rest }) => {
   const loadingComponent = 'Loading...';
   return (
     <ThemeProvider theme={{ variant }}>
-      <ButtonStyles {...rest}>{isLoading ? loadingComponent : children}</ButtonStyles>
+      <ButtonStyles {...rest} disabled={disabled || isLoading}>{isLoading ? loadingComponent : children}</ButtonStyles>
     </ThemeProvider>
   );
 };
