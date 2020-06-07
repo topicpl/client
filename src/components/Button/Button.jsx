@@ -8,8 +8,14 @@ const backgroundBorderColor = themes('variant', {
   success: ({ theme }) => theme.color.green[500],
 });
 
-const hoverBorderColor = themes('variant', {
+const color = themes('variant', {
   default: ({ theme }) => theme.color.black,
+  success: ({ theme }) => theme.color.white,
+});
+
+// hover
+const hoverBorderColor = themes('variant', {
+  default: ({ theme, disabled }) => (disabled ? theme.color.grey[300] : theme.color.black),
   success: ({ theme }) => theme.color.green[500],
 });
 
@@ -23,10 +29,6 @@ const hoverColor = themes('variant', {
   success: ({ theme }) => theme.color.grey[400],
 });
 
-const color = themes('variant', {
-  default: ({ theme }) => theme.color.black,
-  success: ({ theme }) => theme.color.white,
-});
 
 
 const ButtonStyles = styled.button`
