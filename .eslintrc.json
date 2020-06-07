@@ -23,6 +23,7 @@
     "import/prefer-default-export": "off",
     "jsx-a11y/media-has-caption": "off",
     "consistent-return": "off",
-    "object-curly-newline": "off"
+    "object-curly-newline": "off",
+    "no-console": ["error", { "allow": ["warn", "error"] }]
   }
 }
