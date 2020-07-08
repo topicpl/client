@@ -16,9 +16,9 @@ const MyVideoContainer = styled.div`
 const Video = styled.video`
   width: 100%;
   margin-bottom: 10px;
-  `;
+`;
 
-  const LoadingIconWrapper = styled.div`
+const LoadingIconWrapper = styled.div`
   margin-bottom: 10px;
   display: flex;
   justify-content: center;
@@ -39,7 +39,8 @@ const MyVideo = ({ isConnecting, connect }) => {
       video: true,
     };
 
-    navigator.mediaDevices.getUserMedia(defaultSettings)
+    navigator.mediaDevices
+      .getUserMedia(defaultSettings)
       .then((stream) => {
         const video = document.querySelector('#my-video');
         video.srcObject = stream;
@@ -55,8 +56,19 @@ const MyVideo = ({ isConnecting, connect }) => {
           <Spinner />
         </LoadingIconWrapper>
       )}
-      <Video style={{ display: !isVideoLoading ? 'block' : 'none' }} autoPlay id="my-video" />
-      <Button variant="success" disabled={isConnecting} isLoading={isConnecting} onClick={connect}>Connect</Button>
+      <Video
+        style={{ display: !isVideoLoading ? 'block' : 'none' }}
+        autoPlay
+        id="my-video"
+      />
+      <Button
+        variant="success"
+        disabled={isConnecting}
+        isLoading={isConnecting}
+        onClick={connect}
+      >
+        Connect
+      </Button>
     </MyVideoContainer>
   );
 };

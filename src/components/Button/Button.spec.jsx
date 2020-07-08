@@ -1,5 +1,5 @@
 import React from 'react';
-import Button from './Button';
+// import Button from './Button';
 import { mountWithTheme } from '../../utils/jestHelpers';
 
 describe('Button', () => {
@@ -10,7 +10,9 @@ describe('Button', () => {
   });
 
   test('should match variant - success', () => {
-    const wrapper = mountWithTheme(<Button variant="success">my button</Button>);
+    const wrapper = mountWithTheme(
+      <Button variant="success">my button</Button>
+    );
     const tree = wrapper.toJSON();
     expect(tree).toMatchSnapshot();
   });

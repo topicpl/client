@@ -2,9 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 import __t from '../../i18n/translator';
 import List from './CategoriesList';
+import Button from '../../components/Button';
 
 const Categories = () => (
   <Container>
+    <Button variant="default" />
     <Heading>{__t('categories.heading')}</Heading>
     <List />
   </Container>
