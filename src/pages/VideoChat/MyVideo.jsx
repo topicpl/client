@@ -15,9 +15,11 @@ const MyVideoContainer = styled.div`
 
 const Video = styled.video`
   width: 100%;
-`;
+  margin-bottom: 10px;
+  `;
 
-const LoadingIconWrapper = styled.div`
+  const LoadingIconWrapper = styled.div`
+  margin-bottom: 10px;
   display: flex;
   justify-content: center;
   min-height: 82vmin;
