@@ -1,21 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { FaThumbsUp, FaThumbsDown } from 'react-icons/fa';
 import PropTypes from 'prop-types';
 
-const Button = ({ variant }) => {
-  const [color, setColor] = useState(null);
-  const [Icon, setIcon] = useState(null);
+const Button = ({ Icon, color, onClick }) => {
+  const [bgColor, setBgColor] = useState('transparent');
+
+  Button.defaultProps = {
+    bgColor: 'transparent',
+  };
+
+  Button.propTypes = {
+    bgColor: PropTypes.oneOf(['transparent', 'red', 'green']),
+  };
 
   useEffect(() => {
-    if (variant === 'default') {
-      setColor('#000');
-      setIcon(FaThumbsUp);
-    }
+    if (color === 'green') setBgColor('#01da73');
+    else if (color === 'red') setBgColor('#F44336');
+    else setBgColor('transparent');
   });
 
   return (
-    <Container>
+    <Container style={{ backgroundColor: bgColor }} onClick={onClick}>
       <Icon color="#fff" size="20px" />
     </Container>
   );
@@ -24,7 +29,7 @@ const Button = ({ variant }) => {
 export default Button;
 
 const Container = styled.button`
-  background-color: red;
+  backdrop-filter: blur(6px);
   width: 40px;
   height: 40px;
   border-radius: 100%;

@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { FaUserInjured, FaLink } from 'react-icons/fa';
+import { IoMdReverseCamera } from 'react-icons/io';
+import { GoSettings } from 'react-icons/go';
 import Spinner from '../../components/LoadingIcon';
 import Button from '../../components/Button';
 
@@ -24,6 +27,12 @@ const LoadingIconWrapper = styled.div`
   justify-content: center;
   min-height: 82vmin;
   align-items: center;
+`;
+
+const Buttons = styled.div`
+  position: absolute;
+  top: 200px;
+  left: 200px;
 `;
 
 const MyVideo = ({ isConnecting, connect }) => {
@@ -61,14 +70,12 @@ const MyVideo = ({ isConnecting, connect }) => {
         autoPlay
         id="my-video"
       />
-      <Button
-        variant="success"
-        disabled={isConnecting}
-        isLoading={isConnecting}
-        onClick={connect}
-      >
-        Connect
-      </Button>
+      <Buttons>
+        <Button Icon={FaLink} color="blur" />
+        <Button Icon={GoSettings} color="blur" />
+        <Button Icon={IoMdReverseCamera} color="blur" />
+        <Button onClick={connect} Icon={FaUserInjured} color="green" />
+      </Buttons>
     </MyVideoContainer>
   );
 };

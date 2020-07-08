@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { useParams, Link as Hyperlink } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import styled from 'styled-components';
 import Room from '../../components/Room';
 import appConfig from '../../../appConfig';
-import Button from '../../components/Button';
 import MyVideo from './MyVideo';
 
 const VideoChat = () => {
@@ -16,7 +15,8 @@ const VideoChat = () => {
 
   const connect = () => {
     setIsConnecting(true);
-    axios.get(`${appConfig.serverUrl}/getRoom/${category}`)
+    axios
+      .get(`${appConfig.serverUrl}/getRoom/${category}`)
       .then((res) => {
         setRoomName(res.data.room.uniqueName);
         setToken(res.data.token);
@@ -25,9 +25,7 @@ const VideoChat = () => {
       .finally(() => setIsConnecting(false));
   };
 
-
   const handleLogout = () => setToken(null);
-
 
   let render;
   if (token && roomName) {
@@ -37,9 +35,6 @@ const VideoChat = () => {
   } else {
     render = (
       <Container>
-        <Button>
-          <Hyperlink to="/">Back to Categories</Hyperlink>
-        </Button>
         <Heading>{`Category: ${category}`}</Heading>
         <MyVideo connect={connect} isConnecting={isConnecting} />
       </Container>
@@ -57,7 +52,7 @@ const Container = styled.div`
 `;
 
 const Heading = styled.h1`
-  font-weight: ${({ theme }) => theme.font.weight.medium}
+  font-weight: ${({ theme }) => theme.font.weight.medium};
 `;
 
 export default VideoChat;
