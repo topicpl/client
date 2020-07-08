@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, Link as Hyperlink } from 'react-router-dom';
 import axios from 'axios';
 import styled from 'styled-components';
-import Room from '../components/Room';
-import appConfig from '../../appConfig';
-import Button from '../components/Button';
-
+import Room from '../../components/Room';
+import appConfig from '../../../appConfig';
+import Button from '../../components/Button';
+import MyVideo from './MyVideo';
 
 const VideoChat = () => {
   const { category } = useParams();
@@ -13,7 +13,6 @@ const VideoChat = () => {
   const [roomName, setRoomName] = useState(null);
   const [token, setToken] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
-
 
   const connect = () => {
     setIsLoading(true);
@@ -25,6 +24,7 @@ const VideoChat = () => {
       .catch(console.error)
       .finally(() => setIsLoading(false));
   };
+
 
   const handleLogout = () => setToken(null);
 
@@ -41,6 +41,7 @@ const VideoChat = () => {
           <Hyperlink to="/">Back to Categories</Hyperlink>
         </Button>
         <Heading>{`Category: ${category}`}</Heading>
+        <MyVideo />
         <Button variant="success" disabled={isLoading} isLoading={isLoading} onClick={connect}>Connect</Button>
       </Container>
     );
