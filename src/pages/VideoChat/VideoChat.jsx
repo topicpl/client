@@ -12,17 +12,17 @@ const VideoChat = () => {
 
   const [roomName, setRoomName] = useState(null);
   const [token, setToken] = useState(null);
-  const [isLoading, setIsLoading] = useState(null);
+  const [isConnecting, setIsConnecting] = useState(null);
 
   const connect = () => {
-    setIsLoading(true);
+    setIsConnecting(true);
     axios.get(`${appConfig.serverUrl}/getRoom/${category}`)
       .then((res) => {
         setRoomName(res.data.room.uniqueName);
         setToken(res.data.token);
       })
       .catch(console.error)
-      .finally(() => setIsLoading(false));
+      .finally(() => setIsConnecting(false));
   };
 
 
@@ -41,8 +41,7 @@ const VideoChat = () => {
           <Hyperlink to="/">Back to Categories</Hyperlink>
         </Button>
         <Heading>{`Category: ${category}`}</Heading>
-        <MyVideo />
-        <Button variant="success" disabled={isLoading} isLoading={isLoading} onClick={connect}>Connect</Button>
+        <MyVideo connect={connect} isConnecting={isConnecting} />
       </Container>
     );
   }

@@ -1,25 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Spinner from '../../components/LoadingIcon';
+import Button from '../../components/Button';
 
 const MyVideoContainer = styled.div`
   width: 80%;
-  background: ${({ theme }) => theme.color.black}
+  background: ${({ theme }) => theme.color.black};
   position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;
 
 const Video = styled.video`
-    width: 100%;
+  width: 100%;
 `;
 
 const LoadingIconWrapper = styled.div`
-    display: flex;
-    justify-content: center;
-    min-height: 50vh;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  min-height: 82vmin;
+  align-items: center;
 `;
 
-const MyVideo = () => {
+const MyVideo = ({ isConnecting, connect }) => {
   const [isVideoLoading, setIsVideoLoading] = useState(true);
 
   useEffect(() => {
@@ -37,7 +42,6 @@ const MyVideo = () => {
         const video = document.querySelector('#my-video');
         video.srcObject = stream;
         setIsVideoLoading(false);
-
         stream.onremovetrack = () => console.warn('Stream ended');
       })
       .catch(console.error);
@@ -49,7 +53,8 @@ const MyVideo = () => {
           <Spinner />
         </LoadingIconWrapper>
       )}
-      <Video autoPlay id="my-video" />
+      <Video style={{ display: !isVideoLoading ? 'block' : 'none' }} autoPlay id="my-video" />
+      <Button variant="success" disabled={isConnecting} isLoading={isConnecting} onClick={connect}>Connect</Button>
     </MyVideoContainer>
   );
 };
