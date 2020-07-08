@@ -24,6 +24,7 @@
     "jsx-a11y/media-has-caption": "off",
     "consistent-return": "off",
     "object-curly-newline": "off",
-    "no-console": ["error", { "allow": ["warn", "error"] }]
+    "no-console": ["error", { "allow": ["warn", "error"] }],
+    "no-param-reassign":"off"
   }
 }

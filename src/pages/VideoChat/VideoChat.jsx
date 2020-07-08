@@ -1,30 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, Link as Hyperlink } from 'react-router-dom';
 import axios from 'axios';
 import styled from 'styled-components';
-import Room from '../components/Room';
-import appConfig from '../../appConfig';
-import Button from '../components/Button';
-
+import Room from '../../components/Room';
+import appConfig from '../../../appConfig';
+import Button from '../../components/Button';
+import MyVideo from './MyVideo';
 
 const VideoChat = () => {
   const { category } = useParams();
 
   const [roomName, setRoomName] = useState(null);
   const [token, setToken] = useState(null);
-  const [isLoading, setIsLoading] = useState(null);
-
+  const [isConnecting, setIsConnecting] = useState(null);
 
   const connect = () => {
-    setIsLoading(true);
+    setIsConnecting(true);
     axios.get(`${appConfig.serverUrl}/getRoom/${category}`)
       .then((res) => {
         setRoomName(res.data.room.uniqueName);
         setToken(res.data.token);
       })
       .catch(console.error)
-      .finally(() => setIsLoading(false));
+      .finally(() => setIsConnecting(false));
   };
+
 
   const handleLogout = () => setToken(null);
 
@@ -41,7 +41,7 @@ const VideoChat = () => {
           <Hyperlink to="/">Back to Categories</Hyperlink>
         </Button>
         <Heading>{`Category: ${category}`}</Heading>
-        <Button variant="success" disabled={isLoading} isLoading={isLoading} onClick={connect}>Connect</Button>
+        <MyVideo connect={connect} isConnecting={isConnecting} />
       </Container>
     );
   }
