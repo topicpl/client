@@ -74,7 +74,12 @@ const MyVideo = ({ isConnecting, connect }) => {
         <Button Icon={FaLink} color="blur" />
         <Button Icon={GoSettings} color="blur" />
         <Button Icon={IoMdReverseCamera} color="blur" />
-        <Button onClick={connect} Icon={FaUserInjured} color="green" />
+        <Button
+          onClick={connect}
+          isLoading={isConnecting}
+          Icon={FaUserInjured}
+          color="green"
+        />
       </Buttons>
     </MyVideoContainer>
   );

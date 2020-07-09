@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { AiOutlineReload } from 'react-icons/ai';
 
-const Button = ({ Icon, color, onClick }) => {
+const Button = ({ Icon, color, onClick, isLoading }) => {
   const [bgColor, setBgColor] = useState('transparent');
 
   Button.defaultProps = {
@@ -21,7 +22,11 @@ const Button = ({ Icon, color, onClick }) => {
 
   return (
     <Container style={{ backgroundColor: bgColor }} onClick={onClick}>
-      <Icon color="#fff" size="20px" />
+      {isLoading ? (
+        <AiOutlineReload color="#fff" size="20px" className="loading" />
+      ) : (
+        <Icon color="#fff" size="20px" />
+      )}
     </Container>
   );
 };
@@ -29,9 +34,12 @@ const Button = ({ Icon, color, onClick }) => {
 export default Button;
 
 const Container = styled.button`
-  backdrop-filter: blur(6px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 40px;
   height: 40px;
+  backdrop-filter: blur(6px);
   border-radius: 100%;
   border: none;
   cursor: pointer;
@@ -40,4 +48,34 @@ const Container = styled.button`
   -webkit-box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.25);
   -moz-box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.25);
   box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.25);
+
+  .loading {
+    -webkit-animation: spin 0.8s infinite ease-out;
+    animation: spin 0.8s infinite ease-out;
+    -moz-animation: spin 0.8s infinite ease-out;
+    @-moz-keyframes spin {
+      from {
+        -moz-transform: rotate(0deg);
+      }
+      to {
+        -moz-transform: rotate(360deg);
+      }
+    }
+    @-webkit-keyframes spin {
+      from {
+        -webkit-transform: rotate(0deg);
+      }
+      to {
+        -webkit-transform: rotate(360deg);
+      }
+    }
+    @keyframes spin {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
+  }
 `;
