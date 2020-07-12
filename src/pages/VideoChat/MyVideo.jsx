@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { FaUserInjured, FaLink } from 'react-icons/fa';
+import { IoMdReverseCamera } from 'react-icons/io';
+import { GoSettings } from 'react-icons/go';
 import Spinner from '../../components/LoadingIcon';
 import Button from '../../components/Button';
 
@@ -16,14 +19,20 @@ const MyVideoContainer = styled.div`
 const Video = styled.video`
   width: 100%;
   margin-bottom: 10px;
-  `;
+`;
 
-  const LoadingIconWrapper = styled.div`
+const LoadingIconWrapper = styled.div`
   margin-bottom: 10px;
   display: flex;
   justify-content: center;
   min-height: 82vmin;
   align-items: center;
+`;
+
+const Buttons = styled.div`
+  position: absolute;
+  top: 200px;
+  left: 200px;
 `;
 
 const MyVideo = ({ isConnecting, connect }) => {
@@ -39,7 +48,8 @@ const MyVideo = ({ isConnecting, connect }) => {
       video: true,
     };
 
-    navigator.mediaDevices.getUserMedia(defaultSettings)
+    navigator.mediaDevices
+      .getUserMedia(defaultSettings)
       .then((stream) => {
         const video = document.querySelector('#my-video');
         video.srcObject = stream;
@@ -55,8 +65,22 @@ const MyVideo = ({ isConnecting, connect }) => {
           <Spinner />
         </LoadingIconWrapper>
       )}
-      <Video style={{ display: !isVideoLoading ? 'block' : 'none' }} autoPlay id="my-video" />
-      <Button variant="success" disabled={isConnecting} isLoading={isConnecting} onClick={connect}>Connect</Button>
+      <Video
+        style={{ display: !isVideoLoading ? 'block' : 'none' }}
+        autoPlay
+        id="my-video"
+      />
+      <Buttons>
+        <Button Icon={FaLink} color="blur" />
+        <Button Icon={GoSettings} color="blur" />
+        <Button Icon={IoMdReverseCamera} color="blur" />
+        <Button
+          onClick={connect}
+          isLoading={isConnecting}
+          Icon={FaUserInjured}
+          color="green"
+        />
+      </Buttons>
     </MyVideoContainer>
   );
 };

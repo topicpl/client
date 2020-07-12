@@ -1,70 +1,81 @@
-import React from 'react';
-import styled, { ThemeProvider } from 'styled-components';
-import themes from 'styled-theming';
+import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { AiOutlineReload } from 'react-icons/ai';
 
-const backgroundBorderColor = themes('variant', {
-  default: ({ theme, disabled }) => (disabled ? theme.color.grey[500] : theme.color.grey[400]),
-  success: ({ theme, disabled }) => (disabled ? theme.color.green[800] : theme.color.green[500]),
-});
+const Button = ({ Icon, color, onClick, isLoading }) => {
+  const [bgColor, setBgColor] = useState('transparent');
 
-const color = themes('variant', {
-  default: ({ theme, disabled }) => (disabled ? theme.color.grey[800] : theme.color.black),
-  success: ({ theme, disabled }) => (disabled ? theme.color.grey[500] : theme.color.white),
-});
+  Button.defaultProps = {
+    bgColor: 'transparent',
+  };
 
-// hover
-const hoverBorderColor = themes('variant', {
-  default: ({ theme, disabled }) => (disabled ? theme.color.grey[500] : theme.color.black),
-  success: ({ theme, disabled }) => theme.color.green[disabled ? 800 : 500],
-});
+  Button.propTypes = {
+    bgColor: PropTypes.oneOf(['transparent', 'red', 'green']),
+  };
 
-const hoverBgColor = themes('variant', {
-  default: ({ theme, disabled }) => (disabled ? theme.color.grey[500] : theme.color.grey[200]),
-  success: ({ theme, disabled }) => theme.color.green[disabled ? 800 : 600],
-});
+  useEffect(() => {
+    if (color === 'green') setBgColor('#01da73');
+    else if (color === 'red') setBgColor('#F44336');
+    else setBgColor('transparent');
+  });
 
-const hoverColor = themes('variant', {
-  default: ({ theme, disabled }) => (disabled ? theme.color.grey[800] : theme.color.black),
-  success: ({ theme, disabled }) => theme.color.grey[disabled ? 500 : 400],
-});
-
-
-const ButtonStyles = styled.button`
-  cursor: pointer;
-  font-size: 16px;
-  border-radius: 3px;
-  padding: 0.25em 1em;
-  transition: 0.5s all ease-out;
-  background: ${backgroundBorderColor};
-  border: 1px solid ${backgroundBorderColor};
-  color: ${color};
-  font-weight: ${({ theme }) => theme.font.weight.medium};
-  cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
-
-  &:hover {
-    background: ${hoverBgColor};
-    border-color: ${hoverBorderColor};
-    color: ${hoverColor};
-  }
-`;
-
-ButtonStyles.defaultProps = {
-  variant: 'default',
-};
-
-ButtonStyles.propTypes = {
-  variant: PropTypes.oneOf(['default', 'success']),
-};
-
-const Button = ({ children, isLoading, disabled, variant = 'default', ...rest }) => {
-  const loadingComponent = 'Loading...';
   return (
-    <ThemeProvider theme={{ variant }}>
-      <ButtonStyles {...rest} disabled={disabled || isLoading}>{isLoading ? loadingComponent : children}</ButtonStyles>
-    </ThemeProvider>
+    <Container style={{ backgroundColor: bgColor }} onClick={onClick}>
+      {isLoading ? (
+        <AiOutlineReload color="#fff" size="20px" className="loading" />
+      ) : (
+        <Icon color="#fff" size="20px" />
+      )}
+    </Container>
   );
 };
 
-
 export default Button;
+
+const Container = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  backdrop-filter: blur(6px);
+  border-radius: 100%;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  color: ${({ theme }) => theme.color.white};
+  -webkit-box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.25);
+  -moz-box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.25);
+  box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.25);
+
+  .loading {
+    -webkit-animation: spin 0.8s infinite ease-out;
+    animation: spin 0.8s infinite ease-out;
+    -moz-animation: spin 0.8s infinite ease-out;
+    @-moz-keyframes spin {
+      from {
+        -moz-transform: rotate(0deg);
+      }
+      to {
+        -moz-transform: rotate(360deg);
+      }
+    }
+    @-webkit-keyframes spin {
+      from {
+        -webkit-transform: rotate(0deg);
+      }
+      to {
+        -webkit-transform: rotate(360deg);
+      }
+    }
+    @keyframes spin {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
+  }
+`;
