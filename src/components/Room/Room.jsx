@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import Video from 'twilio-video';
 import Participant from '../Participant';
+import Cookies from 'universal-cookie';
+
+const cookies = new Cookies();
 
 const Room = ({ roomName, token, handleLogout }) => {
   const [room, setRoom] = useState(null);
   const [participants, setParticipants] = useState([]);
+
 
   useEffect(() => {
     const participantConnected = (participant) => {
