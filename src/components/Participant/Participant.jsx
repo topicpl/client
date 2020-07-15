@@ -1,6 +1,21 @@
 import React, { useState, useEffect, useRef } from 'react';
+import styled from 'styled-components';
+import { IoMdWalk } from 'react-icons/io';
+import Button from '../Button';
 
-const Participant = ({ participant }) => {
+const ParticipantContainer = styled.div`
+  position: relative;
+  grid-column: ${({ totalParticipants, myself }) => ((totalParticipants === 3 || totalParticipants === 5) && myself) && '1 /span 2;'}
+`;
+
+const Buttons = styled.div`
+  position: absolute;
+  top: 200px;
+  left: 200px;
+  z-index: 1;
+`;
+
+const Participant = ({ participant, totalParticipants, myself, handleLogout }) => {
   const [videoTracks, setVideoTracks] = useState([]);
   const [audioTracks, setAudioTracks] = useState([]);
 
@@ -62,11 +77,14 @@ const Participant = ({ participant }) => {
   }, [audioTracks]);
 
   return (
-    <div className="participant">
+    <ParticipantContainer className="participant" totalParticipants={totalParticipants} myself={myself}>
+      <Buttons>
+        {myself && <Button Icon={IoMdWalk} color="red" onClick={handleLogout} />}
+      </Buttons>
       <h3>{participant.identity}</h3>
       <video ref={videoRef} autoPlay />
       <audio ref={audioRef} autoPlay muted />
-    </div>
+    </ParticipantContainer>
   );
 };
 
