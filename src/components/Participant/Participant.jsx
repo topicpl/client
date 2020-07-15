@@ -91,7 +91,6 @@ const Participant = ({ participant, totalParticipants, myself, handleLogout }) =
       <Buttons>
         {myself && <Button Icon={IoMdWalk} color="red" onClick={handleLogout} />}
       </Buttons>
-      {/* <h3>{participant.identity}</h3> */}
       <VideoFrame ref={videoRef} autoPlay totalParticipants={totalParticipants} />
       <audio ref={audioRef} autoPlay muted />
     </ParticipantContainer>
