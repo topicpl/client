@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { IoMdWalk, IoIosRemoveCircleOutline, IoMdArrowForward, IoIosMicOff, IoIosMic } from 'react-icons/io';
 import styled from 'styled-components';
+import { RiCameraLine, RiCameraOffLine } from 'react-icons/ri';
 import Button from '../Button';
 
 const Buttons = styled.div`
@@ -11,6 +12,7 @@ const Buttons = styled.div`
 `;
 const ParticipantButtons = ({ myself, handleLogout }) => {
   const [isMicrophoneMuted, setIsMicrophoneMuted] = useState(false);
+  const [isVideoOn, setIsVideoOn] = useState(true);
   return (
     <Buttons>
       {myself
@@ -22,6 +24,11 @@ const ParticipantButtons = ({ myself, handleLogout }) => {
               Icon={isMicrophoneMuted ? IoIosMicOff : IoIosMic}
               onClick={() => setIsMicrophoneMuted(!isMicrophoneMuted)}
               title={isMicrophoneMuted ? 'Unmute microphone' : 'Mute microphone'}
+            />
+            <Button
+              Icon={isVideoOn ? RiCameraOffLine : RiCameraLine}
+              onClick={() => setIsVideoOn(!isVideoOn)}
+              title={isVideoOn ? 'Hide camera' : 'Show camera'}
             />
           </>
         ) : (
