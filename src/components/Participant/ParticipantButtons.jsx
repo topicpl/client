@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import { IoMdWalk, IoIosRemoveCircleOutline, IoMdArrowForward, IoIosMicOff, IoIosMic } from 'react-icons/io';
+import { IoMdWalk, IoIosRemoveCircleOutline, IoMdArrowForward, IoIosMicOff, IoIosMic, IoIosSend } from 'react-icons/io';
 import styled from 'styled-components';
 import { RiCameraLine, RiCameraOffLine } from 'react-icons/ri';
+import { AiOutlineExclamation } from 'react-icons/ai';
+import { GiSpeakerOff, GiSpeaker } from 'react-icons/gi';
 import Button from '../Button';
 
 const Buttons = styled.div`
@@ -11,19 +13,20 @@ const Buttons = styled.div`
   z-index: 1;
 `;
 const ParticipantButtons = ({ myself, handleLogout }) => {
-  const [isMicrophoneMuted, setIsMicrophoneMuted] = useState(false);
+  const [isMyMicrophoneMuted, setIsMyMicrophoneMuted] = useState(false);
   const [isVideoOn, setIsVideoOn] = useState(true);
+  const [isParticipantMuted, setIsParticipantMuted] = useState(true);
   return (
     <Buttons>
       {myself
         ? (
           <>
             <Button Icon={IoMdWalk} color="red" onClick={handleLogout} title="Exit the room" />
-            <Button Icon={IoMdArrowForward} color="green" onClick={handleLogout} title="Search next room" />
+            <Button Icon={IoMdArrowForward} color="green" title="Search next room" />
             <Button
-              Icon={isMicrophoneMuted ? IoIosMicOff : IoIosMic}
-              onClick={() => setIsMicrophoneMuted(!isMicrophoneMuted)}
-              title={isMicrophoneMuted ? 'Unmute microphone' : 'Mute microphone'}
+              Icon={isMyMicrophoneMuted ? IoIosMicOff : IoIosMic}
+              onClick={() => setIsMyMicrophoneMuted(!isMyMicrophoneMuted)}
+              title={isMyMicrophoneMuted ? 'Unmute microphone' : 'Mute microphone'}
             />
             <Button
               Icon={isVideoOn ? RiCameraOffLine : RiCameraLine}
@@ -33,7 +36,14 @@ const ParticipantButtons = ({ myself, handleLogout }) => {
           </>
         ) : (
           <>
-            <Button Icon={IoIosRemoveCircleOutline} color="red" onClick={handleLogout} title="Initialize vote to kick user" />
+            <Button
+              Icon={isParticipantMuted ? GiSpeaker : GiSpeakerOff}
+              onClick={() => setIsParticipantMuted(!isParticipantMuted)}
+              title={isParticipantMuted ? 'Mute this user' : 'Unmute this user'}
+            />
+            <Button Icon={IoIosRemoveCircleOutline} onClick={handleLogout} title="Initialize vote to kick user" />
+            <Button Icon={AiOutlineExclamation} title="Report user" />
+            <Button Icon={IoIosSend} title="Send privet message" />
           </>
         )}
     </Buttons>
