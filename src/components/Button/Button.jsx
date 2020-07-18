@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { AiOutlineReload } from 'react-icons/ai';
 
-const Button = ({ Icon, color, onClick, isLoading }) => {
+const Button = ({ Icon, color, onClick, isLoading, ...rest }) => {
   const [bgColor, setBgColor] = useState('transparent');
 
   Button.defaultProps = {
@@ -21,7 +21,7 @@ const Button = ({ Icon, color, onClick, isLoading }) => {
   });
 
   return (
-    <Container style={{ backgroundColor: bgColor }} onClick={onClick}>
+    <Container style={{ backgroundColor: bgColor }} onClick={onClick} {...rest}>
       {isLoading ? (
         <AiOutlineReload color="#fff" size="20px" className="loading" />
       ) : (
