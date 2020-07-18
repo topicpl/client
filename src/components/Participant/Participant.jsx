@@ -11,6 +11,8 @@ const ParticipantContainer = styled.div`
 
 const VideoFrame = styled.video`
   width: 100%;
+  height: 100%;
+  transform: scale(1.011);
   object-fit: cover;
   max-height: ${({ totalParticipants }) => {
     if (totalParticipants >= 2 && totalParticipants <= 4) return `calc(99vh / ${2});`;
