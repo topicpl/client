@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import { IoMdWalk } from 'react-icons/io';
-import Button from '../Button';
+import ParticipantButtons from './ParticipantButtons';
 
 const ParticipantContainer = styled.div`
   position: relative;
@@ -16,13 +15,6 @@ const VideoFrame = styled.video`
     if (totalParticipants >= 5) return `calc(99vh / ${3});`;
     return '99vh';
   }}
-`;
-
-const Buttons = styled.div`
-  position: absolute;
-  top: 200px;
-  left: 200px;
-  z-index: 1;
 `;
 
 const Participant = ({ participant, totalParticipants, myself, handleLogout }) => {
@@ -86,11 +78,10 @@ const Participant = ({ participant, totalParticipants, myself, handleLogout }) =
     }
   }, [audioTracks]);
 
+
   return (
     <ParticipantContainer className="participant" totalParticipants={totalParticipants} myself={myself}>
-      <Buttons>
-        {myself && <Button Icon={IoMdWalk} color="red" onClick={handleLogout} />}
-      </Buttons>
+      <ParticipantButtons handleLogout={handleLogout} myself={myself}/>
       <VideoFrame ref={videoRef} autoPlay totalParticipants={totalParticipants} />
       <audio ref={audioRef} autoPlay muted />
     </ParticipantContainer>
