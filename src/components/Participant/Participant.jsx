@@ -4,11 +4,14 @@ import ParticipantButtons from './ParticipantButtons';
 
 const ParticipantContainer = styled.div`
   position: relative;
+  display: flex;
+  align-items: center;
   grid-column: ${({ totalParticipants, myself }) => ((totalParticipants === 3 || totalParticipants === 5) && myself) && '1 /span 2;'}
 `;
 
 const VideoFrame = styled.video`
   width: 100%;
+  object-fit: cover;
   max-height: ${({ totalParticipants }) => {
     if (totalParticipants >= 2 && totalParticipants <= 4) return `calc(99vh / ${2});`;
     if (totalParticipants === 2) return `calc(99vh / ${2});`;
