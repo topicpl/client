@@ -8,9 +8,14 @@ import Button from '../Button';
 
 const Buttons = styled.div`
   position: absolute;
-  top: 200px;
-  left: 200px;
+  left: 50%;
+  top: 93%;
+  transform: translate(-50%,-50%);
   z-index: 1;
+
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 10px;
 `;
 const MyButtons = ({ handleLogout }) => {
   const [isMyMicrophoneMuted, setIsMyMicrophoneMuted] = useState(false);
@@ -18,7 +23,6 @@ const MyButtons = ({ handleLogout }) => {
   return (
     <>
       <Button Icon={IoMdWalk} color="red" onClick={handleLogout} title="Leave" />
-      <Button Icon={IoMdArrowForward} color="green" title="Next room" />
       <Button
         Icon={isMyMicrophoneMuted ? IoIosMicOff : IoIosMic}
         onClick={() => setIsMyMicrophoneMuted(!isMyMicrophoneMuted)}
@@ -29,6 +33,7 @@ const MyButtons = ({ handleLogout }) => {
         onClick={() => setIsVideoOn(!isVideoOn)}
         title={isVideoOn ? 'Hide camera' : 'Show camera'}
       />
+      <Button Icon={IoMdArrowForward} color="green" title="Next room" />
     </>
   );
 };
