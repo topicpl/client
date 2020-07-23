@@ -47,7 +47,10 @@ const VideoChat = (props) => {
       .finally(() => setIsConnecting(false));
   };
 
-  const handleLogout = () => setToken(null);
+  const handleLogout = () => {
+    history.push({ search: '' });
+    setToken(null);
+  };
 
   let render;
   if (token && roomName) {
