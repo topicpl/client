@@ -1,6 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import Video from 'twilio-video';
+import styled from 'styled-components';
 import Participant from '../Participant';
+
+const RoomContainer = styled.div`
+  position: relative;
+`;
+const ParticipantsWrapper = styled.div`
+  height: 100vh;
+  width: 100%;
+  position: absolute;
+  display: grid;
+  grid-template-columns: ${({ totalParticipants }) => {
+    if (totalParticipants > 2) return 'repeat(2, 1fr);';
+    return '1fr;';
+  }}
+  grid-template-rows: ${({ totalParticipants }) => {
+    if (totalParticipants === 1) return '1fr;';
+    if (totalParticipants < 1) return 'repeat(2, 1fr);';
+  }}
+`;
 
 const Room = ({ roomName, token, handleLogout }) => {
   const [room, setRoom] = useState(null);
@@ -37,26 +56,24 @@ const Room = ({ roomName, token, handleLogout }) => {
     };
   }, [roomName, token]);
 
-  const remoteParticipants = participants.map((participant) => <Participant key={participant.sid} participant={participant} />);
+  const totalParticipants = participants.length + 1;
+  const remoteParticipants = participants.map((participant) => <Participant key={participant.sid} participant={participant} totalParticipants={totalParticipants} />);
 
   return (
-    <div className="room">
-      <h2>
-        Room:
-        {roomName}
-      </h2>
-      <button onClick={handleLogout}>Log out</button>
-      <div className="local-participant">
+    <RoomContainer className="room">
+      <ParticipantsWrapper totalParticipants={totalParticipants}>
+        {remoteParticipants}
         {room && (
           <Participant
+            myself
             key={room.localParticipant.sid}
             participant={room.localParticipant}
+            totalParticipants={totalParticipants}
+            handleLogout={handleLogout}
           />
         )}
-      </div>
-      <h3>Remote Participants</h3>
-      <div className="remote-participants">{remoteParticipants}</div>
-    </div>
+      </ParticipantsWrapper>
+    </RoomContainer>
   );
 };
 
