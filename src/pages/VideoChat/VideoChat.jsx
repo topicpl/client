@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import Room from '../../components/Room';
 import appConfig from '../../../appConfig';
 import MyVideo from './MyVideo';
+import { getQueryVariable } from '../../utils/helpers';
 
 
 const VideoChat = (props) => {
@@ -12,22 +13,8 @@ const VideoChat = (props) => {
   const { category } = useParams();
   const [roomParam, setRoomParam] = useState(null);
 
-  // refactor
-  function getQueryVariable(variable) {
-    const query = window.location.search.substring(1);
-    const vars = query.split('&');
-    for (let i = 0; i < vars.length; i++) {
-      const pair = vars[i].split('=');
-      if (decodeURIComponent(pair[0]) == variable) {
-        return decodeURIComponent(pair[1]);
-      }
-    }
-    console.log('Query variable %s not found', variable);
-  }
-  //
   useEffect(() => {
-    const room = getQueryVariable('room');
-    setRoomParam(room);
+    setRoomParam(getQueryVariable('room'));
   }, []);
 
 
@@ -37,7 +24,7 @@ const VideoChat = (props) => {
 
   const connect = () => {
     setIsConnecting(true);
-    axios.get(`${appConfig.serverUrl}/getRoom/${category}/${roomParam || null}`)
+    axios.post(`${appConfig.serverUrl}/getRoom`, { category, roomParam })
       .then((res) => {
         history.push({ search: `?room=${res.data.room.uniqueName}` });
         setRoomName(res.data.room.uniqueName);
