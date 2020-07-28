@@ -1,6 +1,28 @@
 import React, { useState, useEffect, useRef } from 'react';
+import styled from 'styled-components';
+import ParticipantButtons from './ParticipantButtons';
 
-const Participant = ({ participant }) => {
+const ParticipantContainer = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+  grid-column: ${({ totalParticipants, myself }) => ((totalParticipants === 3 || totalParticipants === 5) && myself) && '1 /span 2;'}
+`;
+
+const VideoFrame = styled.video`
+  width: 100%;
+  height: 100%;
+  transform: scale(1.011);
+  object-fit: cover;
+  max-height: ${({ totalParticipants }) => {
+    if (totalParticipants >= 2 && totalParticipants <= 4) return `calc(99vh / ${2});`;
+    if (totalParticipants === 2) return `calc(99vh / ${2});`;
+    if (totalParticipants >= 5) return `calc(99vh / ${3});`;
+    return '99vh';
+  }}
+`;
+
+const Participant = ({ participant, totalParticipants, myself, handleLogout }) => {
   const [videoTracks, setVideoTracks] = useState([]);
   const [audioTracks, setAudioTracks] = useState([]);
 
@@ -61,12 +83,13 @@ const Participant = ({ participant }) => {
     }
   }, [audioTracks]);
 
+
   return (
-    <div className="participant">
-      <h3>{participant.identity}</h3>
-      <video ref={videoRef} autoPlay />
+    <ParticipantContainer className="participant" totalParticipants={totalParticipants} myself={myself}>
+      <ParticipantButtons handleLogout={handleLogout} myself={myself}/>
+      <VideoFrame ref={videoRef} autoPlay totalParticipants={totalParticipants} />
       <audio ref={audioRef} autoPlay muted />
-    </div>
+    </ParticipantContainer>
   );
 };
 
