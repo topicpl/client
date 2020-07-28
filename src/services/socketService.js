@@ -1,30 +1,31 @@
+/* eslint-disable no-console */
 import Cookies from 'universal-cookie';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import io from 'socket.io-client';
 
 const cookies = new Cookies();
 
 const socket = io('http://localhost:3111');
-var identity;
-var roomSid;
+let identity;
+let roomSid;
 
-export function rememberIdentity(id, sid)
-{
+export function rememberIdentity(id, sid) {
   identity = id;
   roomSid = sid;
 }
 
-socket.on('connect', socket => {
+socket.on('connect', () => {
   console.log('connected to socket');
 });
-socket.on('message', data => {
+socket.on('message', (data) => {
   console.log(data);
 });
 
-export function emit(event, data){ 
+export function emit(event, data) {
   socket.emit(event, {
-      identity,
-      roomSid,
-      socketToken: cookies.get('socketToken'),
-      data
+    identity,
+    roomSid,
+    socketToken: cookies.get('socketToken'),
+    data,
   });
-};
+}

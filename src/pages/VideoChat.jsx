@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useParams, Link as Hyperlink } from 'react-router-dom';
 import axios from 'axios';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import styled from 'styled-components';
 import Cookies from 'universal-cookie';
 import Room from '../components/Room';
@@ -22,11 +23,11 @@ const VideoChat = () => {
     setIsLoading(true);
     axios.get(`${appConfig.serverUrl}/getRoom/${category}`)
       .then((res) => {
-        cookies.set('socketToken', res.data.socketToken, {path: '/'});
+        cookies.set('socketToken', res.data.socketToken, { path: '/' });
         socket.rememberIdentity(res.data.identity, res.data.room.sid);
         setRoomName(res.data.room.uniqueName);
         setToken(res.data.token);
-        socket.emit('startVoteKick', {user: "testUser"});
+        socket.emit('startVoteKick', { user: 'testUser' });
       })
       .catch(console.error)
       .finally(() => setIsLoading(false));
