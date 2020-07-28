@@ -1,4 +1,5 @@
 import React from 'react';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { ThemeProvider } from 'styled-components';
 import GlobalStyle from './GlobalStyle';
 import { theme } from './theme';
