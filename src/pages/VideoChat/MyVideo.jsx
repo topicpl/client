@@ -37,10 +37,18 @@ const Buttons = styled.div`
 
 const MyVideo = ({ isConnecting, connect }) => {
   const [isVideoLoading, setIsVideoLoading] = useState(true);
+  let localStream;
 
   useEffect(() => {
     getDevices();
+    return stopStream;
   }, []);
+
+  const stopStream = () => {
+    const [audio, video] = localStream.getTracks();
+    audio.stop();
+    video.stop();
+  };
 
   const getDevices = () => {
     const defaultSettings = {
@@ -52,6 +60,7 @@ const MyVideo = ({ isConnecting, connect }) => {
       .getUserMedia(defaultSettings)
       .then((stream) => {
         const video = document.querySelector('#my-video');
+        localStream = (stream);
         video.srcObject = stream;
         setIsVideoLoading(false);
         stream.onremovetrack = () => console.warn('Stream ended');
