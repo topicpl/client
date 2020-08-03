@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { FaUserInjured, FaLink } from 'react-icons/fa';
 import { IoMdReverseCamera } from 'react-icons/io';
@@ -37,10 +37,18 @@ const Buttons = styled.div`
 
 const MyVideo = ({ isConnecting, connect }) => {
   const [isVideoLoading, setIsVideoLoading] = useState(true);
+  const videoRef = useRef();
 
   useEffect(() => {
     getDevices();
+    return stopStream;
   }, []);
+
+  const stopStream = () => {
+    const [audio, video] = videoRef.current.srcObject.getTracks();
+    audio.stop();
+    video.stop();
+  };
 
   const getDevices = () => {
     const defaultSettings = {
@@ -51,8 +59,7 @@ const MyVideo = ({ isConnecting, connect }) => {
     navigator.mediaDevices
       .getUserMedia(defaultSettings)
       .then((stream) => {
-        const video = document.querySelector('#my-video');
-        video.srcObject = stream;
+        videoRef.current.srcObject = stream;
         setIsVideoLoading(false);
         stream.onremovetrack = () => console.warn('Stream ended');
       })
@@ -65,11 +72,7 @@ const MyVideo = ({ isConnecting, connect }) => {
           <Spinner />
         </LoadingIconWrapper>
       )}
-      <Video
-        style={{ display: !isVideoLoading ? 'block' : 'none' }}
-        autoPlay
-        id="my-video"
-      />
+      <Video ref={videoRef} style={{ display: !isVideoLoading ? 'block' : 'none' }} autoPlay />
       <Buttons>
         <Button Icon={FaLink} color="blur" />
         <Button Icon={GoSettings} color="blur" />
