@@ -70,7 +70,7 @@ const Container = styled.div`
     grid-column-gap: 50px;
     position: absolute;
     top: 50%;
-    transform: translateY(-50%);
+    transform: translate(-100px, -50%);
   }
 
   @media (min-width: 1280px) {
