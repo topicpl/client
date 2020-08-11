@@ -13,13 +13,7 @@ jobs:
   digitalocean-test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
-
-      - name: Install doctl
-        uses: ./
-        with:
-          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
-          version: 1.38.0
-
-      - name: Verify installation of correct version
-        run: ls
+    - name: Install doctl
+      uses: digitalocean/action-doctl@v2
+      with:
+        token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
