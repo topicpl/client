@@ -85,19 +85,17 @@ const MyVideo = ({ isConnecting, connect }) => {
   };
   return (
     <MyVideoContainer>
-      {isVideoLoading && (
-        <CenteredElement>
-          <Spinner />
-        </CenteredElement>
-      )}
-      {errorMessage && !isVideoLoading && (
-        <CenteredElement>
+
+      {isVideoLoading || errorMessage && <CenteredElement>
+        {isVideoLoading && <Spinner />}
+        {errorMessage && !isVideoLoading && (
           <ErrorContainer>
             <ErrorMessage>{errorMessage}</ErrorMessage>
-            <RegularButton onClick={getDevices} >Try Again</RegularButton>
+            <RegularButton onClick={getDevices}>Try Again</RegularButton>
           </ErrorContainer>
-        </CenteredElement>
-      )}
+        )}
+      </CenteredElement>}
+
       {!errorMessage && !isVideoLoading && <>
         <Video ref={videoRef} style={{ display: !isVideoLoading ? 'block' : 'none' }} autoPlay />
         <Buttons>
