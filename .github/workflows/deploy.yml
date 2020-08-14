@@ -27,4 +27,13 @@ jobs:
     - name: docker push
       run: |
         docker push thetopichub913/the-topic:1.0.0
+    - name: ls -a via ssh
+    - name: ssh
+      uses: garygrossgarten/github-action-ssh@release
+      with:
+        command: ls -a
+        host: ${{ secrets.HOST }}
+        username: root
+        privateKey: ${{ secrets.PRIVATE_KEY}}
+
 
