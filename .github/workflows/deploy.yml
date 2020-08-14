@@ -12,9 +12,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Verify installation of correct version
-      run: ls
+    - name: docker login
+      env:
+        DOCKER_USER: ${{ secrets.DOCKER_USER }}   
+        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}  
+      run: |
+        docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
     - name: docker build
       run: |
-        docker build -t gh-build-docker . && docker push gh-build-docker
+        docker build -t gh-build-docker:1.0.0 .
+    - name: docker push
+      run: |
+        docker push gh-build-docker:1.0.0
 
