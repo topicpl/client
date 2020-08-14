@@ -26,5 +26,5 @@ jobs:
         docker images
     - name: docker push
       run: |
-        docker push gh-build-docker:1.0.0
+        docker push thetopichub913/the-topic:gh-build-docker:1.0.0
 
