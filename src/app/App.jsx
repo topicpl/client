@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { HashRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import detectBrowserLanguage from 'detect-browser-language';
 import { I18nProvider } from '../i18n';
 import MasterStyle from '../assets/styles/MasterStyle';
