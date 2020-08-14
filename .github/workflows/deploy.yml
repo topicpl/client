@@ -16,5 +16,5 @@ jobs:
       run: ls
     - name: docker build
       run: |
-        docker build -t gh-build-docker . && docker push thetopichub913/the-topic:tagname
+        docker build -t gh-build-docker . && docker push gh-build-docker
 
