@@ -21,6 +21,9 @@ jobs:
     - name: docker build
       run: |
         docker build . -t gh-build-docker:1.0.0
+    - name: check docker images
+      run: |
+        docker images
     - name: docker push
       run: |
         docker push gh-build-docker:1.0.0
