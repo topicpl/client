@@ -12,6 +12,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+    - uses: ./
+    - name: Verify installation of correct version
+      run: ls
     - name: docker build
       run: |
         docker build -t gh-build-docker .
