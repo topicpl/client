@@ -6,16 +6,13 @@ name: Node.js CI
 on:
   push:
     branches: [ master ]
-  pull_request:
-    branches: [ master ]
 
 jobs:
   digitalocean-test:
     runs-on: ubuntu-latest
     steps:
-    - name: Install doctl
-      uses: digitalocean/action-doctl@v2
-      with:
-        token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
-        runs: | 
-          ls
+    - uses: actions/checkout@v2
+    - name: docker build
+      run: |
+        docker build -t gh-build-docker .
+
