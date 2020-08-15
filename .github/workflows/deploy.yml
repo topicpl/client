@@ -27,11 +27,29 @@ jobs:
     - name: docker push
       run: |
         docker push thetopichub913/the-topic:1.0.0
-    - name: ls -a via ssh
-      uses: garygrossgarten/github-action-ssh@release
+    #- name: ls -a via ssh
+     # uses: garygrossgarten/github-action-ssh@release
+     # with:
+    #    command: ls -a
+    #    host: ${{ secrets.HOST }}
+    #    username: root
+     #   privateKey: ${{ secrets.PRIVATE_KEY}}
+    - name: Remote SSH Commands
+      uses: fifsky/ssh-action@v0.0.4
       with:
+        # Command to execute on the remote server.
         command: ls -a
-        host: ${{ secrets.HOST }}
-        username: root
-        privateKey: ${{ secrets.PRIVATE_KEY}}
+        # Hostname or IP address of the server.
+        host: 139.59.137.236
+        # Username for authentication.
+        user: root
+        # Port number of the server.
+        # port: # optional, default is 22
+        # File Location or string that contains a private key for either key-based or hostbased user authentication (OpenSSH format)
+        key: ${{ secrets.PRIVATE_KEY}}
+        # Password for authentication.
+        #pass: # optional
+        # SSH parameters for example: -tt.
+       # args: # optional
+
 
