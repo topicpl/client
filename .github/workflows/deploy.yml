@@ -32,6 +32,6 @@ jobs:
       with:
         command: ls -a
         host: ${{ secrets.HOST }}
-        username: garygrossgarten
+        username: root
         privateKey: ${{ secrets.PRIVATE_KEY}}
 
