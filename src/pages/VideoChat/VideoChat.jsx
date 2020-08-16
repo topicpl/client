@@ -1,14 +1,18 @@
+/* eslint-disable import/no-named-as-default-member */
 /* eslint-disable no-plusplus */
 /* eslint-disable no-console */
 import React, { useState, useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
+import Cookies from 'universal-cookie';
 import axios from 'axios';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import styled from 'styled-components';
 import Room from '../../components/Room';
 import appConfig from '../../../appConfig';
 import MyVideo from './MyVideo';
+import { emit, rememberIdentity } from '../../services/socketService';
 
+const cookies = new Cookies();
 
 const VideoChat = () => {
   const history = useHistory();
@@ -42,6 +46,11 @@ const VideoChat = () => {
     setIsConnecting(true);
     axios.get(`${appConfig.serverUrl}/getRoom/${category}/${roomParam || null}`)
       .then((res) => {
+        cookies.set('socketToken', res.data.socketToken, { path: '/' });
+        rememberIdentity(res.data.room.sid, res.data.identity);
+        const roomSid = res.data.room.sid;
+        const identity = res.data.identity;
+        emit('registerSocket', {roomSid, identity});
         history.push({ search: `?room=${res.data.room.uniqueName}` });
         setRoomName(res.data.room.uniqueName);
         setToken(res.data.token);

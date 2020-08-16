@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import styled from 'styled-components';
 import { FaUserInjured, FaLink } from 'react-icons/fa';
 import { IoMdReverseCamera } from 'react-icons/io';
@@ -73,6 +74,7 @@ const MyVideo = ({ isConnecting, connect }) => {
       <Buttons>
         <Button Icon={FaLink} color="blur" />
         <Button Icon={GoSettings} color="blur" />
+        <Button Icon={IoMdReverseCamera} onClick={connect} color="blur" />
         <Button Icon={IoMdReverseCamera} color="blur" />
         <Button
           onClick={connect}

@@ -9,7 +9,8 @@ const socket = io('http://localhost:3111');
 let identity;
 let roomSid;
 
-export function rememberIdentity(id, sid) {
+export function rememberIdentity(sid, id) {
+  console.log("\nremember identity\nidentity: "+id+"\nsid: "+sid+"\n");
   identity = id;
   roomSid = sid;
 }
@@ -23,9 +24,9 @@ socket.on('message', (data) => {
 
 export function emit(event, data) {
   socket.emit(event, {
-    identity,
-    roomSid,
+    identity: identity,
+    roomSid: roomSid,
     socketToken: cookies.get('socketToken'),
-    data,
+    data: data,
   });
 }
