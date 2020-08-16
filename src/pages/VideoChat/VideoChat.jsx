@@ -11,6 +11,7 @@ import Room from '../../components/Room';
 import appConfig from '../../../appConfig';
 import MyVideo from './MyVideo';
 import { emit, rememberIdentity } from '../../services/socketService';
+import { getQueryVariable } from '../../utils/helpers';
 
 const cookies = new Cookies();
 
@@ -33,8 +34,7 @@ const VideoChat = () => {
   }
   //
   useEffect(() => {
-    const room = getQueryVariable('room');
-    setRoomParam(room);
+    setRoomParam(getQueryVariable('room'));
   }, []);
 
 
@@ -44,7 +44,7 @@ const VideoChat = () => {
 
   const connect = () => {
     setIsConnecting(true);
-    axios.get(`${appConfig.serverUrl}/getRoom/${category}/${roomParam || null}`)
+    axios.post(`${appConfig.serverUrl}/getRoom`, { category, roomParam })
       .then((res) => {
         cookies.set('socketToken', res.data.socketToken, { path: '/' });
         rememberIdentity(res.data.room.sid, res.data.identity);

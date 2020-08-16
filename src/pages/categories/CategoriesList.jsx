@@ -68,9 +68,6 @@ const Container = styled.div`
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-column-gap: 50px;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
   }
 
   @media (min-width: 1280px) {
