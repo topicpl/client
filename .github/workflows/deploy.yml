@@ -41,7 +41,7 @@ jobs:
         # ssh host
         host: ${{ secrets.HOST }}
         # ssh key passphrase
-     #   passphrase: ${{ secrets.PASS_PHRASE }}
+        passphrase: ${{ secrets.PASS_PHRASE }}
         # ssh username
         username: ${{ secrets.USER_NAME }}
        # password: ${{ secrets.PASSWORD }}  
