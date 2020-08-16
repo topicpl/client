@@ -20,7 +20,7 @@ jobs:
         docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
     - name: docker build
       run: |
-        docker build . -t thetopichub913/the-topic:1.0.0
+        docker build . -t thetopichub913/the-topic:${{ github.run_id }}
     - name: check docker images
       run: |
         docker images
