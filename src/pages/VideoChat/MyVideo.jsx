@@ -29,7 +29,7 @@ const CenteredElement = styled.div`
   min-height: 82vmin;
   align-items: center;
   `;
-  
+
 const ErrorContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -69,47 +69,52 @@ const MyVideo = ({ isConnecting, connect }) => {
       video: true,
     };
 
-    setIsVideoLoading(true)
+    setErrorMessage(null);
+    setIsVideoLoading(true);
     navigator.mediaDevices
       .getUserMedia(defaultSettings)
       .then((stream) => {
         videoRef.current.srcObject = stream;
         stream.onremovetrack = () => console.warn('Stream ended');
       })
-      .catch((err =>{
-        console.error(err)
+      .catch(((err) => {
+        console.error(err);
         if (err.name === 'NotFoundError') setErrorMessage('Camera not found');
-        else setErrorMessage(err.message)
+        else setErrorMessage(err.message);
       }))
-      .finally(() => setIsVideoLoading(false))
+      .finally(() => setIsVideoLoading(false));
   };
   return (
     <MyVideoContainer>
 
-      {isVideoLoading || errorMessage && <CenteredElement>
-        {isVideoLoading && <Spinner />}
-        {errorMessage && !isVideoLoading && (
-          <ErrorContainer>
-            <ErrorMessage>{errorMessage}</ErrorMessage>
-            <RegularButton onClick={getDevices}>Try Again</RegularButton>
-          </ErrorContainer>
-        )}
-      </CenteredElement>}
+      {(isVideoLoading || errorMessage) && (
+        <CenteredElement>
+          {isVideoLoading && <Spinner />}
+          {errorMessage && !isVideoLoading && (
+            <ErrorContainer>
+              <ErrorMessage>{errorMessage}</ErrorMessage>
+              <RegularButton onClick={getDevices}>Try Again</RegularButton>
+            </ErrorContainer>
+          )}
+        </CenteredElement>
+      )}
 
-      {!errorMessage && !isVideoLoading && <>
-        <Video ref={videoRef} style={{ display: !isVideoLoading ? 'block' : 'none' }} autoPlay />
-        <Buttons>
-          <Button Icon={FaLink} color="blur" />
-          <Button Icon={GoSettings} color="blur" />
-          <Button Icon={IoMdReverseCamera} color="blur" />
-          <Button
-            onClick={connect}
-            isLoading={isConnecting}
-            Icon={FaUserInjured}
-            color="green"
+      <Video ref={videoRef} style={{ display: !isVideoLoading ? 'block' : 'none' }} autoPlay />
+      {!errorMessage && !isVideoLoading && (
+        <>
+          <Buttons>
+            <Button Icon={FaLink} color="blur" />
+            <Button Icon={GoSettings} color="blur" />
+            <Button Icon={IoMdReverseCamera} color="blur" />
+            <Button
+              onClick={connect}
+              isLoading={isConnecting}
+              Icon={FaUserInjured}
+              color="green"
             />
-        </Buttons>
-      </>}
+          </Buttons>
+        </>
+      )}
     </MyVideoContainer>
   );
 };
