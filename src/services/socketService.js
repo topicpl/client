@@ -10,7 +10,6 @@ let identity;
 let roomSid;
 
 export function rememberIdentity(sid, id) {
-  console.log("\nremember identity\nidentity: "+id+"\nsid: "+sid+"\n");
   identity = id;
   roomSid = sid;
 }
@@ -24,9 +23,9 @@ socket.on('message', (data) => {
 
 export function emit(event, data) {
   socket.emit(event, {
-    identity: identity,
-    roomSid: roomSid,
+    identity,
+    roomSid,
     socketToken: cookies.get('socketToken'),
-    data: data,
+    data,
   });
 }
