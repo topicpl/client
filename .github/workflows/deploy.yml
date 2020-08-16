@@ -26,7 +26,7 @@ jobs:
         docker images
     - name: docker push
       run: |
-        docker push thetopichub913/the-topic:1.0.0
+        docker push thetopichub913/the-topic:${{ github.run_id }}
     #- name: ls -a via ssh
     #  uses: garygrossgarten/github-action-ssh@release
      # with:
