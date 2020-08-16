@@ -44,8 +44,8 @@ jobs:
      #   passphrase: ${{ secrets.PASS_PHRASE }}
         # ssh username
         username: ${{ secrets.USER_NAME }}
-        password: ${{ secrets.PASSWORD }}  
-       # key: ${{ secrets.PRIVATE_KEY }}
+       # password: ${{ secrets.PASSWORD }}  
+        key: ${{ secrets.PRIVATE_KEY }}
         script: |
             whoami
             ls -al
