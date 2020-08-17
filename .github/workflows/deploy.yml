@@ -45,7 +45,12 @@ jobs:
         script: |
           docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
           docker pull thetopichub913/the-topic:${{ github.run_id }}
+          
+          echo kill and remove container:
           docker kill topic-client
+          docker rm topic-client
+          echo finish removing container
+
           echo start container:
           docker run -p 3005:3001/tcp --name topic-client -d thetopichub913/the-topic:${{ github.run_id }}
           echo finish starting container
