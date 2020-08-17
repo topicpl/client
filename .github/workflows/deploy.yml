@@ -48,3 +48,4 @@ jobs:
           echo start container:
           docker run -p 3005:3001/tcp -d thetopichub913/the-topic:${{ github.run_id }}
           echo finish starting container
+          docker ps
