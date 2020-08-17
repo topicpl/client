@@ -8,7 +8,7 @@ on:
     branches: [ master ]
 
 jobs:
-  digitalocean-test:
+  build:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -34,6 +34,7 @@ jobs:
         username: ${{ secrets.USER_NAME }}
         key: ${{ secrets.PRIVATE_KEY }}
         script: |
+          docker login -u ${{ secrets.DOCKER_USER_NAME }} -p ${{ secrets.DOCKER_PASSWORD }}
           docker run thetopichub913/the-topic -p 3005:3001/tcp
           ls -al
           docker ps
