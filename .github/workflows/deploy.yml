@@ -17,7 +17,7 @@ jobs:
         DOCKER_USER: ${{ secrets.DOCKER_USER }}   
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}  
       run: |
-        docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+        docker login -u $DOCKER_USER_NAME -p $DOCKER_PASSWORD
     - name: docker build
       run: |
         docker build . -t thetopichub913/the-topic:${{ github.run_id }}
@@ -34,7 +34,7 @@ jobs:
         username: ${{ secrets.USER_NAME }}
         key: ${{ secrets.PRIVATE_KEY }}
         script: |
-          docker login -u ${{ secrets.DOCKER_USER_NAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+          docker login -u $DOCKER_USER_NAME -p $DOCKER_PASSWORD
           docker run thetopichub913/the-topic -p 3005:3001/tcp
           ls -al
           docker ps
