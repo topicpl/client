@@ -1,7 +1,7 @@
 # This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-name: Node.js CI
+name: Build and deploy
 
 on:
   push:
@@ -27,22 +27,6 @@ jobs:
     - name: docker push
       run: |
         docker push thetopichub913/the-topic:${{ github.run_id }}
-    #- name: ls -a via ssh
-    #  uses: garygrossgarten/github-action-ssh@release
-     # with:
-     #   command: ls -a
-     #   host: ${{ secrets.HOST }}
-     #   username: ${{ secrets.USER_NAME }}
-      #  privateKey: ${{ secrets.PRIVATE_KEY }}
-     #   passphrase: ${{ secrets.PASS_PHRASE }}
-    #- name: ls -a via ssh
-   #   uses: garygrossgarten/github-action-ssh@release
-     # with:
-     #   command: ls -a
-       # host: ${{ secrets.HOST }}
-      #  username: ${{ secrets.USER_NAME }}
-      #  passphrase: ${{ secrets.PASSPHRASE }}
-      #  privateKey: ${{ secrets.PRIVATE_KEY}}
     - name: SSH Remote Commands
       uses: appleboy/ssh-action@v0.1.3
       with:
@@ -50,6 +34,6 @@ jobs:
         username: ${{ secrets.USER_NAME }}
         key: ${{ secrets.PRIVATE_KEY }}
         script: |
-          whoami
+          docker run thetopichub913/the-topic -p 3005:3001/tcp
           ls -al
           docker ps
