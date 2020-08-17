@@ -45,6 +45,6 @@ jobs:
         script: |
           docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
           docker pull thetopichub913/the-topic:${{ github.run_id }}
+          echo start container:
           docker run -p 3005:3001/tcp -d thetopichub913/the-topic:${{ github.run_id }}
-          ls -al
-          docker ps
+          echo finish starting container
