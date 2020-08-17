@@ -41,6 +41,7 @@ jobs:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USER_NAME }}
         key: ${{ secrets.PRIVATE_KEY }}
+        envs: DOCKER_USER,DOCKER_PASSWORD  
         script: |
           docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
           docker run thetopichub913/the-topic -p 3005:3001/tcp
