@@ -1,55 +1,49 @@
 # This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-name: Node.js CI
+name: Build and deploy
 
 on:
   push:
     branches: [ master ]
 
 jobs:
-  digitalocean-test:
+  build:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+      
     - name: docker login
       env:
         DOCKER_USER: ${{ secrets.DOCKER_USER }}   
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}  
       run: |
         docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+        
     - name: docker build
       run: |
-        docker build . -t thetopichub913/the-topic:1.0.0
+        docker build . -t thetopichub913/the-topic:${{ github.run_id }}
+        
     - name: check docker images
       run: |
         docker images
+        
     - name: docker push
       run: |
-        docker push thetopichub913/the-topic:1.0.0
-    #- name: ls -a via ssh
-     # uses: garygrossgarten/github-action-ssh@release
-     # with:
-    #    command: ls -a
-    #    host: ${{ secrets.HOST }}
-    #    username: root
-     #   privateKey: ${{ secrets.PRIVATE_KEY}}
-    - name: Remote SSH Commands
-      uses: fifsky/ssh-action@v0.0.4
+        docker push thetopichub913/the-topic:${{ github.run_id }}
+        
+    - name: SSH Remote Commands
+      uses: appleboy/ssh-action@v0.1.3
+      env:
+        DOCKER_USER: ${{ secrets.DOCKER_USER }}   
+        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}  
       with:
-        # Command to execute on the remote server.
-        command: ls -a
-        # Hostname or IP address of the server.
-        host: 139.59.137.236
-        # Username for authentication.
-        user: root
-        # Port number of the server.
-        # port: # optional, default is 22
-        # File Location or string that contains a private key for either key-based or hostbased user authentication (OpenSSH format)
-        key: ${{ secrets.PRIVATE_KEY}}
-        # Password for authentication.
-        #pass: # optional
-        # SSH parameters for example: -tt.
-       # args: # optional
-
-
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USER_NAME }}
+        key: ${{ secrets.PRIVATE_KEY }}
+        envs: DOCKER_USER,DOCKER_PASSWORD  
+        script: |
+          docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+          docker run thetopichub913/the-topic -p 3005:3001/tcp
+          ls -al
+          docker ps
