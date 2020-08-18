@@ -1,18 +1,38 @@
+/* eslint-disable import/no-named-as-default-member */
+/* eslint-disable no-plusplus */
+/* eslint-disable no-console */
 import React, { useState, useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
+import Cookies from 'universal-cookie';
 import axios from 'axios';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import styled from 'styled-components';
 import Room from '../../components/Room';
 import appConfig from '../../../appConfig';
 import MyVideo from './MyVideo';
+import { emit, rememberIdentity } from '../../services/socketService';
 import { getQueryVariable } from '../../utils/helpers';
 
+const cookies = new Cookies();
 
-const VideoChat = (props) => {
+const VideoChat = () => {
   const history = useHistory();
   const { category } = useParams();
   const [roomParam, setRoomParam] = useState(null);
 
+  // refactor
+  function getQueryVariable(variable) {
+    const query = window.location.search.substring(1);
+    const vars = query.split('&');
+    for (let i = 0; i < vars.length; i++) {
+      const pair = vars[i].split('=');
+      if (decodeURIComponent(pair[0]) === variable) {
+        return decodeURIComponent(pair[1]);
+      }
+    }
+    console.log('Query variable %s not found', variable);
+  }
+  //
   useEffect(() => {
     setRoomParam(getQueryVariable('room'));
   }, []);
@@ -26,6 +46,11 @@ const VideoChat = (props) => {
     setIsConnecting(true);
     axios.post(`${appConfig.serverUrl}/getRoom`, { category, roomParam })
       .then((res) => {
+        cookies.set('socketToken', res.data.socketToken, { path: '/' });
+        rememberIdentity(res.data.room.sid, res.data.identity);
+        const roomSid = res.data.room.sid;
+        const identity = res.data.identity;
+        emit('registerSocket', {roomSid, identity});
         history.push({ search: `?room=${res.data.room.uniqueName}` });
         setRoomName(res.data.room.uniqueName);
         setToken(res.data.token);

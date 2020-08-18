@@ -86,7 +86,7 @@ const Participant = ({ participant, totalParticipants, myself, handleLogout }) =
 
   return (
     <ParticipantContainer className="participant" totalParticipants={totalParticipants} myself={myself}>
-      <ParticipantButtons handleLogout={handleLogout} myself={myself} />
+      <ParticipantButtons handleLogout={handleLogout} myself={myself} participant={participant} />
       <VideoFrame ref={videoRef} autoPlay totalParticipants={totalParticipants} />
       <audio ref={audioRef} autoPlay muted={myself} />
     </ParticipantContainer>

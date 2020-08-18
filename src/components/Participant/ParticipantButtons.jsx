@@ -5,6 +5,7 @@ import { RiCameraLine, RiCameraOffLine } from 'react-icons/ri';
 import { AiOutlineExclamation } from 'react-icons/ai';
 import { GiSpeakerOff, GiSpeaker } from 'react-icons/gi';
 import Button from '../Button';
+import { emit } from '../../services/socketService';
 
 const Buttons = styled.div`
   position: absolute;
@@ -38,7 +39,9 @@ const MyButtons = ({ handleLogout }) => {
   );
 };
 
-const OtherParticipantButtons = () => {
+const OtherParticipantButtons = ({ participant }) => {
+  console.log(participant.sid);
+  const participantIdentity = participant.identity;
   const [isParticipantMuted, setIsParticipantMuted] = useState(true);
   return (
     <>
@@ -47,16 +50,20 @@ const OtherParticipantButtons = () => {
         onClick={() => setIsParticipantMuted(!isParticipantMuted)}
         title={isParticipantMuted ? 'Mute' : 'Unmute'}
       />
-      <Button Icon={IoIosRemoveCircleOutline} title="Initialize vote to kick user" />
+      <Button
+        Icon={IoIosRemoveCircleOutline}
+        onClick={() => emit('startVoteKick', { participantIdentity })}
+        title="Initialize vote to kick user"
+      />
       <Button Icon={AiOutlineExclamation} title="Report user" />
       <Button Icon={IoIosSend} title="Send privet message" />
     </>
   );
 };
 
-const ParticipantButtons = ({ myself, handleLogout }) => (
+const ParticipantButtons = ({ myself, handleLogout, participant }) => (
   <Buttons>
-    {myself ? <MyButtons handleLogout={handleLogout} /> : <OtherParticipantButtons />}
+    {myself ? <MyButtons handleLogout={handleLogout} /> : <OtherParticipantButtons participant={participant}/>}
   </Buttons>
 );
 

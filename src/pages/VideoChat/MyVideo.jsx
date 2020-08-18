@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { FaUserInjured, FaLink } from 'react-icons/fa';
@@ -86,6 +87,28 @@ const MyVideo = ({ isConnecting, connect }) => {
   };
   return (
     <MyVideoContainer>
+      {isVideoLoading && (
+        <LoadingIconWrapper>
+          <Spinner />
+        </LoadingIconWrapper>
+      )}
+      <Video
+        style={{ display: !isVideoLoading ? 'block' : 'none' }}
+        autoPlay
+        id="my-video"
+      />
+      <Buttons>
+        <Button Icon={FaLink} color="blur" />
+        <Button Icon={GoSettings} color="blur" />
+        <Button Icon={IoMdReverseCamera} onClick={connect} color="blur" />
+        <Button Icon={IoMdReverseCamera} color="blur" />
+        <Button
+          onClick={connect}
+          isLoading={isConnecting}
+          Icon={FaUserInjured}
+          color="green"
+        />
+      </Buttons>
 
       {(isVideoLoading || errorMessage) && (
         <CenteredElement>
