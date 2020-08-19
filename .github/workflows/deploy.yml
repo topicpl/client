@@ -12,49 +12,49 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-      
+
     - name: docker login
       env:
-        DOCKER_USER: ${{ secrets.DOCKER_USER }}   
-        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}  
+        DOCKER_USER: ${{ secrets.DOCKER_USER }}
+        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
       run: |
         docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
-        
+
     - name: docker build
       run: |
         docker build . -t thetopichub913/the-topic:${{ github.run_id }}
-        
+
     - name: check docker images
       run: |
         docker images
-        
+
     - name: docker push
       run: |
         docker push thetopichub913/the-topic:${{ github.run_id }}
-        
+
     - name: SSH Remote Commands
       uses: appleboy/ssh-action@v0.1.3
       env:
-        DOCKER_USER: ${{ secrets.DOCKER_USER }}   
-        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}  
+        DOCKER_USER: ${{ secrets.DOCKER_USER }}
+        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USER_NAME }}
         key: ${{ secrets.PRIVATE_KEY }}
-        envs: DOCKER_USER,DOCKER_PASSWORD  
+        envs: DOCKER_USER,DOCKER_PASSWORD
         script: |
           docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
-      
+
           # remove all unused images
           docker image prune -a -f
-          
+
           docker pull thetopichub913/the-topic:${{ github.run_id }}
-          
+
           # kill containers
-          docker kill topic-client
-          docker rm topic-client
+          docker kill topic-server
+          docker rm topic-server
 
           # start container:
-          docker run -p 80:3001/tcp --name topic-client -d thetopichub913/the-topic:${{ github.run_id }}
+          docker run -p 80:3001/tcp --name topic-server -d thetopichub913/the-topic:${{ github.run_id }}
 
           docker ps
