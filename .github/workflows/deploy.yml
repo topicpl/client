@@ -51,10 +51,10 @@ jobs:
           docker pull thetopichub913/the-topic:${{ github.run_id }}
 
           # kill containers
-          docker kill topic-server
-          docker rm topic-server
+          docker kill topic-client
+          docker rm topic-client
 
           # start container:
-          docker run -p 80:3001/tcp --name topic-server -d thetopichub913/the-topic:${{ github.run_id }}
+          docker run -p 80:3001/tcp --name topic-client -d thetopichub913/the-topic:${{ github.run_id }}
 
           docker ps
