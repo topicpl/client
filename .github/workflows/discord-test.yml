@@ -33,7 +33,7 @@ jobs:
         webhook_id: "${{secrets.DISCORD_WEBHOOK_ID}}"
         webhook_token: "${{secrets.DISCORD_WEBHOOK_TOKEN}}"
         # the message contents (up to 2000 characters)
-        message: f [[ "${{job.status}}" -eq "success" ]] then 'Ty pojebie success' else 'fail' fi #"Hey @Libik Ty huju server Ci pada ${{job.status}}" 
+        message: if [[ "${{job.status}}" -eq "success" ]] then 'Ty pojebie success' else 'fail' fi #"Hey @Libik Ty huju server Ci pada ${{job.status}}" 
         # the contents of the file being sent
         #file: # optional
         # color code of the embed
