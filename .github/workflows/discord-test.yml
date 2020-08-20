@@ -18,9 +18,31 @@ jobs:
         env
 
     - name: discord notification
+      if: always()
       uses: "hugoalh/GitHubAction.SendToDiscord@v1.1.1"
       with:
-        webhook_id: "${{secrets.WEBHOOK_ID}}"
-        webhook_token: "${{secrets.WEBHOOK_TOKEN}}"
+        webhook_id: "${{secrets.DISCORD_WEBHOOK_ID}}"
+        webhook_token: "${{secrets.DISCORD_WEBHOOK_TOKEN}}"
         message_usetexttospeech: "false"
-        message_text: "Hello, world!"
+        message_text: "Hello, world! This action failed "
+  
+    - name: Discord Message Notify
+      uses: appleboy/discord-action@0.0.3
+      if: always()
+      with:
+        webhook_id: "${{secrets.DISCORD_WEBHOOK_ID}}"
+        webhook_token: "${{secrets.DISCORD_WEBHOOK_TOKEN}}"
+        # the message contents (up to 2000 characters)
+        message: "Hey @Libik Ty huju server Ci pada ${{job.status}}" 
+        # the contents of the file being sent
+        #file: # optional
+        # color code of the embed
+        #color: # optional
+        # waits for server confirmation of message send before response, and returns the created message body
+        #wait: # optional
+        # true if this is a TTS message
+        #tts: # optional
+        # override the default username of the webhook
+        #username: # optional
+        # override the default avatar of the webhook
+        #avatar_url: # optional:  
