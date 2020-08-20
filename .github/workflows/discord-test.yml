@@ -16,23 +16,17 @@ jobs:
     - name: test
       run: |
         env
-        
-    - name: Try to fail
-      run: exit 1
     # notifications #
-    - name: discord notification
+    - name: Discord fail notification
       if: ${{ failure() }}
       uses: appleboy/discord-action@0.0.3
-      env:
-        GITHUB_WORKFLOW_URL: https://github.com/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID  
       with:
         webhook_id: "${{secrets.DISCORD_WEBHOOK_ID}}"
         webhook_token: "${{secrets.DISCORD_WEBHOOK_TOKEN}}"
-        # the message contents (up to 2000 characters)
-        message: "Deployment failed @here $GITHUB_WORKFLOW_URL" 
+        message: "Deployment failed" 
         color: "#FF0000"
   
-    - name: Discord Message Notify
+    - name: Discord success notification
       uses: appleboy/discord-action@0.0.3
       if: ${{ success() }}
       with:
@@ -40,11 +34,3 @@ jobs:
         webhook_token: "${{secrets.DISCORD_WEBHOOK_TOKEN}}"
         message: "Deployment successful" 
         color: 	"#00FF00"
-        # waits for server confirmation of message send before response, and returns the created message body
-        #wait: # optional
-        # true if this is a TTS message
-        #tts: # optional
-        # override the default username of the webhook
-        #username: # optional
-        # override the default avatar of the webhook
-        #avatar_url: # optional:    
