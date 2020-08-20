@@ -58,9 +58,23 @@ jobs:
           docker run -p 80:3001/tcp --name topic-client -d thetopichub913/the-topic:${{ github.run_id }}
 
           docker ps
-    - name: Discord notification
-      env:
-        DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
-      uses: Ilshidur/action-discord@master
+
+    # notifications #
+    - name: Discord fail notification
+      if: ${{ failure() }}
+      uses: appleboy/discord-action@0.0.3
       with:
-        args: 'The Topic Client has been deployed succesfully at $(date).'
+        webhook_id: "${{secrets.DISCORD_WEBHOOK_ID}}"
+        webhook_token: "${{secrets.DISCORD_WEBHOOK_TOKEN}}"
+        message: "Client deployment failed" 
+        color: "#FF0000"
+  
+    - name: Discord success notification
+      uses: appleboy/discord-action@0.0.3
+      if: ${{ success() }}
+      with:
+        webhook_id: "${{secrets.DISCORD_WEBHOOK_ID}}"
+        webhook_token: "${{secrets.DISCORD_WEBHOOK_TOKEN}}"
+        message: "Client deployment successful" 
+        color: 	"#00FF00"
+
