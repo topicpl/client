@@ -17,9 +17,10 @@ jobs:
       run: |
         env
 
-    - name: send custom message with args
-      uses: appleboy/discord-action@master
+    - name: discord notification
+      uses: "hugoalh/GitHubAction.SendToDiscord@v1.1.1"
       with:
-        webhook_id: ${{ secrets.WEBHOOK_ID }}
-        webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
-        args: The ${{ github.event_name }} event triggered first step.
+        webhook_id: "${{secrets.WEBHOOK_ID}}"
+        webhook_token: "${{secrets.WEBHOOK_TOKEN}}"
+        message_usetexttospeech: "false"
+        message_text: "Hello, world!"
