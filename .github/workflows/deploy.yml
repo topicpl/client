@@ -58,3 +58,9 @@ jobs:
           docker run -p 80:3001/tcp --name topic-client -d thetopichub913/the-topic:${{ github.run_id }}
 
           docker ps
+    - name: Discord notification
+      env:
+        DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+      uses: Ilshidur/action-discord@master
+      with:
+        args: 'The Topic Client has been deployed succesfully at $(date).'
