@@ -19,6 +19,9 @@ jobs:
     - uses: actions/setup-ruby@v1
     - name: send message
       uses: appleboy/discord-action@master
+      env:
+        WEBHOOK_ID: ${{ secrets.WEBHOOK_ID }}
+        WEBHOOK_TOKEN: ${{ secrets.WEBHOOK_TOKEN }}
       with:
         webhook_id: ${{ secrets.WEBHOOK_ID }}
         webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
