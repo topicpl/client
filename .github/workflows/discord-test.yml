@@ -16,9 +16,12 @@ jobs:
     - name: test
       run: |
         env
-    - name: Discord notification
-      env:
-        DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
-      uses: Ilshidur/action-discord@master
+    - uses: actions/setup-ruby@v1
+    - name: send message
+      uses: appleboy/discord-action@master
       with:
-        args: 'The Topic Client has been deployed succesfully at $(date).'
+        webhook_id: ${{ secrets.WEBHOOK_ID }}
+        webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
+        color: "#48f442"
+        username: "GitHub Bot"
+        message: "A new commit has been pushed with custom color."
