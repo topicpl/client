@@ -20,23 +20,9 @@ const VideoChat = () => {
   const { category } = useParams();
   const [roomParam, setRoomParam] = useState(null);
 
-  // refactor
-  function getQueryVariable(variable) {
-    const query = window.location.search.substring(1);
-    const vars = query.split('&');
-    for (let i = 0; i < vars.length; i++) {
-      const pair = vars[i].split('=');
-      if (decodeURIComponent(pair[0]) === variable) {
-        return decodeURIComponent(pair[1]);
-      }
-    }
-    console.log('Query variable %s not found', variable);
-  }
-  //
   useEffect(() => {
     setRoomParam(getQueryVariable('room'));
   }, []);
-
 
   const [roomName, setRoomName] = useState(null);
   const [token, setToken] = useState(null);
@@ -49,8 +35,8 @@ const VideoChat = () => {
         cookies.set('socketToken', res.data.socketToken, { path: '/' });
         rememberIdentity(res.data.room.sid, res.data.identity);
         const roomSid = res.data.room.sid;
-        const identity = res.data.identity;
-        emit('registerSocket', {roomSid, identity});
+        const { identity } = res.data;
+        emit('registerSocket', { roomSid, identity });
         history.push({ search: `?room=${res.data.room.uniqueName}` });
         setRoomName(res.data.room.uniqueName);
         setToken(res.data.token);
