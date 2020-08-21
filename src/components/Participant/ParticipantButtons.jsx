@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+/* eslint-disable no-unused-vars */
+import React, { useState } from 'react';
 import {
   IoMdWalk,
   IoIosRemoveCircleOutline,
@@ -6,17 +7,17 @@ import {
   IoIosMicOff,
   IoIosMic,
   IoIosSend,
-} from "react-icons/io";
-import styled from "styled-components";
-import { RiCameraLine, RiCameraOffLine } from "react-icons/ri";
+} from 'react-icons/io';
+import styled from 'styled-components';
+import { RiCameraLine, RiCameraOffLine } from 'react-icons/ri';
 import {
   AiOutlineExclamation,
   AiOutlineCheck,
   AiOutlineClose,
-} from "react-icons/ai";
-import { GiSpeakerOff, GiSpeaker } from "react-icons/gi";
-import Button from "../Button";
-import { emit } from "../../services/socketService";
+} from 'react-icons/ai';
+import { GiSpeakerOff, GiSpeaker } from 'react-icons/gi';
+import Button from '../Button';
+import { emit } from '../../services/socketService';
 
 const Buttons = styled.div`
   position: absolute;
@@ -43,12 +44,12 @@ const MyButtons = ({ handleLogout }) => {
       <Button
         Icon={isMyMicrophoneMuted ? IoIosMicOff : IoIosMic}
         onClick={() => setIsMyMicrophoneMuted(!isMyMicrophoneMuted)}
-        title={isMyMicrophoneMuted ? "Unmute" : "Mute"}
+        title={isMyMicrophoneMuted ? 'Unmute' : 'Mute'}
       />
       <Button
         Icon={isVideoOn ? RiCameraOffLine : RiCameraLine}
         onClick={() => setIsVideoOn(!isVideoOn)}
-        title={isVideoOn ? "Hide camera" : "Show camera"}
+        title={isVideoOn ? 'Hide camera' : 'Show camera'}
       />
       <Button Icon={IoMdArrowForward} color="green" title="Next room" />
     </>
@@ -56,6 +57,7 @@ const MyButtons = ({ handleLogout }) => {
 };
 
 const OtherParticipantButtons = ({ participant }) => {
+  // eslint-disable-next-line no-console
   console.log(participant.sid);
   const participantIdentity = participant.identity;
   const [isParticipantMuted, setIsParticipantMuted] = useState(true);
@@ -64,25 +66,26 @@ const OtherParticipantButtons = ({ participant }) => {
       <Button
         Icon={isParticipantMuted ? GiSpeaker : GiSpeakerOff}
         onClick={() => setIsParticipantMuted(!isParticipantMuted)}
-        title={isParticipantMuted ? "Mute" : "Unmute"}
+        title={isParticipantMuted ? 'Mute' : 'Unmute'}
       />
       <Button
         Icon={IoIosRemoveCircleOutline}
-        onClick={() => emit("startVoteKick", { participantIdentity })}
+        onClick={() => emit('startVoteKick', { participantIdentity })}
         title="Initialize vote to kick user"
       />
-      {/*<Button Icon={AiOutlineExclamation} title="Report user" />
-      <Button Icon={IoIosSend} title="Send privet message" />*/}
+      <Button Icon={AiOutlineExclamation} title="Report user" />
+      <Button Icon={IoIosSend} title="Send privet message" />
+      {/*
       <Button
         Icon={AiOutlineCheck}
-        onClick={() => emit("voteKick", { participantIdentity, value: true })}
-        title={"kick" + participantIdentity}
+        onClick={() => emit('voteKick', { participantIdentity, value: true })}
+        title={`kick${participantIdentity}`}
       />
       <Button
         Icon={AiOutlineClose}
-        onClick={() => emit("voteKick", { participantIdentity, value: false })}
-        title={"kick" + participantIdentity}
-      />
+        onClick={() => emit('voteKick', { participantIdentity, value: false })}
+        title={`kick${participantIdentity}`}
+      /> */}
     </>
   );
 };
