@@ -21,7 +21,7 @@ const ParticipantsWrapper = styled.div`
   }}
 `;
 
-const Room = ({ roomName, token, handleLogout }) => {
+const Room = ({ roomName, token, handleLogout, nextRoomHandler, isConnecting }) => {
   const [room, setRoom] = useState(null);
   const [participants, setParticipants] = useState([]);
 
@@ -66,7 +66,9 @@ const Room = ({ roomName, token, handleLogout }) => {
         {remoteParticipants}
         {room && (
           <Participant
+            isConnecting={isConnecting}
             myself
+            nextRoomHandler={nextRoomHandler}
             key={room.localParticipant.sid}
             participant={room.localParticipant}
             totalParticipants={totalParticipants}

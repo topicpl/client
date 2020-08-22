@@ -19,28 +19,29 @@ const VideoChat = () => {
   const history = useHistory();
   const { category } = useParams();
   const [roomParam, setRoomParam] = useState(null);
+  const [roomData, setRoomData] = useState(null);
+  const [token, setToken] = useState(null);
+  const [isConnecting, setIsConnecting] = useState(null);
 
-  // refactor
-  function getQueryVariable(variable) {
-    const query = window.location.search.substring(1);
-    const vars = query.split('&');
-    for (let i = 0; i < vars.length; i++) {
-      const pair = vars[i].split('=');
-      if (decodeURIComponent(pair[0]) === variable) {
-        return decodeURIComponent(pair[1]);
-      }
-    }
-    console.log('Query variable %s not found', variable);
-  }
-  //
+
   useEffect(() => {
     setRoomParam(getQueryVariable('room'));
   }, []);
 
-
-  const [roomName, setRoomName] = useState(null);
-  const [token, setToken] = useState(null);
-  const [isConnecting, setIsConnecting] = useState(null);
+  const nextRoomHandler = () => {
+    setRoomData(null);
+    setIsConnecting(true);
+    axios.post(`${appConfig.serverUrl}/findNextRoom`, { category, currentRoomSid: roomData.sid })
+      .then((res) => {
+        const { room } = res.data;
+        setRoomParam(room.uniqueName);
+        history.push({ search: `?room=${room.uniqueName}` });
+        setRoomData(room);
+        setToken(res.data.token);
+      })
+      .catch(console.error)
+      .finally(() => setIsConnecting(false));
+  };
 
   const connect = () => {
     setIsConnecting(true);
@@ -49,10 +50,10 @@ const VideoChat = () => {
         cookies.set('socketToken', res.data.socketToken, { path: '/' });
         rememberIdentity(res.data.room.sid, res.data.identity);
         const roomSid = res.data.room.sid;
-        const identity = res.data.identity;
-        emit('registerSocket', {roomSid, identity});
+        const { identity } = res.data;
+        emit('registerSocket', { roomSid, identity });
         history.push({ search: `?room=${res.data.room.uniqueName}` });
-        setRoomName(res.data.room.uniqueName);
+        setRoomData(res.data.room);
         setToken(res.data.token);
       })
       .catch(console.error)
@@ -65,9 +66,9 @@ const VideoChat = () => {
   };
 
   let render;
-  if (token && roomName) {
+  if (token && roomData && roomData.uniqueName) {
     render = (
-      <Room roomName={roomName} token={token} handleLogout={handleLogout} />
+      <Room roomName={roomData.uniqueName} token={token} handleLogout={handleLogout} nextRoomHandler={nextRoomHandler} isConnecting={isConnecting} />
     );
   } else {
     render = (

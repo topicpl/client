@@ -18,7 +18,7 @@ const Buttons = styled.div`
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 10px;
 `;
-const MyButtons = ({ handleLogout }) => {
+const MyButtons = ({ handleLogout, nextRoomHandler, isConnecting }) => {
   const [isMyMicrophoneMuted, setIsMyMicrophoneMuted] = useState(false);
   const [isVideoOn, setIsVideoOn] = useState(true);
   return (
@@ -34,7 +34,7 @@ const MyButtons = ({ handleLogout }) => {
         onClick={() => setIsVideoOn(!isVideoOn)}
         title={isVideoOn ? 'Hide camera' : 'Show camera'}
       />
-      <Button Icon={IoMdArrowForward} color="green" title="Next room" />
+      <Button onClick={nextRoomHandler} Icon={IoMdArrowForward} color="green" title="Next room" disabled={isConnecting} />
     </>
   );
 };
@@ -61,9 +61,9 @@ const OtherParticipantButtons = ({ participant }) => {
   );
 };
 
-const ParticipantButtons = ({ myself, handleLogout, participant }) => (
+const ParticipantButtons = ({ myself, handleLogout, participant, nextRoomHandler }) => (
   <Buttons>
-    {myself ? <MyButtons handleLogout={handleLogout} /> : <OtherParticipantButtons participant={participant}/>}
+    {myself ? <MyButtons handleLogout={handleLogout} nextRoomHandler={nextRoomHandler} /> : <OtherParticipantButtons participant={participant} />}
   </Buttons>
 );
 
