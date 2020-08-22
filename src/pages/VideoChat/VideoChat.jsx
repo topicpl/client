@@ -29,19 +29,15 @@ const VideoChat = () => {
   }, []);
 
   const nextRoomHandler = () => {
-    console.log('nextRoomHandler -> previousRoomId', category);
-    console.log('nextRoomHandler -> roomParam', roomData);
     setRoomData(null);
     setIsConnecting(true);
     axios.post(`${appConfig.serverUrl}/findNextRoom`, { category, currentRoomSid: roomData.sid })
       .then((res) => {
-        console.log('NEXT ROOOM DATA -> res', res);
-        // console.log('nextRoomHandler -> res', res);
-        // cookies.set('socketToken', res.data.socketToken, { path: '/' });
-        history.push({ search: `?room=${res.data.room.uniqueName}` });
-        setRoomData(res.data.room);
-        // setToken(res.data.token);
-        connect();
+        const { room } = res.data;
+        setRoomParam(room.uniqueName);
+        history.push({ search: `?room=${room.uniqueName}` });
+        setRoomData(room);
+        setToken(res.data.token);
       })
       .catch(console.error)
       .finally(() => setIsConnecting(false));
@@ -51,6 +47,7 @@ const VideoChat = () => {
     setIsConnecting(true);
     axios.post(`${appConfig.serverUrl}/getRoom`, { category, roomParam })
       .then((res) => {
+        // it doesnt connect to specify room param cat--id
         console.log('connect -> res', res);
         cookies.set('socketToken', res.data.socketToken, { path: '/' });
         rememberIdentity(res.data.room.sid, res.data.identity);
