@@ -47,8 +47,6 @@ const VideoChat = () => {
     setIsConnecting(true);
     axios.post(`${appConfig.serverUrl}/getRoom`, { category, roomParam })
       .then((res) => {
-        // it doesnt connect to specify room param cat--id
-        console.log('connect -> res', res);
         cookies.set('socketToken', res.data.socketToken, { path: '/' });
         rememberIdentity(res.data.room.sid, res.data.identity);
         const roomSid = res.data.room.sid;
