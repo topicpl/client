@@ -68,7 +68,7 @@ const VideoChat = () => {
   let render;
   if (token && roomData && roomData.uniqueName) {
     render = (
-      <Room roomName={roomData.uniqueName} token={token} handleLogout={handleLogout} nextRoomHandler={nextRoomHandler} />
+      <Room roomName={roomData.uniqueName} token={token} handleLogout={handleLogout} nextRoomHandler={nextRoomHandler} isConnecting={isConnecting} />
     );
   } else {
     render = (
