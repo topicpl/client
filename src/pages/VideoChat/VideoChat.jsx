@@ -33,6 +33,7 @@ const VideoChat = () => {
   const nextRoomHandler = () => {
     setRoomData(null);
     setIsConnecting(true);
+    event({ category: 'video-buttons', action: 'click', label: 'next-room' });
     axios.post(`${appConfig.serverUrl}/findNextRoom`, { category, currentRoomSid: roomData.sid })
       .then((res) => {
         const { room } = res.data;
