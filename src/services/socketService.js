@@ -1,15 +1,14 @@
 /* eslint-disable no-console */
-import Cookies from 'universal-cookie';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import io from 'socket.io-client';
-
-const cookies = new Cookies();
 
 const socket = io('http://localhost:3111');
 let identity;
 let roomSid;
+let socketToken;
 
-export function rememberIdentity(sid, id) {
+export function rememberIdentity(token, sid, id) {
+  socketToken = token;
   identity = id;
   roomSid = sid;
 }
@@ -33,12 +32,15 @@ socket.on('updateVoteKickStatus', (data) => {
 socket.on('voteKickEnded', (data) => {
   console.log(`Vote kick ended, success: ${data.success}`);
 });
+socket.on('authenticationFailed', () => {
+  emit('registerSocket', { roomSid, identity });
+});
 
 export function emit(event, data) {
   socket.emit(event, {
     identity,
     roomSid,
-    socketToken: cookies.get('socketToken'),
+    socketToken,
     data,
   });
 }
