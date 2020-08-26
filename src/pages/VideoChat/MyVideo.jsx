@@ -45,8 +45,14 @@ const ErrorMessage = styled.div`
 
 const Buttons = styled.div`
   position: absolute;
-  top: 200px;
-  left: 200px;
+  left: 50%;
+  top: 93%;
+  transform: translate(-50%,-50%);
+  z-index: 1;
+
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 10px;
 `;
 
 const MyVideo = ({ isConnecting, connect }) => {
@@ -88,7 +94,6 @@ const MyVideo = ({ isConnecting, connect }) => {
   };
   return (
     <MyVideoContainer>
-
       {(isVideoLoading || errorMessage) && (
         <CenteredElement>
           {isVideoLoading && <Spinner />}

@@ -14,6 +14,8 @@ const App = () => {
   const overrideLang = () => {
     const lang = detectBrowserLanguage();
     if (lang === 'en-US') return 'en';
+    if (lang === 'en-GB') return 'en';
+
     return lang;
   };
 
