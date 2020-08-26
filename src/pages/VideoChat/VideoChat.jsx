@@ -7,6 +7,7 @@ import Cookies from 'universal-cookie';
 import axios from 'axios';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import styled from 'styled-components';
+import ReactGA, { event } from 'react-ga';
 import Room from '../../components/Room';
 import appConfig from '../../../appConfig';
 import MyVideo from './MyVideo';
@@ -45,6 +46,8 @@ const VideoChat = () => {
   };
 
   const connect = () => {
+    event({ category: 'video-buttons', action: 'click', label: 'connect-click' });
+    event({ category: 'category-connection', action: 'click', label: category });
     setIsConnecting(true);
     axios.post(`${appConfig.serverUrl}/getRoom`, { category, roomParam })
       .then((res) => {
