@@ -27,7 +27,9 @@ const VideoChat = () => {
 
 
   useEffect(() => {
-    setRoomParam(getQueryVariable('room'));
+    const queryVal = getQueryVariable('room');
+    setRoomParam(queryVal);
+    event({ category: 'link-room', action: 'load', label: queryVal });
   }, []);
 
   const nextRoomHandler = () => {
