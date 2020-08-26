@@ -10,6 +10,7 @@ import styled from 'styled-components';
 import Room from '../../components/Room';
 import appConfig from '../../../appConfig';
 import MyVideo from './MyVideo';
+import Layout from '../../app/Layout';
 import { emit, rememberIdentity } from '../../services/socketService';
 import { getQueryVariable } from '../../utils/helpers';
 
@@ -78,7 +79,7 @@ const VideoChat = () => {
       </Container>
     );
   }
-  return render;
+  return <Layout>{render}</Layout>;
 };
 
 const Container = styled.div`

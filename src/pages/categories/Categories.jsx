@@ -2,14 +2,17 @@ import React from 'react';
 import styled from 'styled-components';
 import __t from '../../i18n/translator';
 import List from './CategoriesList';
+import Layout from '../../app/Layout';
 
 const Categories = () => (
-  <Container>
-    <Heading>{__t('categories.heading')}</Heading>
-    <ListWrapper>
-      <List />
-    </ListWrapper>
-  </Container>
+  <Layout>
+    <Container>
+      <Heading>{__t('categories.heading')}</Heading>
+      <ListWrapper>
+        <List />
+      </ListWrapper>
+    </Container>
+  </Layout>
 );
 
 export default Categories;
