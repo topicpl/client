@@ -57,8 +57,6 @@ const MyButtons = ({ handleLogout, nextRoomHandler, isConnecting }) => {
 };
 
 const OtherParticipantButtons = ({ participant }) => {
-  // eslint-disable-next-line no-console
-  console.log(participant.sid);
   const participantIdentity = participant.identity;
   const [isParticipantMuted, setIsParticipantMuted] = useState(true);
   return (

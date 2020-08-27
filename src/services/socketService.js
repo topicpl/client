@@ -12,10 +12,6 @@ export function rememberIdentity(token, sid, id) {
   identity = id;
   roomSid = sid;
 }
-
-socket.on('connect', () => {
-  console.log('connected to socket');
-});
 socket.on('startedVoteKick', (data) => {
   console.log(`started voteKick for ${data.participantIdentity}`);
 });
