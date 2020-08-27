@@ -2,11 +2,13 @@ import React from 'react';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { Link as Hyperlink } from 'react-router-dom';
+import { event } from 'react-ga';
 
 const Link = ({ Icon, text, href }) => {
   const dispatch = useDispatch();
 
   const save = () => {
+    event({ category: 'category-selection', action: 'click', href });
     dispatch({ type: 'ADD_CATEGORY', category: href });
   };
 

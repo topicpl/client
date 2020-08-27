@@ -10,7 +10,6 @@ import Categories from '../pages/categories/Categories';
 
 const App = () => {
   const dispatch = useDispatch();
-
   const overrideLang = () => {
     const lang = detectBrowserLanguage();
     if (lang === 'en-US') return 'en';

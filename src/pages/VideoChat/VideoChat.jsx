@@ -7,9 +7,11 @@ import Cookies from 'universal-cookie';
 import axios from 'axios';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import styled from 'styled-components';
+import ReactGA, { event } from 'react-ga';
 import Room from '../../components/Room';
 import appConfig from '../../../appConfig';
 import MyVideo from './MyVideo';
+import Layout from '../../app/Layout';
 import { emit, rememberIdentity } from '../../services/socketService';
 import { getQueryVariable } from '../../utils/helpers';
 
@@ -25,12 +27,15 @@ const VideoChat = () => {
 
 
   useEffect(() => {
-    setRoomParam(getQueryVariable('room'));
+    const queryVal = getQueryVariable('room');
+    setRoomParam(queryVal);
+    event({ category: 'link-room', action: 'load', label: queryVal });
   }, []);
 
   const nextRoomHandler = () => {
     setRoomData(null);
     setIsConnecting(true);
+    event({ category: 'video-buttons', action: 'click', label: 'next-room' });
     axios.post(`${appConfig.serverUrl}/findNextRoom`, { category, currentRoomSid: roomData.sid })
       .then((res) => {
         const { room } = res.data;
@@ -44,6 +49,8 @@ const VideoChat = () => {
   };
 
   const connect = () => {
+    event({ category: 'video-buttons', action: 'click', label: 'connect-click' });
+    event({ category: 'category-connection', action: 'click', label: category });
     setIsConnecting(true);
     axios.post(`${appConfig.serverUrl}/getRoom`, { category, roomParam })
       .then((res) => {
@@ -78,7 +85,7 @@ const VideoChat = () => {
       </Container>
     );
   }
-  return render;
+  return <Layout>{render}</Layout>;
 };
 
 const Container = styled.div`
