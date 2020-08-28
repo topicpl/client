@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import detectBrowserLanguage from 'detect-browser-language';
@@ -10,21 +10,21 @@ import Categories from '../pages/categories/Categories';
 
 const App = () => {
   const dispatch = useDispatch();
-  const [language, setLang] = useState('en');
 
-  useEffect(() => {
+  const detectLang = () => {
     const detectedLang = detectBrowserLanguage();
-    if (detectedLang.includes('pl')) setLang('pl');
-    else if (detectedLang.includes('de')) setLang('de');
-    else if (detectedLang.includes('es')) setLang('es');
-    else if (detectedLang.includes('fr')) setLang('fr');
-    else setLang('en');
-
-    dispatch({ type: 'ADD_LANG', lang: language });
+    if (detectedLang.includes('pl')) return 'pl';
+    if (detectedLang.includes('de')) return 'de';
+    if (detectedLang.includes('es')) return 'es';
+    if (detectedLang.includes('fr')) return 'fr';
+    return 'en';
+  };
+  useEffect(() => {
+    dispatch({ type: 'ADD_LANG', lang: detectLang() });
   }, []);
 
   return (
-    <I18nProvider locale={language}>
+    <I18nProvider locale={detectLang()}>
       <MasterStyle>
         <Router>
           <Switch>
