@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import detectBrowserLanguage from 'detect-browser-language';
@@ -10,20 +10,21 @@ import Categories from '../pages/categories/Categories';
 
 const App = () => {
   const dispatch = useDispatch();
-  const overrideLang = () => {
-    const lang = detectBrowserLanguage();
-    if (lang === 'en-US') return 'en';
-    if (lang === 'en-GB') return 'en';
-
-    return lang;
-  };
+  const [language, setLang] = useState('en');
 
   useEffect(() => {
-    dispatch({ type: 'ADD_LANG', lang: overrideLang() });
+    const detectedLang = detectBrowserLanguage();
+    if (detectedLang.includes('pl')) setLang('pl');
+    else if (detectedLang.includes('de')) setLang('de');
+    else if (detectedLang.includes('es')) setLang('es');
+    else if (detectedLang.includes('fr')) setLang('fr');
+    else setLang('en');
+
+    dispatch({ type: 'ADD_LANG', lang: language });
   }, []);
 
   return (
-    <I18nProvider locale={overrideLang()}>
+    <I18nProvider locale={language}>
       <MasterStyle>
         <Router>
           <Switch>
