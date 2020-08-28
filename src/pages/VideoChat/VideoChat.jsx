@@ -36,7 +36,7 @@ const VideoChat = () => {
     setRoomData(null);
     setIsConnecting(true);
     event({ category: 'video-buttons', action: 'click', label: 'next-room' });
-    axios.post(`${appConfig.serverUrl}/findNextRoom`, { category, currentRoomSid: roomData.sid })
+    axios.post(`${appConfig.serverUrl}/api/findNextRoom`, { category, currentRoomSid: roomData.sid })
       .then((res) => {
         const { room } = res.data;
         setRoomParam(room.uniqueName);
@@ -52,7 +52,7 @@ const VideoChat = () => {
     event({ category: 'video-buttons', action: 'click', label: 'connect-click' });
     event({ category: 'category-connection', action: 'click', label: category });
     setIsConnecting(true);
-    axios.post(`${appConfig.serverUrl}/getRoom`, { category, roomParam })
+    axios.post(`${appConfig.serverUrl}/api/getRoom`, { category, roomParam })
       .then((res) => {
         cookies.set('socketToken', res.data.socketToken, { path: '/' });
         rememberIdentity(res.data.room.sid, res.data.identity);
