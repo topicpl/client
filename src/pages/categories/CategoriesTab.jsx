@@ -46,8 +46,14 @@ const Container = styled.div`
   -webkit-box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.25);
   -moz-box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.25);
   box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.25);
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 `;
 const Inner = styled.div`
+  height: 100%;
+  width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
