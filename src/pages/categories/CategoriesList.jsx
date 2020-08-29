@@ -23,6 +23,7 @@ export default List;
 const Container = styled.div`
   display: grid;
   grid-gap: 50px;
+  grid-row-gap: 80px;
 
   @media (min-width: 760px) {
     grid-gap: 100px;

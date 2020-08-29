@@ -61,11 +61,15 @@ const Inner = styled.div`
     &__art {
       width: 235px;
       transform: rotate(-90deg);
-      margin: 88px 0 0 -20px;
+      /* margin: 88px 0 0 -20px; */
+      top: 0;
+      margin-left: -20px;
     }
 
     &__life {
-      margin: -12px 0 0 60px;
+      /* margin: -12px 0 0 60px; */
+      bottom: 0;
+      margin-left: 60px;
     }
 
     &__science {
