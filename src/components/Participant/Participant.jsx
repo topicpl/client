@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
 import ParticipantButtons from './ParticipantButtons';
+import appConfig from '../../../appConfig';
 
 const ParticipantContainer = styled.div`
   position: relative;
@@ -67,6 +69,7 @@ const Participant = ({ participant, totalParticipants, myself, handleLogout, nex
     const videoTrack = videoTracks[0];
     if (videoTrack) {
       videoTrack.attach(videoRef.current);
+      window.onunload = () => videoTrack.detach();
       return () => {
         videoTrack.detach();
       };
@@ -77,6 +80,7 @@ const Participant = ({ participant, totalParticipants, myself, handleLogout, nex
     const audioTrack = audioTracks[0];
     if (audioTrack) {
       audioTrack.attach(audioRef.current);
+      window.onunload = () => audioTrack.detach();
       return () => {
         audioTrack.detach();
       };
