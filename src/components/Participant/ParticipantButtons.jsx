@@ -73,8 +73,8 @@ const OtherParticipantButtons = ({ participant, isMicrophoneMuted, setMicrophone
         onClick={startVoteKickHandler}
         title="Initialize vote to kick user"
       />
-      <Button Icon={AiOutlineExclamation} title="Report user" onClick={() => logButtonEvent('report-user')} />
-      <Button Icon={IoIosSend} title="Send privet message" onClick={() => logButtonEvent('send-private-message')} />
+      {/* <Button Icon={AiOutlineExclamation} title="Report user" onClick={() => logButtonEvent('report-user')} /> */}
+      {/* <Button Icon={IoIosSend} title="Send private message" onClick={() => logButtonEvent('send-private-message')} /> */}
     </>
   );
 };
