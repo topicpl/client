@@ -60,8 +60,9 @@ const Inner = styled.div`
 
     &__art {
       width: 235px;
+      top: 0;
       transform: rotate(-90deg);
-      margin: 88px 0 0 -20px;
+      margin-left: -20px;
     }
 
     &__life {
