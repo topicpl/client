@@ -1,15 +1,17 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import { FaUserInjured, FaLink } from 'react-icons/fa';
+import { FiLink } from 'react-icons/fi';
 import { IoMdReverseCamera } from 'react-icons/io';
 import { GoSettings } from 'react-icons/go';
+import { RiUserSearchLine } from 'react-icons/ri';
 import Spinner from '../../components/LoadingIcon';
 import Button from '../../components/Button';
 import RegularButton from '../../components/Button/oldButton';
 
 const MyVideoContainer = styled.div`
-  width: 80%;
+  width: 100%;
+  height: 100%;
   background: ${({ theme }) => theme.color.black};
   position: relative;
   display: flex;
@@ -19,8 +21,7 @@ const MyVideoContainer = styled.div`
 `;
 
 const Video = styled.video`
-  width: 100%;
-  margin-bottom: 10px;
+  height: 100%;
 `;
 
 const CenteredElement = styled.div`
@@ -29,13 +30,12 @@ const CenteredElement = styled.div`
   justify-content: center;
   min-height: 82vmin;
   align-items: center;
-  `;
+`;
 
 const ErrorContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  items-align: center;
 `;
 
 const ErrorMessage = styled.div`
@@ -46,12 +46,12 @@ const Buttons = styled.div`
   position: absolute;
   left: 50%;
   top: 93%;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%, -50%);
   z-index: 1;
 
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-gap: 10px;
+  /* display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 30px; */
 `;
 
 const MyVideo = ({ isConnecting, connect }) => {
@@ -84,11 +84,11 @@ const MyVideo = ({ isConnecting, connect }) => {
         videoRef.current.srcObject = stream;
         stream.onremovetrack = () => console.warn('Stream ended');
       })
-      .catch(((err) => {
+      .catch((err) => {
         console.error(err);
         if (err.name === 'NotFoundError') setErrorMessage('Camera not found');
         else setErrorMessage(err.message);
-      }))
+      })
       .finally(() => setIsVideoLoading(false));
   };
   return (
@@ -105,17 +105,21 @@ const MyVideo = ({ isConnecting, connect }) => {
         </CenteredElement>
       )}
 
-      <Video ref={videoRef} style={{ display: !isVideoLoading ? 'block' : 'none' }} autoPlay />
+      <Video
+        ref={videoRef}
+        style={{ display: !isVideoLoading ? 'block' : 'none' }}
+        autoPlay
+      />
       {!errorMessage && !isVideoLoading && (
         <>
           <Buttons>
-            <Button Icon={FaLink} color="blur" />
-            <Button Icon={GoSettings} color="blur" />
-            <Button Icon={IoMdReverseCamera} color="blur" />
+            {/* <Button Icon={FiLink} color="blur" /> */}
+            {/* <Button Icon={GoSettings} color="blur" /> */}
+            {/* <Button Icon={IoMdReverseCamera} color="blur" /> */}
             <Button
               onClick={connect}
               isLoading={isConnecting}
-              Icon={FaUserInjured}
+              Icon={RiUserSearchLine}
               color="green"
             />
           </Buttons>

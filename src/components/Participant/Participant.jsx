@@ -6,7 +6,10 @@ const ParticipantContainer = styled.div`
   position: relative;
   display: flex;
   align-items: center;
-  grid-column: ${({ totalParticipants, myself }) => ((totalParticipants === 3 || totalParticipants === 5) && myself) && '1 /span 2;'}
+  grid-column: ${({ totalParticipants, myself }) =>
+    (totalParticipants === 3 || totalParticipants === 5) &&
+    myself &&
+    '1 /span 2;'};
 `;
 
 const VideoFrame = styled.video`
@@ -15,23 +18,32 @@ const VideoFrame = styled.video`
   transform: scale(1.011);
   object-fit: cover;
   max-height: ${({ totalParticipants }) => {
-    if (totalParticipants >= 2 && totalParticipants <= 4) return `calc(99vh / ${2});`;
+    if (totalParticipants >= 2 && totalParticipants <= 4)
+      return `calc(99vh / ${2});`;
     if (totalParticipants === 2) return `calc(99vh / ${2});`;
     if (totalParticipants >= 5) return `calc(99vh / ${3});`;
     return '99vh';
-  }}
+  }};
 `;
 
-const Participant = ({ participant, totalParticipants, myself, handleLogout, nextRoomHandler, isConnecting }) => {
+const Participant = ({
+  participant,
+  totalParticipants,
+  myself,
+  handleLogout,
+  nextRoomHandler,
+  isConnecting,
+}) => {
   const [videoTracks, setVideoTracks] = useState([]);
   const [audioTracks, setAudioTracks] = useState([]);
 
   const videoRef = useRef();
   const audioRef = useRef();
 
-  const trackpubsToTracks = (trackMap) => Array.from(trackMap.values())
-    .map((publication) => publication.track)
-    .filter((track) => track !== null);
+  const trackpubsToTracks = (trackMap) =>
+    Array.from(trackMap.values())
+      .map((publication) => publication.track)
+      .filter((track) => track !== null);
 
   useEffect(() => {
     setVideoTracks(trackpubsToTracks(participant.videoTracks));
@@ -47,9 +59,13 @@ const Participant = ({ participant, totalParticipants, myself, handleLogout, nex
 
     const trackUnsubscribed = (track) => {
       if (track.kind === 'video') {
-        setVideoTracks((videoTrackList) => videoTrackList.filter((v) => v !== track));
+        setVideoTracks((videoTrackList) =>
+          videoTrackList.filter((v) => v !== track)
+        );
       } else if (track.kind === 'audio') {
-        setAudioTracks((audioTrackList) => audioTrackList.filter((a) => a !== track));
+        setAudioTracks((audioTrackList) =>
+          audioTrackList.filter((a) => a !== track)
+        );
       }
     };
 
@@ -83,11 +99,24 @@ const Participant = ({ participant, totalParticipants, myself, handleLogout, nex
     }
   }, [audioTracks]);
 
-
   return (
-    <ParticipantContainer className="participant" totalParticipants={totalParticipants} myself={myself}>
-      <ParticipantButtons handleLogout={handleLogout} myself={myself} participant={participant} nextRoomHandler={nextRoomHandler} isConnecting={isConnecting} />
-      <VideoFrame ref={videoRef} autoPlay totalParticipants={totalParticipants} />
+    <ParticipantContainer
+      className="participant"
+      totalParticipants={totalParticipants}
+      myself={myself}
+    >
+      <ParticipantButtons
+        handleLogout={handleLogout}
+        myself={myself}
+        participant={participant}
+        nextRoomHandler={nextRoomHandler}
+        isConnecting={isConnecting}
+      />
+      <VideoFrame
+        ref={videoRef}
+        autoPlay
+        totalParticipants={totalParticipants}
+      />
       <audio ref={audioRef} autoPlay muted={myself} />
     </ParticipantContainer>
   );
