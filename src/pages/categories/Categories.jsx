@@ -18,26 +18,24 @@ const Categories = () => (
 export default Categories;
 
 const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   background: ${({ theme }) => theme.color.white};
   color: ${({ theme }) => theme.color.grey[950]};
   width: 100%;
   min-height: 100%;
-  padding: 32px 0 0 12px;
-
-  @media (min-width: 321px) {
-    padding: 32px;
-  }
-
-  @media (min-width: 500px) {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
 `;
 const Heading = styled.div`
   font-size: 2rem;
   font-weight: ${({ theme }) => theme.font.weight.bold};
   margin: 50px 0;
+  text-align: center;
+  width: 300px;
+
+  @media (min-width: 500px) {
+    width: unset;
+  }
 
   @media (min-width: 1024px) {
     font-size: 2.5rem;
