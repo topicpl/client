@@ -1,4 +1,7 @@
+const webpack = require('webpack');
 const path = require('path');
+
+const isDev = process.env.NODE_ENV !== 'production';
 
 module.exports = {
   entry: './src/index.jsx',
@@ -26,4 +29,11 @@ module.exports = {
       },
     }],
   },
+  plugins: [
+    new webpack.DefinePlugin({
+      'process.env': {
+        IS_DEV: isDev,
+      },
+    }),
+  ],
 };
