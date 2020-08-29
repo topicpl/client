@@ -8,7 +8,7 @@ const cookies = new Cookies();
 
 let socket;
 if (appConfig.isDev) socket = io('http://localhost:3000');
-else socket = io('https://thetopic.pl', {secure: true});
+else socket = io('https://thetopic.pl', { secure: true });
 let identity;
 let roomSid;
 
