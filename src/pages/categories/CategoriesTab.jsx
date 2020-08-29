@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { event } from 'react-ga';
 
-const Tab = ({ href, header, text, color }) => {
+const Tab = ({ href, header, text, color, img }) => {
   const dispatch = useDispatch();
 
   const save = () => {
@@ -17,6 +17,7 @@ const Tab = ({ href, header, text, color }) => {
       <Container onClick={() => save()} style={{ backgroundColor: color }}>
         <Inner>
           <Header>{header}</Header>
+          <img src={img} alt={header} />
           <ul>
             {text.map((item) => (
               <li>{item}</li>

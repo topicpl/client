@@ -12,6 +12,7 @@ const List = () => (
         href={item.href}
         text={item.text}
         color={item.color}
+        img={item.img}
       />
     ))}
   </Container>

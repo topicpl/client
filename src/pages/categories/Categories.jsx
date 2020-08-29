@@ -8,7 +8,9 @@ const Categories = () => (
   <Layout>
     <Container>
       <Heading>{__t('categories.heading')}</Heading>
-      <List />
+      <ListWrapper>
+        <List />
+      </ListWrapper>
     </Container>
   </Layout>
 );
@@ -39,5 +41,13 @@ const Heading = styled.div`
 
   @media (min-width: 1024px) {
     font-size: 2.5rem;
+  }
+`;
+const ListWrapper = styled.div`
+  margin-top: 50px;
+  @media (min-width: 1024px) {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
   }
 `;
