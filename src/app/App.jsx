@@ -22,13 +22,16 @@ const App = () => {
     dispatch({ type: 'ADD_LANG', lang: language });
   }, []);
 
+  const categoriesPath = process.env.IS_DEV ? '/' : '/app';
+  const videoChatPath = process.env.IS_DEV ? '/:category' : '/app/:category';
+
   return (
     <I18nProvider locale={language}>
       <MasterStyle>
         <Router>
           <Switch>
-            <Route path="/app" exact component={Categories} />
-            <Route path="/app/:category" component={VideoChat} />
+            <Route path={categoriesPath} exact component={Categories} />
+            <Route path={videoChatPath} component={VideoChat} />
           </Switch>
         </Router>
       </MasterStyle>
