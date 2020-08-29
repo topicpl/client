@@ -62,8 +62,12 @@ const VideoChat = () => {
         history.push({ search: `?room=${res.data.room.uniqueName}` });
         setRoomData(res.data.room);
         setToken(res.data.token);
+        console.log(res.data.room);
       })
-      .catch(console.error)
+      .catch(() => {
+        setIsConnecting(false);
+        connect();
+      })
       .finally(() => setIsConnecting(false));
   };
 
