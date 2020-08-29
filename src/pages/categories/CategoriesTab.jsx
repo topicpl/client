@@ -17,7 +17,7 @@ const Tab = ({ href, header, text, color, img }) => {
       <Container onClick={() => save()} style={{ backgroundColor: color }}>
         <Inner>
           <Header>{header}</Header>
-          <img src={img} alt={header} />
+          <img src={img} alt={header} class={'img img__' + href} />
           <ul>
             {text.map((item) => (
               <li>{item}</li>
@@ -37,6 +37,7 @@ const Container = styled.div`
   color: ${({ theme }) => theme.color.white};
   border-radius: 5px;
   padding: 0 20px;
+  position: relative;
 
   -webkit-box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.25);
   -moz-box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.25);
@@ -48,11 +49,43 @@ const Inner = styled.div`
   justify-content: space-between;
   align-items: center;
 
+  .img {
+    width: 130px;
+    z-index: 1;
+    position: absolute;
+
+    &__art {
+      width: 235px;
+      transform: rotate(-90deg);
+      margin: 88px 0 0 -20px;
+    }
+
+    &__life {
+      margin: -12px 0 0 60px;
+    }
+
+    &__science {
+      width: 100px;
+      margin: -50px 0 0 80px;
+    }
+
+    &__sport {
+      width: 130px;
+      margin-left: 65px;
+    }
+
+    &__world {
+      width: 150px;
+      margin: -35px 0 0 45px;
+    }
+  }
+
   ul {
     list-style: none;
     text-align: center;
     font-size: 13px;
     font-weight: ${({ theme }) => theme.font.weight.medium};
+    z-index: 2;
 
     li {
       margin: 2px 0;
@@ -60,6 +93,7 @@ const Inner = styled.div`
   }
 `;
 const Header = styled.span`
+  z-index: 2;
   font-size: 40px;
   font-weight: ${({ theme }) => theme.font.weight.bold};
 `;
