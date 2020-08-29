@@ -8,9 +8,7 @@ const Categories = () => (
   <Layout>
     <Container>
       <Heading>{__t('categories.heading')}</Heading>
-      <ListWrapper>
-        <List />
-      </ListWrapper>
+      <List />
     </Container>
   </Layout>
 );
@@ -20,8 +18,13 @@ export default Categories;
 const Container = styled.div`
   background: ${({ theme }) => theme.color.white};
   color: ${({ theme }) => theme.color.grey[950]};
-  padding: 32px;
   width: 100%;
+  min-height: 100%;
+  padding: 32px 0 0 12px;
+
+  @media (min-width: 321px) {
+    padding: 32px;
+  }
 
   @media (min-width: 500px) {
     display: flex;
@@ -38,4 +41,3 @@ const Heading = styled.div`
     font-size: 2.5rem;
   }
 `;
-const ListWrapper = styled.div``;
