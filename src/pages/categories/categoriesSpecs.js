@@ -76,6 +76,13 @@ const categoriesSpecs = [
       __t('categories.tab.4.helper.5'),
     ],
   },
+  {
+    href: null,
+    color: '#000',
+    img: null,
+    header: __t('categories.tab.5.header'),
+    text: [__t('categories.tab.5.helper.0'), __t('categories.tab.5.helper.1')],
+  },
 ];
 
 export default categoriesSpecs;

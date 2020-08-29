@@ -17,7 +17,11 @@ const Tab = ({ href, header, text, color, img }) => {
       <Container onClick={() => save()} style={{ backgroundColor: color }}>
         <Inner>
           <Header>{header}</Header>
-          <img src={img} alt={header} class={'img img__' + href} />
+
+          {header === 'Live' ? null : (
+            <img src={img} alt={header} class={'img img__' + href} />
+          )}
+
           <ul>
             {text.map((item) => (
               <li>{item}</li>
@@ -77,6 +81,10 @@ const Inner = styled.div`
     &__world {
       width: 150px;
       margin: -35px 0 0 45px;
+    }
+
+    &__null {
+      display: none;
     }
   }
 

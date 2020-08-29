@@ -61,6 +61,10 @@ export default {
             'Philosophy',
           ],
         },
+        {
+          header: 'Live',
+          helper: ['Available', 'soon'],
+        },
       ],
     },
   },
