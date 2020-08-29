@@ -25,6 +25,7 @@ const Container = styled.div`
   color: ${({ theme }) => theme.color.grey[950]};
   width: 100%;
   min-height: 100%;
+  padding-bottom: 100px;
 `;
 const Heading = styled.div`
   font-size: 2rem;
