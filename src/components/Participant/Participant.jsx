@@ -96,7 +96,7 @@ const Participant = ({ participant, totalParticipants, myself, handleLogout, nex
         setMicrophoneMuted={setMicrophoneMuted}
         isMicrophoneMuted={isMicrophoneMuted}
       />
-      <VideoFrame ref={videoRef} autoPlay totalParticipants={totalParticipants} muted={myself || isMicrophoneMuted} />
+      <VideoFrame ref={videoRef} autoPlay totalParticipants={totalParticipants} />
       <audio ref={audioRef} autoPlay muted={myself || isMicrophoneMuted} />
     </ParticipantContainer>
   );
