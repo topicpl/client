@@ -28,14 +28,27 @@ const Container = styled.div`
     flex-direction: column;
     align-items: center;
   }
+
+  @media (min-width: 1024px) {
+    height: 100%;
+  }
 `;
+
 const Heading = styled.div`
   font-size: 2rem;
   font-weight: ${({ theme }) => theme.font.weight.bold};
+
   margin: 50px 0;
 
   @media (min-width: 1024px) {
     font-size: 2.5rem;
   }
 `;
-const ListWrapper = styled.div``;
+
+const ListWrapper = styled.div`
+  @media (min-width: 1024px) {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+`;

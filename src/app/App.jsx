@@ -14,9 +14,10 @@ const App = () => {
   const detectLang = () => {
     const detectedLang = detectBrowserLanguage();
     if (detectedLang.includes('pl')) return 'pl';
-    if (detectedLang.includes('de')) return 'de';
-    if (detectedLang.includes('es')) return 'es';
-    if (detectedLang.includes('fr')) return 'fr';
+    // TODO: Add support for the rest
+    // if (detectedLang.includes('de')) return 'de';
+    // if (detectedLang.includes('es')) return 'es';
+    // if (detectedLang.includes('fr')) return 'fr';
     return 'en';
   };
   useEffect(() => {

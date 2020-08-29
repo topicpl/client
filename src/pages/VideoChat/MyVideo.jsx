@@ -1,9 +1,9 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import { FiLink } from 'react-icons/fi';
-import { IoMdReverseCamera } from 'react-icons/io';
-import { GoSettings } from 'react-icons/go';
+// import { FiLink } from 'react-icons/fi';
+// import { IoMdReverseCamera } from 'react-icons/io';
+// import { GoSettings } from 'react-icons/go';
 import { RiUserSearchLine } from 'react-icons/ri';
 import Spinner from '../../components/LoadingIcon';
 import Button from '../../components/Button';
