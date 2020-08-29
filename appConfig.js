@@ -5,5 +5,5 @@ const appConfig = {
   isDev,
   gaTrackingId: isDev ? 'UA-176397412-2' : 'UA-176397412-1',
 };
-module.exports.isDev = isDev;
+
 export default appConfig;
