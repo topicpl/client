@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { Link as Hyperlink } from 'react-router-dom';
 import { event } from 'react-ga';
 
-const Tab = ({ text, href }) => {
+const Tab = ({ href, header, text, color }) => {
   const dispatch = useDispatch();
 
   const save = () => {
@@ -16,7 +16,8 @@ const Tab = ({ text, href }) => {
     <Hyperlink to={href}>
       <Container onClick={() => save()}>
         <Inner>
-          <Text>{text}</Text>
+          <Text>{header}</Text>
+          <Text style={{ color }}>{text}</Text>
         </Inner>
       </Container>
     </Hyperlink>
