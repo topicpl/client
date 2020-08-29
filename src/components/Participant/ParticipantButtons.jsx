@@ -49,12 +49,11 @@ const MyButtons = ({ handleLogout, nextRoomHandler, isConnecting }) => {
   );
 };
 
-const OtherParticipantButtons = ({ participant }) => {
+const OtherParticipantButtons = ({ participant, isMicrophoneMuted, setMicrophoneMuted }) => {
   const participantIdentity = participant.identity;
-  const [isParticipantMuted, setIsParticipantMuted] = useState(true);
   const toggleMicrophone = () => {
-    setIsParticipantMuted(!isParticipantMuted);
-    logButtonEvent(isParticipantMuted ? 'other-participant-microphone-on' : 'other-participant-microphone-on');
+    setMicrophoneMuted(!isMicrophoneMuted);
+    logButtonEvent(isMicrophoneMuted ? 'other-participant-microphone-on' : 'other-participant-microphone-off');
   };
 
   const startVoteKickHandler = () => {
@@ -65,9 +64,9 @@ const OtherParticipantButtons = ({ participant }) => {
   return (
     <>
       <Button
-        Icon={isParticipantMuted ? GiSpeaker : GiSpeakerOff}
+        Icon={isMicrophoneMuted ? GiSpeakerOff : GiSpeaker}
         onClick={toggleMicrophone}
-        title={isParticipantMuted ? 'Mute' : 'Unmute'}
+        title={isMicrophoneMuted ? 'Mute' : 'Unmute'}
       />
       <Button
         Icon={IoIosRemoveCircleOutline}
@@ -80,9 +79,9 @@ const OtherParticipantButtons = ({ participant }) => {
   );
 };
 
-const ParticipantButtons = ({ myself, handleLogout, participant, nextRoomHandler }) => (
+const ParticipantButtons = ({ myself, handleLogout, participant, nextRoomHandler, isMicrophoneMuted, setMicrophoneMuted }) => (
   <Buttons>
-    {myself ? <MyButtons handleLogout={handleLogout} nextRoomHandler={nextRoomHandler} /> : <OtherParticipantButtons participant={participant} />}
+    {myself ? <MyButtons handleLogout={handleLogout} nextRoomHandler={nextRoomHandler} /> : <OtherParticipantButtons participant={participant} isMicrophoneMuted={isMicrophoneMuted} setMicrophoneMuted={setMicrophoneMuted} />}
   </Buttons>
 );
 
