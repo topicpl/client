@@ -32,7 +32,7 @@ const Heading = styled.div`
   font-weight: ${({ theme }) => theme.font.weight.bold};
   margin: 50px 0;
   text-align: center;
-  width: 300px;
+  width: 350px;
 
   @media (min-width: 500px) {
     width: unset;

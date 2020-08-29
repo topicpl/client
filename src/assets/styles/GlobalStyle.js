@@ -42,6 +42,20 @@ const GlobalStyle = createGlobalStyle`
       color: inherit;
       outline: none;
     }
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #fff;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #f44336;
+  border-radius: 100px;
+}
 
 `;
 export default GlobalStyle;

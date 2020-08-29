@@ -61,6 +61,10 @@ export default {
             'Filozofia',
           ],
         },
+        {
+          header: 'Live',
+          helper: ['Dostępne', 'wkrótce'],
+        },
       ],
     },
   },
