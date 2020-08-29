@@ -25,7 +25,6 @@ const VideoChat = () => {
   const [token, setToken] = useState(null);
   const [isConnecting, setIsConnecting] = useState(null);
 
-
   useEffect(() => {
     const queryVal = getQueryVariable('room');
     setRoomParam(queryVal);
@@ -36,7 +35,11 @@ const VideoChat = () => {
     setRoomData(null);
     setIsConnecting(true);
     event({ category: 'video-buttons', action: 'click', label: 'next-room' });
-    axios.post(`${appConfig.serverUrl}/api/findNextRoom`, { category, currentRoomSid: roomData.sid })
+    axios
+      .post(`${appConfig.serverUrl}/api/findNextRoom`, {
+        category,
+        currentRoomSid: roomData.sid,
+      })
       .then((res) => {
         const { room } = res.data;
         setRoomParam(room.uniqueName);
@@ -49,10 +52,19 @@ const VideoChat = () => {
   };
 
   const connect = () => {
-    event({ category: 'video-buttons', action: 'click', label: 'connect-click' });
-    event({ category: 'category-connection', action: 'click', label: category });
+    event({
+      category: 'video-buttons',
+      action: 'click',
+      label: 'connect-click',
+    });
+    event({
+      category: 'category-connection',
+      action: 'click',
+      label: category,
+    });
     setIsConnecting(true);
-    axios.post(`${appConfig.serverUrl}/api/getRoom`, { category, roomParam })
+    axios
+      .post(`${appConfig.serverUrl}/api/getRoom`, { category, roomParam })
       .then((res) => {
         cookies.set('socketToken', res.data.socketToken, { path: '/' });
         rememberIdentity(res.data.room.sid, res.data.identity);
@@ -78,12 +90,17 @@ const VideoChat = () => {
   let render;
   if (token && roomData && roomData.uniqueName) {
     render = (
-      <Room roomName={roomData.uniqueName} token={token} handleLogout={handleLogout} nextRoomHandler={nextRoomHandler} isConnecting={isConnecting} />
+      <Room
+        roomName={roomData.uniqueName}
+        token={token}
+        handleLogout={handleLogout}
+        nextRoomHandler={nextRoomHandler}
+        isConnecting={isConnecting}
+      />
     );
   } else {
     render = (
       <Container>
-        <Heading>{`Category: ${category}`}</Heading>
         <MyVideo connect={connect} isConnecting={isConnecting} />
       </Container>
     );
@@ -92,15 +109,12 @@ const VideoChat = () => {
 };
 
 const Container = styled.div`
-  margin-top: 20px;
-  display: flex;
+  width: 100vw;
+  height: 100vh;
+  /* display: flex;
   align-items: center;
   justify-content: center;
-  flex-direction: column;
-`;
-
-const Heading = styled.h1`
-  font-weight: ${({ theme }) => theme.font.weight.medium};
+  flex-direction: column; */
 `;
 
 export default VideoChat;
