@@ -62,10 +62,11 @@ const Inner = styled.div`
       width: 235px;
       top: 0;
       transform: rotate(-90deg);
-      margin-left: -20px;
+      margin: -6px 0 0 -20px;
     }
 
     &__life {
+      top: 0;
       margin: -12px 0 0 60px;
     }
 
