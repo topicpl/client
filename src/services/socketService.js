@@ -2,10 +2,13 @@
 import Cookies from 'universal-cookie';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import io from 'socket.io-client';
+import appConfig from '../../appConfig';
 
 const cookies = new Cookies();
 
-const socket = io('http://localhost:3000');
+let socket;
+if (appConfig.isDev) socket = io('http://localhost:3000');
+else socket = io('http://139.59.137.236:3000');
 let identity;
 let roomSid;
 
