@@ -11,7 +11,6 @@ import Categories from '../pages/categories/Categories';
 const App = () => {
   const dispatch = useDispatch();
   const [language, setLang] = useState('en');
-
   useEffect(() => {
     const detectedLang = detectBrowserLanguage();
     if (detectedLang.includes('pl')) setLang('pl');
@@ -28,8 +27,8 @@ const App = () => {
       <MasterStyle>
         <Router>
           <Switch>
-            <Route path="/" exact component={Categories} />
-            <Route path="/:category" component={VideoChat} />
+            <Route path="/app" exact component={Categories} />
+            <Route path="/app/:category" component={VideoChat} />
           </Switch>
         </Router>
       </MasterStyle>
