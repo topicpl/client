@@ -104,12 +104,7 @@ const MyVideo = ({ isConnecting, connect }) => {
           )}
         </CenteredElement>
       )}
-
-      <Video
-        ref={videoRef}
-        style={{ display: !isVideoLoading ? 'block' : 'none' }}
-        autoPlay
-      />
+      <Video ref={videoRef} style={{ display: !isVideoLoading ? 'block' : 'none' }} autoPlay muted />
       {!errorMessage && !isVideoLoading && (
         <>
           <Buttons>

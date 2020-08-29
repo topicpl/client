@@ -75,7 +75,10 @@ const VideoChat = () => {
         setRoomData(res.data.room);
         setToken(res.data.token);
       })
-      .catch(console.error)
+      .catch(() => {
+        setIsConnecting(false);
+        connect();
+      })
       .finally(() => setIsConnecting(false));
   };
 

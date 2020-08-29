@@ -5,7 +5,7 @@ import io from 'socket.io-client';
 
 const cookies = new Cookies();
 
-const socket = io('http://localhost:3111');
+const socket = io('http://localhost:3000');
 let identity;
 let roomSid;
 
