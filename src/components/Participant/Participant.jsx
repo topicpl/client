@@ -27,6 +27,7 @@ const VideoFrame = styled.video`
 const Participant = ({ participant, totalParticipants, myself, handleLogout, nextRoomHandler, isConnecting }) => {
   const [videoTracks, setVideoTracks] = useState([]);
   const [audioTracks, setAudioTracks] = useState([]);
+  const [isMicrophoneMuted, setMicrophoneMuted] = useState(false);
 
   const videoRef = useRef();
   const audioRef = useRef();
@@ -90,9 +91,17 @@ const Participant = ({ participant, totalParticipants, myself, handleLogout, nex
 
   return (
     <ParticipantContainer className="participant" totalParticipants={totalParticipants} myself={myself}>
-      <ParticipantButtons handleLogout={handleLogout} myself={myself} participant={participant} nextRoomHandler={nextRoomHandler} isConnecting={isConnecting} />
+      <ParticipantButtons
+        handleLogout={handleLogout}
+        myself={myself}
+        participant={participant}
+        nextRoomHandler={nextRoomHandler}
+        isConnecting={isConnecting}
+        setMicrophoneMuted={setMicrophoneMuted}
+        isMicrophoneMuted={isMicrophoneMuted}
+      />
       <VideoFrame ref={videoRef} autoPlay totalParticipants={totalParticipants} />
-      <audio ref={audioRef} autoPlay muted={myself} />
+      <audio ref={audioRef} autoPlay muted={myself || isMicrophoneMuted} />
     </ParticipantContainer>
   );
 };
