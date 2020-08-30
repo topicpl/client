@@ -97,7 +97,7 @@ const OtherParticipantButtons = ({
 
   const voteKick = (vote) => {
     emit('voteKick', { participantIdentity, value: vote });
-    setKickingBtnsVisible(false);
+    // setKickingBtnsVisible(false);
   };
 
   return (
@@ -107,28 +107,28 @@ const OtherParticipantButtons = ({
         onClick={toggleMicrophone}
         title={isMicrophoneMuted ? 'Mute' : 'Unmute'}
       />
-      <Button
+      {/* <Button
         Icon={IoIosRemoveCircleOutline}
         onClick={startVoteKickHandler}
         title="Initialize vote to kick user"
-      />
-
+      /> */}
+      {/* 
       {isKickingBtnsVisible ? (
         <>
           <Button
             Icon={IoMdThumbsUp}
             color="green"
             title="Vote yes"
-            onClick={voteKick(true)}
+            onClick={() => voteKick(true)}
           />
           <Button
             Icon={IoMdThumbsDown}
             color="red"
             title="Vote no"
-            onClick={voteKick(false)}
+            onClick={() => voteKick(false)}
           />
         </>
-      ) : null}
+      ) : null} */}
       {/* <Button Icon={AiOutlineExclamation} title="Report user" onClick={() => logButtonEvent('report-user')} /> */}
       {/* <Button Icon={IoIosSend} title="Send private message" onClick={() => logButtonEvent('send-private-message')} /> */}
     </>
