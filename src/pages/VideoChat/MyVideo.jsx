@@ -22,6 +22,9 @@ const MyVideoContainer = styled.div`
 
 const Video = styled.video`
   height: 100%;
+  /* MIRRORING */
+  transform: scale(-1, 1);
+  -webkit-transform: scale(-1, 1);
 `;
 
 const CenteredElement = styled.div`
@@ -104,7 +107,12 @@ const MyVideo = ({ isConnecting, connect }) => {
           )}
         </CenteredElement>
       )}
-      <Video ref={videoRef} style={{ display: !isVideoLoading ? 'block' : 'none' }} autoPlay muted />
+      <Video
+        ref={videoRef}
+        style={{ display: !isVideoLoading ? 'block' : 'none' }}
+        autoPlay
+        muted
+      />
       {!errorMessage && !isVideoLoading && (
         <>
           <Buttons>
