@@ -95,6 +95,11 @@ const OtherParticipantButtons = ({
     setKickingBtnsVisible(true);
   };
 
+  const voteKick = (vote) => {
+    emit('voteKick', { participantIdentity, value: vote });
+    setKickingBtnsVisible(false);
+  };
+
   return (
     <>
       <Button
@@ -114,13 +119,13 @@ const OtherParticipantButtons = ({
             Icon={IoMdThumbsUp}
             color="green"
             title="Vote yes"
-            onClick={emit('voteKick', { participantIdentity, value: true })}
+            onClick={voteKick(true)}
           />
           <Button
             Icon={IoMdThumbsDown}
             color="red"
             title="Vote no"
-            onClick={emit('voteKick', { participantIdentity, value: false })}
+            onClick={voteKick(false)}
           />
         </>
       ) : null}
