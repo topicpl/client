@@ -6,6 +6,8 @@ import {
   IoIosMicOff,
   IoIosMic,
   IoIosSend,
+  IoMdThumbsUp,
+  IoMdThumbsDown,
 } from 'react-icons/io';
 import styled from 'styled-components';
 import { RiCameraLine, RiCameraOffLine } from 'react-icons/ri';
@@ -72,6 +74,7 @@ const OtherParticipantButtons = ({
   isMicrophoneMuted,
   setMicrophoneMuted,
 }) => {
+  const [isKickingBtnsVisible, setKickingBtnsVisible] = useState(false);
   const participantIdentity = participant.identity;
   const toggleMicrophone = () => {
     setMicrophoneMuted(!isMicrophoneMuted);
@@ -85,6 +88,8 @@ const OtherParticipantButtons = ({
   const startVoteKickHandler = () => {
     emit('startVoteKick', { participantIdentity });
     logButtonEvent('start-vote-kick');
+
+    setKickingBtnsVisible(true);
   };
 
   return (
@@ -99,6 +104,13 @@ const OtherParticipantButtons = ({
         onClick={startVoteKickHandler}
         title="Initialize vote to kick user"
       />
+
+      {isKickingBtnsVisible ? (
+        <>
+          <Button Icon={IoMdThumbsUp} color="green" title="Vote yes" />
+          <Button Icon={IoMdThumbsDown} color="red" title="Vote no" />
+        </>
+      ) : null}
       {/* <Button Icon={AiOutlineExclamation} title="Report user" onClick={() => logButtonEvent('report-user')} /> */}
       {/* <Button Icon={IoIosSend} title="Send private message" onClick={() => logButtonEvent('send-private-message')} /> */}
     </>
