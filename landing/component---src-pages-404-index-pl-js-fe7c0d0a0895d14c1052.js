@@ -1,0 +1,2 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[5],{tYZw:function(n,t,e){"use strict";e.r(t);var a=e("q1tI"),i=e.n(a),o=e("vOnD");t.default=function(){return i.a.createElement(c,null,"404PL")};var c=o.c.div.withConfig({displayName:"indexpl__Container",componentId:"sc-1ap0nmt-0"})([""])}}]);
+//# sourceMappingURL=component---src-pages-404-index-pl-js-fe7c0d0a0895d14c1052.js.map

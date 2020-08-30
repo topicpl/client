@@ -20,6 +20,12 @@ jobs:
       run: |
         docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
 
+    - name: generate .env file
+      env:
+        NODE_ENV: ${{ secrets.NODE_ENV }}
+      run: |
+        envsubst < .env.example > .env && ls
+
     - name: docker build
       run: |
         docker build . -t thetopichub913/the-topic:${{ github.run_id }}
@@ -55,7 +61,7 @@ jobs:
           docker rm topic-client
 
           # start container:
-          docker run -p 80:3001/tcp --name topic-client -d thetopichub913/the-topic:${{ github.run_id }}
+          docker run -p 5000:3001/tcp --name topic-client -d thetopichub913/the-topic:${{ github.run_id }}
 
           docker ps
 
@@ -66,15 +72,15 @@ jobs:
       with:
         webhook_id: "${{secrets.DISCORD_WEBHOOK_ID}}"
         webhook_token: "${{secrets.DISCORD_WEBHOOK_TOKEN}}"
-        message: "Client deployment failed" 
+        message: "Client deployment failed"
         color: "#FF0000"
-  
+
     - name: Discord success notification
       uses: appleboy/discord-action@0.0.3
       if: ${{ success() }}
       with:
         webhook_id: "${{secrets.DISCORD_WEBHOOK_ID}}"
         webhook_token: "${{secrets.DISCORD_WEBHOOK_TOKEN}}"
-        message: "Client deployment successful" 
+        message: "Client deployment successful"
         color: 	"#00FF00"
 

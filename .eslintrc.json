@@ -8,7 +8,7 @@
         "commonjs": true,
         "es6": true
     },
-    "ignorePatterns": ["public/bundle.js"],
+    "ignorePatterns": ["public/bundle.js", "landing/*"],
     "globals": {
         "__": true
     },

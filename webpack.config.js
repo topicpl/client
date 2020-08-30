@@ -1,4 +1,8 @@
+require('dotenv').config();
+const webpack = require('webpack');
 const path = require('path');
+
+const isDev = process.env.NODE_ENV !== 'production';
 
 module.exports = {
   entry: './src/index.jsx',
@@ -14,16 +18,33 @@ module.exports = {
     hot: true,
   },
   module: {
-    rules: [{
-      test: /\.js|jsx$/,
-      exclude: /node_modules/,
-      loader: 'babel-loader',
-      resolve: {
-        extensions: ['.js', '.jsx'],
+    rules: [
+      {
+        test: /\.(png|jpe?g|gif)$/i,
+        use: [
+          {
+            loader: 'file-loader',
+          },
+        ],
       },
-      query: {
-        presets: ['@babel/preset-env', '@babel/preset-react'],
+      {
+        test: /\.js|jsx$/,
+        exclude: /node_modules/,
+        loader: 'babel-loader',
+        resolve: {
+          extensions: ['.js', '.jsx'],
+        },
+        query: {
+          presets: ['@babel/preset-env', '@babel/preset-react'],
+        },
       },
-    }],
+    ],
   },
+  plugins: [
+    new webpack.DefinePlugin({
+      'process.env': {
+        IS_DEV: isDev,
+      },
+    }),
+  ],
 };

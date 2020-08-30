@@ -1,12 +1,17 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
 import ParticipantButtons from './ParticipantButtons';
+import appConfig from '../../../appConfig';
 
 const ParticipantContainer = styled.div`
   position: relative;
   display: flex;
   align-items: center;
-  grid-column: ${({ totalParticipants, myself }) => ((totalParticipants === 3 || totalParticipants === 5) && myself) && '1 /span 2;'}
+  grid-column: ${({ totalParticipants, myself }) =>
+    (totalParticipants === 3 || totalParticipants === 5) &&
+    myself &&
+    '1 /span 2;'};
 `;
 
 const VideoFrame = styled.video`
@@ -15,23 +20,33 @@ const VideoFrame = styled.video`
   transform: scale(1.011);
   object-fit: cover;
   max-height: ${({ totalParticipants }) => {
-    if (totalParticipants >= 2 && totalParticipants <= 4) return `calc(99vh / ${2});`;
+    if (totalParticipants >= 2 && totalParticipants <= 4)
+      return `calc(99vh / ${2});`;
     if (totalParticipants === 2) return `calc(99vh / ${2});`;
     if (totalParticipants >= 5) return `calc(99vh / ${3});`;
     return '99vh';
-  }}
+  }};
 `;
 
-const Participant = ({ participant, totalParticipants, myself, handleLogout, nextRoomHandler, isConnecting }) => {
+const Participant = ({
+  participant,
+  totalParticipants,
+  myself,
+  handleLogout,
+  nextRoomHandler,
+  isConnecting,
+}) => {
   const [videoTracks, setVideoTracks] = useState([]);
   const [audioTracks, setAudioTracks] = useState([]);
+  const [isMicrophoneMuted, setMicrophoneMuted] = useState(false);
 
   const videoRef = useRef();
   const audioRef = useRef();
 
-  const trackpubsToTracks = (trackMap) => Array.from(trackMap.values())
-    .map((publication) => publication.track)
-    .filter((track) => track !== null);
+  const trackpubsToTracks = (trackMap) =>
+    Array.from(trackMap.values())
+      .map((publication) => publication.track)
+      .filter((track) => track !== null);
 
   useEffect(() => {
     setVideoTracks(trackpubsToTracks(participant.videoTracks));
@@ -47,9 +62,13 @@ const Participant = ({ participant, totalParticipants, myself, handleLogout, nex
 
     const trackUnsubscribed = (track) => {
       if (track.kind === 'video') {
-        setVideoTracks((videoTrackList) => videoTrackList.filter((v) => v !== track));
+        setVideoTracks((videoTrackList) =>
+          videoTrackList.filter((v) => v !== track)
+        );
       } else if (track.kind === 'audio') {
-        setAudioTracks((audioTrackList) => audioTrackList.filter((a) => a !== track));
+        setAudioTracks((audioTrackList) =>
+          audioTrackList.filter((a) => a !== track)
+        );
       }
     };
 
@@ -67,6 +86,7 @@ const Participant = ({ participant, totalParticipants, myself, handleLogout, nex
     const videoTrack = videoTracks[0];
     if (videoTrack) {
       videoTrack.attach(videoRef.current);
+      window.onunload = () => videoTrack.detach();
       return () => {
         videoTrack.detach();
       };
@@ -77,18 +97,30 @@ const Participant = ({ participant, totalParticipants, myself, handleLogout, nex
     const audioTrack = audioTracks[0];
     if (audioTrack) {
       audioTrack.attach(audioRef.current);
+      window.onunload = () => audioTrack.detach();
       return () => {
         audioTrack.detach();
       };
     }
   }, [audioTracks]);
 
-
   return (
-    <ParticipantContainer className="participant" totalParticipants={totalParticipants} myself={myself}>
-      <ParticipantButtons handleLogout={handleLogout} myself={myself} participant={participant} nextRoomHandler={nextRoomHandler} isConnecting={isConnecting} />
+    <ParticipantContainer
+      className="participant"
+      totalParticipants={totalParticipants}
+      myself={myself}
+    >
+      <ParticipantButtons
+        handleLogout={handleLogout}
+        myself={myself}
+        participant={participant}
+        nextRoomHandler={nextRoomHandler}
+        isConnecting={isConnecting}
+        setMicrophoneMuted={setMicrophoneMuted}
+        isMicrophoneMuted={isMicrophoneMuted}
+      />
       <VideoFrame ref={videoRef} autoPlay totalParticipants={totalParticipants} />
-      <audio ref={audioRef} autoPlay muted={myself} />
+      <audio ref={audioRef} autoPlay muted={myself || isMicrophoneMuted} />
     </ParticipantContainer>
   );
 };
