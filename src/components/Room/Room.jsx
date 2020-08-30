@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Video from 'twilio-video';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import styled from 'styled-components';
 import Participant from '../Participant';
 
@@ -24,7 +25,6 @@ const ParticipantsWrapper = styled.div`
 const Room = ({ roomName, token, handleLogout, nextRoomHandler, isConnecting }) => {
   const [room, setRoom] = useState(null);
   const [participants, setParticipants] = useState([]);
-
 
   useEffect(() => {
     const participantConnected = (participant) => {

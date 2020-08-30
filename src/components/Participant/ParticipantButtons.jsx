@@ -24,9 +24,12 @@ const Buttons = styled.div`
   transform: translate(-50%, -50%);
   z-index: 1;
 
-  display: grid;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  /* display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-gap: 10px;
+  grid-gap: 10px; */
 `;
 const logButtonEvent = (label) =>
   event({ category: 'video-buttons', action: 'click', label });
@@ -107,8 +110,18 @@ const OtherParticipantButtons = ({
 
       {isKickingBtnsVisible ? (
         <>
-          <Button Icon={IoMdThumbsUp} color="green" title="Vote yes" />
-          <Button Icon={IoMdThumbsDown} color="red" title="Vote no" />
+          <Button
+            Icon={IoMdThumbsUp}
+            color="green"
+            title="Vote yes"
+            onClick={emit('voteKick', { participantIdentity, value: true })}
+          />
+          <Button
+            Icon={IoMdThumbsDown}
+            color="red"
+            title="Vote no"
+            onClick={emit('voteKick', { participantIdentity, value: false })}
+          />
         </>
       ) : null}
       {/* <Button Icon={AiOutlineExclamation} title="Report user" onClick={() => logButtonEvent('report-user')} /> */}
