@@ -1,5 +1,6 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import React, { useState, useEffect, useRef } from 'react';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import styled from 'styled-components';
 // import { FiLink } from 'react-icons/fi';
 // import { IoMdReverseCamera } from 'react-icons/io';

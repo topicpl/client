@@ -1,8 +1,20 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
-import { IoMdWalk, IoIosRemoveCircleOutline, IoMdArrowForward, IoIosMicOff, IoIosMic, IoIosSend } from 'react-icons/io';
+import {
+  IoMdWalk,
+  IoIosRemoveCircleOutline,
+  IoMdArrowForward,
+  IoIosMicOff,
+  IoIosMic,
+  IoIosSend,
+} from 'react-icons/io';
 import styled from 'styled-components';
 import { RiCameraLine, RiCameraOffLine } from 'react-icons/ri';
-import { AiOutlineExclamation } from 'react-icons/ai';
+import {
+  AiOutlineExclamation,
+  AiOutlineCheck,
+  AiOutlineClose,
+} from 'react-icons/ai';
 import { GiSpeakerOff, GiSpeaker } from 'react-icons/gi';
 import { event } from 'react-ga';
 import Button from '../Button';
@@ -12,7 +24,7 @@ const Buttons = styled.div`
   position: absolute;
   left: 50%;
   top: 93%;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%, -50%);
   z-index: 1;
 
   display: grid;
@@ -33,7 +45,12 @@ const MyButtons = ({ handleLogout, nextRoomHandler, isConnecting }) => {
 
   return (
     <>
-      <Button Icon={IoMdWalk} color="red" onClick={handleLogout} title="Leave" />
+      <Button
+        Icon={IoMdWalk}
+        color="red"
+        onClick={handleLogout}
+        title="Leave"
+      />
       <Button
         Icon={isMyMicrophoneMuted ? IoIosMicOff : IoIosMic}
         onClick={toggleMicrophone}
@@ -73,6 +90,17 @@ const OtherParticipantButtons = ({ participant, isMicrophoneMuted, setMicrophone
         onClick={startVoteKickHandler}
         title="Initialize vote to kick user"
       />
+      {/*
+      <Button
+        Icon={AiOutlineCheck}
+        onClick={() => emit('voteKick', { participantIdentity, value: true })}
+        title={`kick${participantIdentity}`}
+      />
+      <Button
+        Icon={AiOutlineClose}
+        onClick={() => emit('voteKick', { participantIdentity, value: false })}
+        title={`kick${participantIdentity}`}
+      /> */}
       {/* <Button Icon={AiOutlineExclamation} title="Report user" onClick={() => logButtonEvent('report-user')} /> */}
       {/* <Button Icon={IoIosSend} title="Send private message" onClick={() => logButtonEvent('send-private-message')} /> */}
     </>
