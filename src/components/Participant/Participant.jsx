@@ -26,6 +26,9 @@ const VideoFrame = styled.video`
     if (totalParticipants >= 5) return `calc(99vh / ${3});`;
     return '99vh';
   }};
+  /* MIRRORING */
+  transform: scale(-1, 1);
+  -webkit-transform: scale(-1, 1);
 `;
 
 const Participant = ({
@@ -119,7 +122,11 @@ const Participant = ({
         setMicrophoneMuted={setMicrophoneMuted}
         isMicrophoneMuted={isMicrophoneMuted}
       />
-      <VideoFrame ref={videoRef} autoPlay totalParticipants={totalParticipants} />
+      <VideoFrame
+        ref={videoRef}
+        autoPlay
+        totalParticipants={totalParticipants}
+      />
       <audio ref={audioRef} autoPlay muted={myself || isMicrophoneMuted} />
     </ParticipantContainer>
   );

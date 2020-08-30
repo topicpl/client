@@ -77,18 +77,21 @@ const Inner = styled.div`
     }
 
     &__science {
+      top: 0;
       width: 100px;
       margin: -50px 0 0 80px;
     }
 
     &__sport {
+      top: 0;
       width: 130px;
-      margin-left: 65px;
+      margin: -25px 0 0 65px;
     }
 
     &__world {
+      top: 0;
       width: 150px;
-      margin: -35px 0 0 45px;
+      margin: -25px 0 0 45px;
     }
 
     &__null {
@@ -99,9 +102,10 @@ const Inner = styled.div`
   ul {
     list-style: none;
     text-align: center;
-    font-size: 13px;
+    font-size: 14px;
     font-weight: ${({ theme }) => theme.font.weight.medium};
     z-index: 2;
+    margin-right: -5px;
 
     li {
       margin: 2px 0;

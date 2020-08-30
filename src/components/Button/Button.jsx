@@ -34,6 +34,7 @@ const Button = ({ Icon, color, onClick, isLoading, ...rest }) => {
 export default Button;
 
 const Container = styled.button`
+  margin: 0 10px;
   display: flex;
   justify-content: center;
   align-items: center;

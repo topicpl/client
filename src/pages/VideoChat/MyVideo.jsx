@@ -1,5 +1,6 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import React, { useState, useEffect, useRef } from 'react';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import styled from 'styled-components';
 // import { FiLink } from 'react-icons/fi';
 // import { IoMdReverseCamera } from 'react-icons/io';
@@ -22,6 +23,9 @@ const MyVideoContainer = styled.div`
 
 const Video = styled.video`
   height: 100%;
+  /* MIRRORING */
+  transform: scale(-1, 1);
+  -webkit-transform: scale(-1, 1);
 `;
 
 const CenteredElement = styled.div`
@@ -45,7 +49,7 @@ const ErrorMessage = styled.div`
 const Buttons = styled.div`
   position: absolute;
   left: 50%;
-  top: 93%;
+  bottom: 5%;
   transform: translate(-50%, -50%);
   z-index: 1;
 
@@ -104,7 +108,12 @@ const MyVideo = ({ isConnecting, connect }) => {
           )}
         </CenteredElement>
       )}
-      <Video ref={videoRef} style={{ display: !isVideoLoading ? 'block' : 'none' }} autoPlay muted />
+      <Video
+        ref={videoRef}
+        style={{ display: !isVideoLoading ? 'block' : 'none' }}
+        autoPlay
+        muted
+      />
       {!errorMessage && !isVideoLoading && (
         <>
           <Buttons>

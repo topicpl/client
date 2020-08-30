@@ -3,7 +3,6 @@
 /* eslint-disable no-console */
 import React, { useState, useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
-import Cookies from 'universal-cookie';
 import axios from 'axios';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import styled from 'styled-components';
@@ -14,8 +13,6 @@ import MyVideo from './MyVideo';
 import Layout from '../../app/Layout';
 import { emit, rememberIdentity } from '../../services/socketService';
 import { getQueryVariable } from '../../utils/helpers';
-
-const cookies = new Cookies();
 
 const VideoChat = () => {
   const history = useHistory();
@@ -66,11 +63,8 @@ const VideoChat = () => {
     axios
       .post(`${appConfig.serverUrl}/api/getRoom`, { category, roomParam })
       .then((res) => {
-        cookies.set('socketToken', res.data.socketToken, { path: '/' });
-        rememberIdentity(res.data.room.sid, res.data.identity);
-        const roomSid = res.data.room.sid;
-        const { identity } = res.data;
-        emit('registerSocket', { roomSid, identity });
+        rememberIdentity(res.data.socketToken, res.data.room.sid, res.data.identity);
+        emit('registerSocket');
         history.push({ search: `?room=${res.data.room.uniqueName}` });
         setRoomData(res.data.room);
         setToken(res.data.token);
