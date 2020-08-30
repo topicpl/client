@@ -5,8 +5,9 @@ import appConfig from '../../appConfig';
 
 let socket;
 if (appConfig.isDev) socket = io('http://localhost:3000');
-else
+else {
   socket = io('https://thetopic.pl', { path: '/api/socket.io', secure: true });
+}
 let identity;
 let roomSid;
 let socketToken;
