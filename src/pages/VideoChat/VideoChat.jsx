@@ -37,6 +37,7 @@ const VideoChat = () => {
     event({ category: 'video-buttons', action: 'click', label: 'next-room' });
     return axios.post(`${appConfig.serverUrl}/api/findNextRoom`, { category, currentRoomSid: roomData.sid })
       .then((res) => {
+        handleLogout();
         const { room } = res.data;
         setRoomParam(room.uniqueName);
         history.push({ search: `?room=${room.uniqueName}` });

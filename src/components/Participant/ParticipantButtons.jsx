@@ -81,7 +81,7 @@ const OtherParticipantButtons = ({ /* participant, */ isMicrophoneMuted, setMicr
 
 const ParticipantButtons = ({ myself, handleLogout, participant, nextRoomHandler, isMicrophoneMuted, setMicrophoneMuted }) => (
   <Buttons>
-    {myself ? <MyButtons handleLogout={handleLogout} nextRoomHandler={nextRoomHandler} /> : <OtherParticipantButtons participant={participant} isMicrophoneMuted={isMicrophoneMuted} setMicrophoneMuted={setMicrophoneMuted} />}
+    {myself ? <MyButtons handleLogout={handleLogout} nextRoomHandler={nextRoomHandler} participant={participant} /> : <OtherParticipantButtons participant={participant} isMicrophoneMuted={isMicrophoneMuted} setMicrophoneMuted={setMicrophoneMuted} />}
   </Buttons>
 );
 
