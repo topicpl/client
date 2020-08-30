@@ -12,10 +12,10 @@ import Room from '../../components/Room';
 import appConfig from '../../../appConfig';
 import MyVideo from './MyVideo';
 import Layout from '../../app/Layout';
-import { emit, rememberIdentity } from '../../services/socketService';
+// import { emit, rememberIdentity } from '../../services/socketService';
 import { getQueryVariable } from '../../utils/helpers';
 
-const cookies = new Cookies();
+// const cookies = new Cookies();
 
 const VideoChat = () => {
   const history = useHistory();
@@ -35,11 +35,7 @@ const VideoChat = () => {
     setRoomData(null);
     setIsConnecting(true);
     event({ category: 'video-buttons', action: 'click', label: 'next-room' });
-    axios
-      .post(`${appConfig.serverUrl}/api/findNextRoom`, {
-        category,
-        currentRoomSid: roomData.sid,
-      })
+    return axios.post(`${appConfig.serverUrl}/api/findNextRoom`, { category, currentRoomSid: roomData.sid })
       .then((res) => {
         const { room } = res.data;
         setRoomParam(room.uniqueName);
@@ -66,11 +62,11 @@ const VideoChat = () => {
     axios
       .post(`${appConfig.serverUrl}/api/getRoom`, { category, roomParam })
       .then((res) => {
-        cookies.set('socketToken', res.data.socketToken, { path: '/' });
-        rememberIdentity(res.data.room.sid, res.data.identity);
-        const roomSid = res.data.room.sid;
-        const { identity } = res.data;
-        emit('registerSocket', { roomSid, identity });
+        // cookies.set('socketToken', res.data.socketToken, { path: '/' });
+        // rememberIdentity(res.data.room.sid, res.data.identity);
+        // const roomSid = res.data.room.sid;
+        // const { identity } = res.data;
+        // emit('registerSocket', { roomSid, identity });
         history.push({ search: `?room=${res.data.room.uniqueName}` });
         setRoomData(res.data.room);
         setToken(res.data.token);

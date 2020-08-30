@@ -4,6 +4,8 @@ import axios from 'axios';
 import ParticipantButtons from './ParticipantButtons';
 import appConfig from '../../../appConfig';
 
+let videoTrackGlobal;
+let audioTrackGlobal;
 const ParticipantContainer = styled.div`
   position: relative;
   display: flex;
@@ -77,6 +79,7 @@ const Participant = ({
 
   useEffect(() => {
     const videoTrack = videoTracks[0];
+    videoTrackGlobal = videoTrack;
     if (videoTrack) {
       videoTrack.attach(videoRef.current);
       window.onunload = () => videoTrack.detach();
@@ -88,6 +91,7 @@ const Participant = ({
 
   useEffect(() => {
     const audioTrack = audioTracks[0];
+    audioTrackGlobal = audioTrack;
     if (audioTrack) {
       audioTrack.attach(audioRef.current);
       window.onunload = () => audioTrack.detach();
@@ -96,6 +100,15 @@ const Participant = ({
       };
     }
   }, [audioTracks]);
+
+  const nextRoom = () => {
+    nextRoomHandler()
+      .then(() => {
+        if (videoTrackGlobal && videoTrackGlobal.detach) videoTrackGlobal.detach();
+        if (audioTrackGlobal && audioTrackGlobal.detach) audioTrackGlobal.detach();
+      })
+      .catch(console.error);
+  };
 
   return (
     <ParticipantContainer
@@ -107,7 +120,7 @@ const Participant = ({
         handleLogout={handleLogout}
         myself={myself}
         participant={participant}
-        nextRoomHandler={nextRoomHandler}
+        nextRoomHandler={nextRoom}
         isConnecting={isConnecting}
         setMicrophoneMuted={setMicrophoneMuted}
         isMicrophoneMuted={isMicrophoneMuted}
