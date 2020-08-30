@@ -22,7 +22,7 @@ socket.on('startedVoteKick', (data) => {
 });
 socket.on('updateVoteKickStatus', (data) => {
   console.log(
-    `agreed: ${data.agreed}\nneeded agree votes: ${data.votesToKick}\ndisagreed: ${data.disagreed}`
+    `agreed: ${data.agreed}\nneeded agree votes: ${data.votesToKick}\ndisagreed: ${data.disagreed}`,
   );
 });
 socket.on('voteKickEnded', (data) => {

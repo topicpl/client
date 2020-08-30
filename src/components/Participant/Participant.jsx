@@ -8,10 +8,9 @@ const ParticipantContainer = styled.div`
   position: relative;
   display: flex;
   align-items: center;
-  grid-column: ${({ totalParticipants, myself }) =>
-    (totalParticipants === 3 || totalParticipants === 5) &&
-    myself &&
-    '1 /span 2;'};
+  grid-column: ${({ totalParticipants, myself }) => (totalParticipants === 3 || totalParticipants === 5)
+    && myself
+    && '1 /span 2;'};
 `;
 
 const VideoFrame = styled.video`
@@ -20,8 +19,7 @@ const VideoFrame = styled.video`
   transform: scale(1.011);
   object-fit: cover;
   max-height: ${({ totalParticipants }) => {
-    if (totalParticipants >= 2 && totalParticipants <= 4)
-      return `calc(99vh / ${2});`;
+    if (totalParticipants >= 2 && totalParticipants <= 4) return `calc(99vh / ${2});`;
     if (totalParticipants === 2) return `calc(99vh / ${2});`;
     if (totalParticipants >= 5) return `calc(99vh / ${3});`;
     return '99vh';
@@ -46,10 +44,9 @@ const Participant = ({
   const videoRef = useRef();
   const audioRef = useRef();
 
-  const trackpubsToTracks = (trackMap) =>
-    Array.from(trackMap.values())
-      .map((publication) => publication.track)
-      .filter((track) => track !== null);
+  const trackpubsToTracks = (trackMap) => Array.from(trackMap.values())
+    .map((publication) => publication.track)
+    .filter((track) => track !== null);
 
   useEffect(() => {
     setVideoTracks(trackpubsToTracks(participant.videoTracks));
@@ -65,13 +62,9 @@ const Participant = ({
 
     const trackUnsubscribed = (track) => {
       if (track.kind === 'video') {
-        setVideoTracks((videoTrackList) =>
-          videoTrackList.filter((v) => v !== track)
-        );
+        setVideoTracks((videoTrackList) => videoTrackList.filter((v) => v !== track));
       } else if (track.kind === 'audio') {
-        setAudioTracks((audioTrackList) =>
-          audioTrackList.filter((a) => a !== track)
-        );
+        setAudioTracks((audioTrackList) => audioTrackList.filter((a) => a !== track));
       }
     };
 

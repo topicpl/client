@@ -15,7 +15,7 @@ import { AiOutlineExclamation } from 'react-icons/ai';
 import { GiSpeakerOff, GiSpeaker } from 'react-icons/gi';
 import { event } from 'react-ga';
 import Button from '../Button';
-import { emit } from '../../services/socketService';
+// import { emit } from '../../services/socketService';
 
 const Buttons = styled.div`
   position: absolute;
@@ -72,13 +72,8 @@ const MyButtons = ({ handleLogout, nextRoomHandler, isConnecting }) => {
   );
 };
 
-const OtherParticipantButtons = ({
-  participant,
-  isMicrophoneMuted,
-  setMicrophoneMuted,
-}) => {
-  const [isKickingBtnsVisible, setKickingBtnsVisible] = useState(false);
-  const participantIdentity = participant.identity;
+const OtherParticipantButtons = ({ /* participant, */ isMicrophoneMuted, setMicrophoneMuted }) => {
+  // const participantIdentity = participant.identity;
   const toggleMicrophone = () => {
     setMicrophoneMuted(!isMicrophoneMuted);
     logButtonEvent(
@@ -88,17 +83,10 @@ const OtherParticipantButtons = ({
     );
   };
 
-  const startVoteKickHandler = () => {
-    emit('startVoteKick', { participantIdentity });
-    logButtonEvent('start-vote-kick');
-
-    setKickingBtnsVisible(true);
-  };
-
-  const voteKick = (vote) => {
-    emit('voteKick', { participantIdentity, value: vote });
-    // setKickingBtnsVisible(false);
-  };
+  // const startVoteKickHandler = () => {
+  //   emit('startVoteKick', { participantIdentity });
+  //   logButtonEvent('start-vote-kick');
+  // };
 
   return (
     <>
@@ -112,23 +100,6 @@ const OtherParticipantButtons = ({
         onClick={startVoteKickHandler}
         title="Initialize vote to kick user"
       /> */}
-      {/* 
-      {isKickingBtnsVisible ? (
-        <>
-          <Button
-            Icon={IoMdThumbsUp}
-            color="green"
-            title="Vote yes"
-            onClick={() => voteKick(true)}
-          />
-          <Button
-            Icon={IoMdThumbsDown}
-            color="red"
-            title="Vote no"
-            onClick={() => voteKick(false)}
-          />
-        </>
-      ) : null} */}
       {/* <Button Icon={AiOutlineExclamation} title="Report user" onClick={() => logButtonEvent('report-user')} /> */}
       {/* <Button Icon={IoIosSend} title="Send private message" onClick={() => logButtonEvent('send-private-message')} /> */}
     </>
@@ -144,18 +115,7 @@ const ParticipantButtons = ({
   setMicrophoneMuted,
 }) => (
   <Buttons>
-    {myself ? (
-      <MyButtons
-        handleLogout={handleLogout}
-        nextRoomHandler={nextRoomHandler}
-      />
-    ) : (
-      <OtherParticipantButtons
-        participant={participant}
-        isMicrophoneMuted={isMicrophoneMuted}
-        setMicrophoneMuted={setMicrophoneMuted}
-      />
-    )}
+    {myself ? <MyButtons handleLogout={handleLogout} nextRoomHandler={nextRoomHandler} participant={participant} /> : <OtherParticipantButtons participant={participant} isMicrophoneMuted={isMicrophoneMuted} setMicrophoneMuted={setMicrophoneMuted} />}
   </Buttons>
 );
 
