@@ -3,7 +3,6 @@
 /* eslint-disable no-console */
 import React, { useState, useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
-import Cookies from 'universal-cookie';
 import axios from 'axios';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import styled from 'styled-components';
