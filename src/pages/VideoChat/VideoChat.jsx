@@ -80,6 +80,11 @@ const VideoChat = () => {
 
   const handleLogout = () => {
     history.push({ search: '' });
+    axios
+      .post(`${appConfig.serverUrl}/api/disconnect`, { category, roomParam })
+      .then((res) => {
+        console.log(res.status);
+      });
     setToken(null);
   };
 
