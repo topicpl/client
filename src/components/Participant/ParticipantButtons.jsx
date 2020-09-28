@@ -15,7 +15,7 @@ import { AiOutlineExclamation } from 'react-icons/ai';
 import { GiSpeakerOff, GiSpeaker } from 'react-icons/gi';
 import { event } from 'react-ga';
 import Button from '../Button';
-// import { emit } from '../../services/socketService';
+import { emit } from '../../services/socketService';
 
 const Buttons = styled.div`
   position: absolute;
@@ -31,8 +31,7 @@ const Buttons = styled.div`
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 10px; */
 `;
-const logButtonEvent = (label) =>
-  event({ category: 'video-buttons', action: 'click', label });
+const logButtonEvent = (label) => event({ category: 'video-buttons', action: 'click', label });
 
 const MyButtons = ({ handleLogout, nextRoomHandler, isConnecting }) => {
   const [isMyMicrophoneMuted, setIsMyMicrophoneMuted] = useState(false);
@@ -72,21 +71,20 @@ const MyButtons = ({ handleLogout, nextRoomHandler, isConnecting }) => {
   );
 };
 
-const OtherParticipantButtons = ({ /* participant, */ isMicrophoneMuted, setMicrophoneMuted }) => {
-  // const participantIdentity = participant.identity;
+const OtherParticipantButtons = ({ participant, isMicrophoneMuted, setMicrophoneMuted }) => {
   const toggleMicrophone = () => {
     setMicrophoneMuted(!isMicrophoneMuted);
     logButtonEvent(
       isMicrophoneMuted
         ? 'other-participant-microphone-on'
-        : 'other-participant-microphone-off'
+        : 'other-participant-microphone-off',
     );
   };
 
-  // const startVoteKickHandler = () => {
-  //   emit('startVoteKick', { participantIdentity });
-  //   logButtonEvent('start-vote-kick');
-  // };
+  const startVoteKickHandler = () => {
+    emit('startVoteKick', { participantIdentity: participant.identity });
+    logButtonEvent('start-vote-kick');
+  };
 
   return (
     <>
