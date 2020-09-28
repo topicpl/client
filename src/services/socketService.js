@@ -4,9 +4,9 @@ import io from 'socket.io-client';
 import appConfig from '../../appConfig';
 
 let socket;
-if (appConfig.isDev) socket = io('http://localhost:3000');
+if (appConfig.isDev) socket = io(appConfig.serverUrl);
 else {
-  socket = io('https://thetopic.pl', { path: '/api/socket.io', secure: true });
+  socket = io(appConfig.serverUrl, { path: '/api/socket.io' });
 }
 let identity;
 let roomSid;
