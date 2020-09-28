@@ -1,13 +1,9 @@
 /* eslint-disable no-console */
-// eslint-disable-next-line import/no-extraneous-dependencies
 import io from 'socket.io-client';
 import appConfig from '../../appConfig';
 
-let socket;
-if (appConfig.isDev) socket = io(appConfig.serverUrl);
-else {
-  socket = io(appConfig.serverUrl, { path: '/api/socket.io' });
-}
+const socket = io(appConfig.serverUrl, { path: '/api/socket.io' });
+
 let identity;
 let roomSid;
 let socketToken;
