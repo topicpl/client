@@ -3,6 +3,9 @@ import Video from 'twilio-video';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import styled from 'styled-components';
 import Participant from '../Participant';
+import getCreds from '../../services/tokenService';
+
+const { token } = getCreds();
 
 const RoomContainer = styled.div`
   position: relative;
@@ -22,7 +25,7 @@ const ParticipantsWrapper = styled.div`
   }}
 `;
 
-const Room = ({ roomName, token, handleLogout, nextRoomHandler, isConnecting }) => {
+const Room = ({ roomName, handleLogout, nextRoomHandler, isConnecting }) => {
   const [room, setRoom] = useState(null);
   const [participants, setParticipants] = useState([]);
 

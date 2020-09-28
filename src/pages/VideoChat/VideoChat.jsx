@@ -11,8 +11,10 @@ import Room from '../../components/Room';
 import appConfig from '../../../appConfig';
 import MyVideo from './MyVideo';
 import Layout from '../../app/Layout';
+import { getCreds } from '../../services/tokenService';
 // import { emit, rememberIdentity } from '../../services/socketService';
 import { getQueryVariable } from '../../utils/helpers';
+
 
 // const cookies = new Cookies();
 
@@ -20,8 +22,7 @@ const VideoChat = () => {
   const history = useHistory();
   const { category } = useParams();
   const [roomParam, setRoomParam] = useState(null);
-  const [roomData, setRoomData] = useState(null);
-  const [token, setToken] = useState(null);
+  const [roomID, setRoomID] = useState(null);
   const [isConnecting, setIsConnecting] = useState(null);
 
   useEffect(() => {
@@ -31,17 +32,17 @@ const VideoChat = () => {
   }, []);
 
   const nextRoomHandler = () => {
-    setRoomData(null);
+    setRoomID(null);
     setIsConnecting(true);
     event({ category: 'video-buttons', action: 'click', label: 'next-room' });
-    return axios.post(`${appConfig.serverUrl}/api/findNextRoom`, { category, currentRoomSid: roomData.sid })
+    return axios.post(`${appConfig.serverUrl}/api/findNextRoom`, { category, currentRoomSid: roomID })
       .then((res) => {
         handleLogout();
         const { room } = res.data;
         setRoomParam(room.uniqueName);
         history.push({ search: `?room=${room.uniqueName}` });
-        setRoomData(room);
-        setToken(res.data.token);
+        setRoomID(room);
+      //  setToken(res.data.token);
       })
       .catch(console.error)
       .finally(() => setIsConnecting(false));
@@ -59,17 +60,13 @@ const VideoChat = () => {
       label: category,
     });
     setIsConnecting(true);
+    const { id, token } = getCreds();
+    if (!token || !id) return setIsConnecting(false);
     axios
-      .post(`${appConfig.serverUrl}/api/getRoom`, { category, roomParam })
+      .post(`${appConfig.serverUrl}/api/connect`, { category, roomParam, token, id })
       .then((res) => {
-        // cookies.set('socketToken', res.data.socketToken, { path: '/' });
-        // rememberIdentity(res.data.room.sid, res.data.identity);
-        // const roomSid = res.data.room.sid;
-        // const { identity } = res.data;
-        // emit('registerSocket', { roomSid, identity });
-        history.push({ search: `?room=${res.data.room.uniqueName}` });
-        setRoomData(res.data.room);
-        setToken(res.data.token);
+        history.push({ search: `?room=${res.data.roomID}` });
+        setRoomID(res.data.roomID);
       })
       .catch(() => {
         setIsConnecting(false);
@@ -80,15 +77,14 @@ const VideoChat = () => {
 
   const handleLogout = () => {
     history.push({ search: '' });
-    setToken(null);
+    // setToken(null);
   };
 
   let render;
-  if (token && roomData && roomData.uniqueName) {
+  if (/* token */1 && roomID) {
     render = (
       <Room
-        roomName={roomData.uniqueName}
-        token={token}
+        roomName={roomID}
         handleLogout={handleLogout}
         nextRoomHandler={nextRoomHandler}
         isConnecting={isConnecting}
