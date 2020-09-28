@@ -3,10 +3,10 @@ const t = {
   id: null,
 };
 
-export function getCreds(){
+export function getCreds() {
   return t;
 }
-export function setCreds(id, token){
+export function setCreds(id, token) {
   t.id = id;
   t.token = token;
 }
