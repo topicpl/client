@@ -15,7 +15,6 @@ import { getCreds } from '../../services/tokenService';
 // import { emit, rememberIdentity } from '../../services/socketService';
 import { getQueryVariable } from '../../utils/helpers';
 
-
 // const cookies = new Cookies();
 
 const VideoChat = () => {

@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import Video from 'twilio-video';
-// eslint-disable-next-line import/no-extraneous-dependencies
+import React, { useRef, useState, useEffect } from 'react';
 import styled from 'styled-components';
-import Participant from '../Participant';
-import getCreds from '../../services/tokenService';
+import Peer from 'simple-peer';
+// import Participant from '../Participant';
+import { getCreds } from '../../services/tokenService';
+import { emit } from '../../services/socketService';
 
 const { token } = getCreds();
 
@@ -26,46 +26,31 @@ const ParticipantsWrapper = styled.div`
 `;
 
 const Room = ({ roomName, handleLogout, nextRoomHandler, isConnecting }) => {
-  const [room, setRoom] = useState(null);
-  const [participants, setParticipants] = useState([]);
+  const userVideo = useRef();
 
   useEffect(() => {
-    const participantConnected = (participant) => {
-      setParticipants((prevParticipants) => [...prevParticipants, participant]);
-    };
+    navigator.mediaDevices.getUserMedia({ audio: true, video: true })
+      .then((stream) => {
+        userVideo.current.srcObject = stream;
 
-    const participantDisconnected = (participant) => {
-      setParticipants((prevParticipants) => prevParticipants.filter((p) => p !== participant));
-    };
+        const peer = new Peer({ initiator: true, trickle: false, stream });
 
-    Video.connect(token, { name: roomName })
-      .then((roomData) => {
-        setRoom(roomData);
-        roomData.on('participantConnected', participantConnected);
-        roomData.on('participantDisconnected', participantDisconnected);
-        roomData.participants.forEach(participantConnected);
+        peer.on('signal', (signal) => {
+          emit('signal', { userId: '123456', roomName, signal });
+        });
+
+
+        stream.onremovetrack = () => console.warn('Stream ended');
       });
+  });
 
-    return () => {
-      setRoom((currentRoom) => {
-        if (currentRoom && currentRoom.localParticipant.state === 'connected') {
-          currentRoom.localParticipant.tracks.forEach((trackPublication) => {
-            trackPublication.track.stop();
-          });
-          currentRoom.disconnect();
-          return null;
-        }
-        return currentRoom;
-      });
-    };
-  }, [roomName, token]);
-
-  const totalParticipants = participants.length + 1;
-  const remoteParticipants = participants.map((participant) => <Participant key={participant.sid} participant={participant} totalParticipants={totalParticipants} />);
+  // const totalParticipants = participants.length + 1;
+  // const remoteParticipants = participants.map((participant) => <Participant key={participant.sid} participant={participant} totalParticipants={totalParticipants} />);
 
   return (
     <RoomContainer className="room">
-      <ParticipantsWrapper totalParticipants={totalParticipants}>
+      <video muted ref={userVideo} autoPlay playsInline />
+      {/* <ParticipantsWrapper totalParticipants={totalParticipants}>
         {remoteParticipants}
         {room && (
           <Participant
@@ -78,9 +63,8 @@ const Room = ({ roomName, handleLogout, nextRoomHandler, isConnecting }) => {
             handleLogout={handleLogout}
           />
         )}
-      </ParticipantsWrapper>
+      </ParticipantsWrapper> */}
     </RoomContainer>
   );
 };
-
 export default Room;
