@@ -36,7 +36,7 @@ const Room = ({ roomName, handleLogout, nextRoomHandler, isConnecting }) => {
         const peer = new Peer({ initiator: true, trickle: false, stream });
 
         peer.on('signal', (signal) => {
-          emit('signal', { userId: '123456', roomName, signal });
+          emit('signal', signal);
         });
 
 
