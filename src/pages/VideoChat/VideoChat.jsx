@@ -77,6 +77,8 @@ const VideoChat = () => {
 
   const handleLogout = () => {
     history.push({ search: '' });
+    axios
+      .post(`${appConfig.serverUrl}/api/disconnect`, { category, roomParam });
     setToken(null);
   };
 
