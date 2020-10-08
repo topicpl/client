@@ -1,12 +1,8 @@
-/* eslint-disable import/no-named-as-default-member */
-/* eslint-disable no-plusplus */
-/* eslint-disable no-console */
 import React, { useState, useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import axios from 'axios';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import styled from 'styled-components';
-import ReactGA, { event } from 'react-ga';
+import { event } from 'react-ga';
 import Room from '../../components/Room';
 import appConfig from '../../../appConfig';
 import MyVideo from './MyVideo';
