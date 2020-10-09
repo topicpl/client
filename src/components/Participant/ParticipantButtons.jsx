@@ -39,7 +39,7 @@ const MyButtons = ({ handleLogout, nextRoomHandler, isConnecting }) => {
 
   const toggleMicrophone = () => {
     setIsMyMicrophoneMuted(!isMyMicrophoneMuted);
-    logButtonEvent(isMyMicrophoneMuted ? 'microphone-on' : 'microphone-on');
+    logButtonEvent(isMyMicrophoneMuted ? 'microphone-off' : 'microphone-on');
   };
 
   return (
