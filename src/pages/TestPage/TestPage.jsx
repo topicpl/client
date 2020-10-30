@@ -27,7 +27,7 @@ const Test = () => {
     }
 
     // Create a transport in the server for sending our media through it.
-    const { transportOptions } = await mySignaling.createTransport({ direction: 'send' });
+    const { transportOptions } = await mySignaling.createTransport({ direction: 'send', peerId });
 
     // Create the local representation of our server-side transport.
     const sendTransport = device.createSendTransport(transportOptions);
@@ -70,7 +70,7 @@ const Test = () => {
   const createReceiveTransport = async () => {
     const device = new Device();
     await device.load({ routerRtpCapabilities: rtpCapabilities });
-    const { transportOptions } = await mySignaling.createTransport({ direction: 'recv', peerId: peerIpToReceive });
+    const { transportOptions } = await mySignaling.createTransport({ direction: 'recv', peerId });
     console.log('createReceiveTransport -> transportOptions', transportOptions);
     const recvTransport = device.createRecvTransport(transportOptions);
 
@@ -95,8 +95,8 @@ const Test = () => {
     const recvTransport = await createReceiveTransport();
 
     const consumerParameters = await mySignaling.receiveTrack({
-      peerId: peerIpToReceive,
-      mediaPeerId: peerIpToReceive,
+      peerId,
+      mediaPeerId: peerId,
       mediaTag: 'cam-video',
       rtpCapabilities,
     })
