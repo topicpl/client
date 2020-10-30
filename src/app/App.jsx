@@ -6,6 +6,7 @@ import { I18nProvider } from '../i18n';
 import MasterStyle from '../assets/styles/MasterStyle';
 
 import VideoChat from '../pages/VideoChat';
+import TestPage from '../pages/TestPage';
 import Categories from '../pages/categories/Categories';
 
 const App = () => {
@@ -32,6 +33,7 @@ const App = () => {
       <MasterStyle>
         <Router>
           <Switch>
+            <Route path="/test" component={TestPage} />
             <Route path={categoriesPath} exact component={Categories} />
             <Route path={videoChatPath} component={VideoChat} />
           </Switch>

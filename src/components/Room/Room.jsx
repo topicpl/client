@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Peer from 'simple-peer';
 // import Participant from '../Participant';
 import { getCreds } from '../../services/tokenService';
-import { emit } from '../../services/socketService';
+// import { emit } from '../../services/socketService';
 
 const { token } = getCreds();
 

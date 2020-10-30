@@ -5,7 +5,7 @@ import App from './app/App';
 import * as serviceWorker from './services/serviceWorker';
 import store from './store/store';
 
-require('./services/socketService');
+// require('./services/socketService');
 
 ReactDOM.render(
   <Provider store={store}>
