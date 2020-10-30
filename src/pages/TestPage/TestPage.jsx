@@ -89,9 +89,13 @@ const Test = () => {
 
     await mySignaling.resumeCustomer({ consumerId: consumer.id });
 
-    const videoEl = document.querySelector('#my-video');
-    videoEl.srcObject = new MediaStream([consumer.track.clone()]);
+    const videoWrapper = document.querySelector('#participants');
 
+    const videoEl = document.createElement('video');
+    videoEl.srcObject = new MediaStream([consumer.track.clone()]);
+    videoEl.setAttribute('controls', '');
+    videoEl.setAttribute('playsinline', '');
+    videoWrapper.appendChild(videoEl);
     videoEl.play()
       .catch((error) => console.warn('audioElem.play() failed:%o', error));
   };
@@ -125,7 +129,8 @@ const Test = () => {
           { peerIpToReceive }
         </span>
       </div>
-      <video width="320" height="240" autoPlay playsInline id="my-video" controls />
+      <div id="participants" />
+      {/* <video width="320" height="240" autoPlay playsInline id="my-video" controls /> */}
     </div>
   );
 };
