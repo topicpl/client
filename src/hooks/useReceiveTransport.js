@@ -4,10 +4,10 @@ import * as mySignaling from '../pages/TestPage/my-signaling';
 
 const sleep = (delayTime) => new Promise((resolve) => setTimeout(() => resolve(), delayTime));
 
-const useReceiveRoomTransport = ({ peerId, rtpCapabilities, mountVideo, peerIpToReceive }) => {
+const useReceiveRoomTransport = ({ peerId, rtpCapabilities, mountVideo }) => {
   const [recvTransport, setRecvTransport] = useState(null);
 
-  const receiveTrack = async () => {
+  const receiveTrack = async ({ peerIpToReceive }) => {
     if (!recvTransport) {
       const recvTransportData = await createReceiveTransport({ rtpCapabilities, peerId, peerIpToReceive });
       setRecvTransport(recvTransportData);

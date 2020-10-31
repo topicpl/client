@@ -1,13 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import useRoomJoin from '../../hooks/useRoomJoin';
 import useReceiveTransport from '../../hooks/useReceiveTransport';
+import useSyncParticipants from '../../hooks/useSyncParticipants';
 
 const peerId = `${Math.random().toString()}-participant`;
 
 const Test = () => {
-  const [peerIpToReceive, setPeerIpToReceive] = useState('');
-
-
   const mountVideo = (track) => {
     const videoWrapper = document.querySelector('#participants');
 
@@ -22,11 +20,17 @@ const Test = () => {
 
 
   const { joinRoom, rtpCapabilities, isConnected } = useRoomJoin({ mountVideo, peerId });
-  const { receiveTrack } = useReceiveTransport({ peerId, rtpCapabilities, mountVideo, peerIpToReceive });
+  const { receiveTrack } = useReceiveTransport({ peerId, rtpCapabilities, mountVideo });
+  const { syncInit, participantsIds } = useSyncParticipants({ peerId });
+
+  const onJoinClick = async () => {
+    await joinRoom();
+    await syncInit();
+  };
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
-      <button onClick={joinRoom} disabled={isConnected}>Join</button>
+      <button onClick={onJoinClick} disabled={isConnected}>Join</button>
       <div>
         currentParticipant:
         <div>
@@ -38,8 +42,17 @@ const Test = () => {
           </h1>
         </div>
       </div>
-      <input onChange={(e) => setPeerIpToReceive(e.target.value)} />
-      <button onClick={() => receiveTrack()}>receive</button>
+      <div style={{ display: 'flex', flexDirection: 'column' }}>
+        <span>Available participants:</span>
+        {
+          participantsIds && participantsIds.map((id) => (
+            <div className={{ display: 'flex' }} key={id}>
+              <span>{id}</span>
+              <button onClick={() => receiveTrack(id)}>connect</button>
+            </div>
+          ))
+        }
+      </div>
       <div id="participants" />
     </div>
   );

@@ -14,3 +14,5 @@ export const sendTrack = (data) => axios.post(`${serverUrl}/signaling/send-track
 export const receiveTrack = (data) => axios.post(`${serverUrl}/signaling/recv-track`, data).then((res) => res.data);
 
 export const resumeCustomer = (data) => axios.post(`${serverUrl}/signaling/resume-consumer`, data).then((res) => res.data);
+
+export const syncParticipants = (data) => axios.post(`${serverUrl}/signaling/sync`, data).then((res) => res.data);
