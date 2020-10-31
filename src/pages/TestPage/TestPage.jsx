@@ -48,7 +48,7 @@ const Test = () => {
           participantsIds && participantsIds.map((id) => (
             <div className={{ display: 'flex' }} key={id}>
               <span>{id}</span>
-              <button onClick={() => receiveTrack(id)}>connect</button>
+              <button disabled={id === peerId} onClick={() => receiveTrack(id)}>connect</button>
             </div>
           ))
         }
