@@ -1,14 +1,20 @@
+import { useState } from 'react';
 import { createReceiveTransport } from '../pages/TestPage/transportHelpers';
 import * as mySignaling from '../pages/TestPage/my-signaling';
 
 const sleep = (delayTime) => new Promise((resolve) => setTimeout(() => resolve(), delayTime));
 
 const useReceiveRoomTransport = ({ peerId, rtpCapabilities, mountVideo, peerIpToReceive }) => {
+  const [recvTransport, setRecvTransport] = useState(null);
+
   const receiveTrack = async () => {
-    const recvTransport = await createReceiveTransport({ rtpCapabilities, peerId, peerIpToReceive });
+    if (!recvTransport) {
+      const recvTransportData = await createReceiveTransport({ rtpCapabilities, peerId, peerIpToReceive });
+      setRecvTransport(recvTransportData);
+    }
+
     const consumerParameters = await mySignaling.receiveTrack({ peerId, mediaPeerId: peerId, mediaTag: 'cam-video', rtpCapabilities })
       .catch(console.error);
-    console.log('receiveTrack -> consumerParameters', consumerParameters);
 
     const consumer = await recvTransport.consume({
       ...consumerParameters,
