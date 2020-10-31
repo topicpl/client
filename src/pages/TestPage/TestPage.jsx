@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Device } from 'mediasoup-client';
 import * as mySignaling from './my-signaling';
+import useRoomJoin from '../../hooks/useRoomJoin';
 
 const peerId = `${Math.random().toString()}-participant`;
 const sleep = (delayTime) => new Promise((resolve) => setTimeout(() => resolve(), delayTime));
 const Test = () => {
-  const [rtpCapabilities, setRtpCapabilities] = useState(null);
   const [peerIpToReceive, setPeerIpToReceive] = useState('');
-  const [isInRoom, setIsInRoom] = useState(false);
+  const [receiveTransportOptions, setReceiveTransportOptions] = useState(null);
 
 
   const mountVideo = (track) => {
@@ -22,54 +22,15 @@ const Test = () => {
       .catch((error) => console.warn('audioElem.play() failed:%o', error));
   };
 
-  const main = async () => {
-    setIsInRoom(true);
-    const device = new Device();
+  const { joinRoom, rtpCapabilities, isConnected } = useRoomJoin({ mountVideo, peerId });
 
-    // Communicate with our server app to retrieve router RTP capabilities.
-    const { routerRtpCapabilities } = await mySignaling.getRouterRtpCapabilities({ peerId });
-    setRtpCapabilities(routerRtpCapabilities);
-    // Load the device with the router RTP capabilities.
-    await device.load({ routerRtpCapabilities });
-    device.observer.on('newtransport', (transport) => {
-      console.log('new transport created [id:%s]', transport.id);
-    });
-    // Check whether we can produce video to the router.
-    if (!device.canProduce('video')) {
-      console.warn('cannot produce video');
-      // Abort next steps.
-    }
-
-    // Create a transport in the server for sending our media through it.
-    const { transportOptions } = await mySignaling.createTransport({ direction: 'send', peerId });
-
-    // Create the local representation of our server-side transport.
-    const sendTransport = device.createSendTransport(transportOptions);
-    // Set transport "connect" event handler.
-    sendTransport.on('connect', async ({ dtlsParameters }, callback, errback) => {
-      // Here we must communicate our local parameters to our remote transport.
-      mySignaling.connectTransport({ transportId: sendTransport.id, dtlsParameters })
-        .then(callback)// Done in the server, tell our transport.
-        .catch(errback); // Something was wrong in server side.
-    });
-
-    // Set transport "produce" event handler.
-    sendTransport.on('produce', ({ kind, rtpParameters, appData }, callback, errback) => {
-      mySignaling.sendTrack({ peerId, transportId: sendTransport.id, kind, rtpParameters, appData })
-        .then(callback)
-        .catch(errback);
-    });
-
-    const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-    const webcamTrack = stream.getVideoTracks()[0];
-    mountVideo(webcamTrack);
-    const webcamProducer = await sendTransport.produce({ track: webcamTrack, appData: { mediaTag: 'cam-video' } });
-  };
 
   const createReceiveTransport = async () => {
     const device = new Device();
     await device.load({ routerRtpCapabilities: rtpCapabilities });
+
     const { transportOptions } = await mySignaling.createTransport({ direction: 'recv', peerId });
+
 
     const recvTransport = device.createRecvTransport(transportOptions);
 
@@ -116,7 +77,7 @@ const Test = () => {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
-      <button onClick={main} disabled={isInRoom}>Join</button>
+      <button onClick={joinRoom} disabled={isConnected}>Join</button>
       <div>
         currentParticipant:
         {' '}
