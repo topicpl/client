@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Device } from 'mediasoup-client';
 import * as mySignaling from '../pages/TestPage/my-signaling';
 
-const useConnect = ({ peerId, mountVideo }) => {
+const useRoomJoin = ({ peerId, mountVideo }) => {
   const device = new Device();
   const [isConnected, setIsConnected] = useState(false);
   const [rtpCapabilities, setRtpCapabilities] = useState(null);
@@ -54,4 +54,4 @@ const useConnect = ({ peerId, mountVideo }) => {
 };
 
 
-export default useConnect;
+export default useRoomJoin;
