@@ -3,12 +3,24 @@ import { Device } from 'mediasoup-client';
 import * as mySignaling from './my-signaling';
 
 const peerId = `${Math.random().toString()}-participant`;
-
+const sleep = (delayTime) => new Promise((resolve) => setTimeout(() => resolve(), delayTime));
 const Test = () => {
   const [rtpCapabilities, setRtpCapabilities] = useState(null);
   const [peerIpToReceive, setPeerIpToReceive] = useState('');
   const [isInRoom, setIsInRoom] = useState(false);
 
+
+  const mountVideo = (track) => {
+    const videoWrapper = document.querySelector('#participants');
+
+    const videoEl = document.createElement('video');
+    videoEl.srcObject = new MediaStream([track.clone()]);
+    videoEl.setAttribute('controls', '');
+    videoEl.setAttribute('playsinline', '');
+    videoWrapper.appendChild(videoEl);
+    videoEl.play()
+      .catch((error) => console.warn('audioElem.play() failed:%o', error));
+  };
 
   const main = async () => {
     setIsInRoom(true);
@@ -50,6 +62,7 @@ const Test = () => {
 
     const stream = await navigator.mediaDevices.getUserMedia({ video: true });
     const webcamTrack = stream.getVideoTracks()[0];
+    mountVideo(webcamTrack);
     const webcamProducer = await sendTransport.produce({ track: webcamTrack, appData: { mediaTag: 'cam-video' } });
   };
 
@@ -81,23 +94,20 @@ const Test = () => {
     const recvTransport = await createReceiveTransport();
     const consumerParameters = await mySignaling.receiveTrack({ peerId, mediaPeerId: peerId, mediaTag: 'cam-video', rtpCapabilities })
       .catch(console.error);
+    console.log('receiveTrack -> consumerParameters', consumerParameters);
 
     const consumer = await recvTransport.consume({
       ...consumerParameters,
       appData: { peerId: peerIpToReceive, mediaTag: 'cam-video' },
     });
+    while (recvTransport.connectionState !== 'connected') {
+      console.log('  transport connstate', recvTransport.connectionState);
+      await sleep(100);
+    }
 
     await mySignaling.resumeCustomer({ consumerId: consumer.id });
 
-    const videoWrapper = document.querySelector('#participants');
-
-    const videoEl = document.createElement('video');
-    videoEl.srcObject = new MediaStream([consumer.track.clone()]);
-    videoEl.setAttribute('controls', '');
-    videoEl.setAttribute('playsinline', '');
-    videoWrapper.appendChild(videoEl);
-    videoEl.play()
-      .catch((error) => console.warn('audioElem.play() failed:%o', error));
+    mountVideo(consumer.track);
   };
 
   useEffect(() => {
