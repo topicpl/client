@@ -29,7 +29,7 @@ const Test = () => {
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', marginTop: '20px' }}>
       <button onClick={onJoinClick} disabled={isConnected}>Join</button>
       <div>
         currentParticipant:
