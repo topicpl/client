@@ -6,12 +6,14 @@ import useSyncParticipants from '../../hooks/useSyncParticipants';
 const peerId = `${Math.random().toString()}-participant`;
 
 const Test = () => {
-  const mountVideo = (track) => {
+  const mountVideo = (consumer) => {
+    console.log('mountVideo -> consumer', consumer);
     const videoWrapper = document.querySelector('#participants');
 
-    const videoEl = document.createElement('video');
-    videoEl.srcObject = new MediaStream([track.clone()]);
-    videoEl.setAttribute('controls', '');
+    const videoEl = document.createElement(consumer.kind);
+    videoEl.setAttribute('participant-id', consumer.id);
+    videoEl.srcObject = new MediaStream([consumer.track]);
+    // videoEl.setAttribute('controls', '');
     videoEl.setAttribute('playsinline', '');
     videoWrapper.appendChild(videoEl);
     videoEl.play()

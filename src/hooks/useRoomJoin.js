@@ -44,10 +44,13 @@ const useRoomJoin = ({ peerId, mountVideo }) => {
         .catch(errback);
     });
 
-    const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+    const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
     const webcamTrack = stream.getVideoTracks()[0];
-    mountVideo(webcamTrack);
-    const webcamProducer = await sendTransport.produce({ track: webcamTrack, appData: { mediaTag: 'cam-video' } });
+    const audioTrack = stream.getAudioTracks()[0];
+    mountVideo({ track: webcamTrack, id: peerId, kind: 'video' });
+
+    await sendTransport.produce({ track: webcamTrack, appData: { mediaTag: 'cam-video' } });
+    await sendTransport.produce({ track: audioTrack, appData: { mediaTag: 'cam-audio' } });
   };
 
   return { joinRoom, rtpCapabilities, isConnected };

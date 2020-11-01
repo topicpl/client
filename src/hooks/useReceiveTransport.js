@@ -15,19 +15,23 @@ const useReceiveRoomTransport = ({ peerId, rtpCapabilities, mountVideo }) => {
 
     const consumerParameters = await mySignaling.receiveTrack({ peerId, mediaPeerId: peerId, mediaTag: 'cam-video', rtpCapabilities })
       .catch(console.error);
+    const consumer = await recvTransport.consume({ ...consumerParameters, appData: { peerId: peerIpToReceive, mediaTag: 'cam-video' } });
 
-    const consumer = await recvTransport.consume({
-      ...consumerParameters,
-      appData: { peerId: peerIpToReceive, mediaTag: 'cam-video' },
-    });
+
+    const consumerParametersAudio = await mySignaling.receiveTrack({ peerId, mediaPeerId: peerId, mediaTag: 'cam-audio', rtpCapabilities })
+      .catch(console.error);
+
+    const consumerAudio = await recvTransport.consume({ ...consumerParametersAudio, appData: { peerId: peerIpToReceive, mediaTag: 'cam-audio' } });
     while (recvTransport.connectionState !== 'connected') {
       // eslint-disable-next-line no-await-in-loop
       await sleep(100);
     }
 
+    await mySignaling.resumeCustomer({ consumerId: consumerAudio.id });
     await mySignaling.resumeCustomer({ consumerId: consumer.id });
 
-    mountVideo(consumer.track);
+    mountVideo(consumer);
+    mountVideo(consumerAudio);
   };
 
   return { receiveTrack };
