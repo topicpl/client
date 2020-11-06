@@ -41,7 +41,7 @@ const Room = ({ roomName, handleLogout, nextRoomHandler, isConnecting }) => {
   });
 
   const mountVideo = (consumer) => {
-    console.log('mountVideo -> consumer', consumer);
+    console.warn('mountVideo -> consumer', consumer);
     const videoWrapper = document.querySelector('#participants');
 
     const videoEl = document.createElement(consumer.kind);
@@ -55,7 +55,7 @@ const Room = ({ roomName, handleLogout, nextRoomHandler, isConnecting }) => {
   };
 
 
-  const { joinRoom, rtpCapabilities, isConnected } = useRoomJoin({ mountVideo, peerId, roomName });
+  const { joinRoom, rtpCapabilities, isConnected } = useRoomJoin({ peerId, roomName });
   const { receiveTrack } = useReceiveTransport({ peerId, rtpCapabilities, mountVideo });
   const { syncInit, participantsIds } = useSyncParticipants({ peerId });
 

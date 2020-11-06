@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Device } from 'mediasoup-client';
 import * as mySignaling from '../pages/TestPage/my-signaling';
 
-const useRoomJoin = ({ peerId, mountVideo, roomName }) => {
+const useRoomJoin = ({ peerId, roomName }) => {
   const device = new Device();
   const [isConnected, setIsConnected] = useState(false);
   const [rtpCapabilities, setRtpCapabilities] = useState(null);
@@ -47,7 +47,6 @@ const useRoomJoin = ({ peerId, mountVideo, roomName }) => {
     const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
     const webcamTrack = stream.getVideoTracks()[0];
     const audioTrack = stream.getAudioTracks()[0];
-    mountVideo({ track: webcamTrack, id: peerId, kind: 'video' });
 
     await sendTransport.produce({ track: webcamTrack, appData: { mediaTag: 'cam-video' } });
     await sendTransport.produce({ track: audioTrack, appData: { mediaTag: 'cam-audio' } });
