@@ -1,11 +1,11 @@
 import React, { useRef, useState, useEffect } from 'react';
 import styled from 'styled-components';
-import Peer from 'simple-peer';
 // import Participant from '../Participant';
 import { getCreds } from '../../services/tokenService';
-// import { emit } from '../../services/socketService';
 
-const { token } = getCreds();
+import useRoomJoin from '../../hooks/useRoomJoin';
+import useReceiveTransport from '../../hooks/useReceiveTransport';
+import useSyncParticipants from '../../hooks/useSyncParticipants';
 
 const RoomContainer = styled.div`
   position: relative;
@@ -24,6 +24,7 @@ const ParticipantsWrapper = styled.div`
     if (totalParticipants < 1) return 'repeat(2, 1fr);';
   }}
 `;
+const peerId = `${Math.random().toString()}-participant`;
 
 const Room = ({ roomName, handleLogout, nextRoomHandler, isConnecting }) => {
   const userVideo = useRef();
@@ -33,16 +34,34 @@ const Room = ({ roomName, handleLogout, nextRoomHandler, isConnecting }) => {
       .then((stream) => {
         userVideo.current.srcObject = stream;
 
-        const peer = new Peer({ initiator: true, trickle: false, stream });
-
-        peer.on('signal', (signal) => {
-          emit('signal', signal);
-        });
-
 
         stream.onremovetrack = () => console.warn('Stream ended');
       });
   });
+
+  const mountVideo = (consumer) => {
+    console.log('mountVideo -> consumer', consumer);
+    const videoWrapper = document.querySelector('#participants');
+
+    const videoEl = document.createElement(consumer.kind);
+    videoEl.setAttribute('participant-id', consumer.id);
+    videoEl.srcObject = new MediaStream([consumer.track]);
+    // videoEl.setAttribute('controls', '');
+    videoEl.setAttribute('playsinline', '');
+    videoWrapper.appendChild(videoEl);
+    videoEl.play()
+      .catch((error) => console.warn('audioElem.play() failed:%o', error));
+  };
+
+
+  const { joinRoom, rtpCapabilities, isConnected } = useRoomJoin({ mountVideo, peerId });
+  const { receiveTrack } = useReceiveTransport({ peerId, rtpCapabilities, mountVideo });
+  const { syncInit, participantsIds } = useSyncParticipants({ peerId });
+
+  const onJoinClick = async () => {
+    await joinRoom();
+    await syncInit();
+  };
 
   // const totalParticipants = participants.length + 1;
   // const remoteParticipants = participants.map((participant) => <Participant key={participant.sid} participant={participant} totalParticipants={totalParticipants} />);
@@ -64,6 +83,32 @@ const Room = ({ roomName, handleLogout, nextRoomHandler, isConnecting }) => {
           />
         )}
       </ParticipantsWrapper> */}
+      <div style={{ display: 'flex', flexDirection: 'column', marginTop: '20px' }}>
+        <button onClick={onJoinClick} disabled={isConnected}>Join</button>
+        <div>
+          currentParticipant:
+          <div>
+            <h1 style={{ color: 'red', padding: '20px', fontSize: '30px', zIndex: 10 }}>
+              <span>
+                my participant id:
+                <input style={{ padding: '10px', width: '400px' }} value={peerId} readOnly />
+              </span>
+            </h1>
+          </div>
+        </div>
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <span>Available participants:</span>
+          {
+            participantsIds && participantsIds.map((id) => (
+              <div className={{ display: 'flex' }} key={id}>
+                <span>{id}</span>
+                <button disabled={id === peerId} onClick={() => receiveTrack(id)}>connect</button>
+              </div>
+            ))
+          }
+        </div>
+        <div id="participants" />
+      </div>
     </RoomContainer>
   );
 };

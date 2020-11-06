@@ -8,7 +8,7 @@ import appConfig from '../../../appConfig';
 import MyVideo from './MyVideo';
 import Layout from '../../app/Layout';
 import { getCreds } from '../../services/tokenService';
-// import { emit, rememberIdentity } from '../../services/socketService';
+import { emit, rememberIdentity } from '../../services/socketService';
 import { getQueryVariable } from '../../utils/helpers';
 
 // const cookies = new Cookies();
@@ -21,7 +21,7 @@ const VideoChat = () => {
   const [isConnecting, setIsConnecting] = useState(null);
 
   useEffect(() => {
-    const queryVal = getQueryVariable('room');
+    const queryVal = getQueryVariable('room') || 'art--5bgsbe224ke3skz695';
     setRoomParam(queryVal);
     event({ category: 'link-room', action: 'load', label: queryVal });
   }, []);
@@ -54,20 +54,21 @@ const VideoChat = () => {
       action: 'click',
       label: category,
     });
-    setIsConnecting(true);
-    const { id, token } = getCreds();
-    if (!token || !id) return setIsConnecting(false);
-    axios
-      .post(`${appConfig.serverUrl}/api/connect`, { category, roomParam, token, id })
-      .then((res) => {
-        history.push({ search: `?room=${res.data.roomID}` });
-        setRoomID(res.data.roomID);
-      })
-      .catch(() => {
-        setIsConnecting(false);
-        connect();
-      })
-      .finally(() => setIsConnecting(false));
+    setRoomID(roomParam);
+    // setIsConnecting(true);
+    // const { id, token } = getCreds();
+    // if (!token || !id) return setIsConnecting(false);
+    // axios
+    //   .post(`${appConfig.serverUrl}/api/connect`, { category, roomParam, token, id })
+    //   .then((res) => {
+    //     history.push({ search: `?room=${res.data.roomID}` });
+    //     setRoomID(res.data.roomID);
+    //   })
+    //   .catch(() => {
+    //     setIsConnecting(false);
+    //     connect();
+    //   })
+    //   .finally(() => setIsConnecting(false));
   };
 
   const handleLogout = () => {
