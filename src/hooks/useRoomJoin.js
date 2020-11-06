@@ -16,7 +16,7 @@ const useRoomJoin = ({ peerId, mountVideo }) => {
     // Load the device with the router RTP capabilities.
     await device.load({ routerRtpCapabilities });
     device.observer.on('newtransport', (transport) => {
-      console.log('new transport created [id:%s]', transport.id);
+      console.warn('new transport created [id:%s]', transport.id);
     });
     // Check whether we can produce video to the router.
     if (!device.canProduce('video')) {
