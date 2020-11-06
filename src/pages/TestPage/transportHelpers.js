@@ -12,7 +12,7 @@ export const createReceiveTransport = async ({ rtpCapabilities, peerId, peerIpTo
   const recvTransport = device.createRecvTransport(transportOptions);
 
   recvTransport.on('connect', async ({ dtlsParameters }, callback, errback) => {
-    const { error } = await mySignaling.connectTransport({ transportId: transportOptions.id, dtlsParameters, peerId: peerIpToReceive });
+    const { error } = await mySignaling.connectTransport({ transportId: transportOptions.id, dtlsParameters, peerId });
     return error ? errback() : callback();
   });
   recvTransport.on('connectionstatechange', async (state) => {
