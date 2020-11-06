@@ -27,6 +27,7 @@ const ParticipantsWrapper = styled.div`
 const peerId = `${Math.random().toString()}-participant`;
 
 const Room = ({ roomName, handleLogout, nextRoomHandler, isConnecting }) => {
+  console.log('Room -> roomName', roomName);
   const userVideo = useRef();
 
   useEffect(() => {
@@ -54,7 +55,7 @@ const Room = ({ roomName, handleLogout, nextRoomHandler, isConnecting }) => {
   };
 
 
-  const { joinRoom, rtpCapabilities, isConnected } = useRoomJoin({ mountVideo, peerId });
+  const { joinRoom, rtpCapabilities, isConnected } = useRoomJoin({ mountVideo, peerId, roomName });
   const { receiveTrack } = useReceiveTransport({ peerId, rtpCapabilities, mountVideo });
   const { syncInit, participantsIds } = useSyncParticipants({ peerId });
 

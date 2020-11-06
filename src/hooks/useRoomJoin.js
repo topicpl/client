@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Device } from 'mediasoup-client';
 import * as mySignaling from '../pages/TestPage/my-signaling';
 
-const useRoomJoin = ({ peerId, mountVideo }) => {
+const useRoomJoin = ({ peerId, mountVideo, roomName }) => {
   const device = new Device();
   const [isConnected, setIsConnected] = useState(false);
   const [rtpCapabilities, setRtpCapabilities] = useState(null);
@@ -25,7 +25,7 @@ const useRoomJoin = ({ peerId, mountVideo }) => {
     }
 
     // Create a transport in the server for sending our media through it.
-    const { transportOptions } = await mySignaling.createTransport({ direction: 'send', peerId });
+    const { transportOptions } = await mySignaling.createTransport({ direction: 'send', peerId, roomName });
 
     // Create the local representation of our server-side transport.
     const sendTransport = device.createSendTransport(transportOptions);
