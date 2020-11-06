@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { syncParticipants } from '../pages/TestPage/my-signaling';
 
 

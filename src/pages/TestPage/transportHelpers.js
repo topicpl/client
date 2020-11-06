@@ -2,7 +2,7 @@
 import { Device } from 'mediasoup-client';
 import * as mySignaling from './my-signaling';
 
-export const createReceiveTransport = async ({ rtpCapabilities, peerId, peerIpToReceive }) => {
+export const createReceiveTransport = async ({ rtpCapabilities, peerId }) => {
   const device = new Device();
   await device.load({ routerRtpCapabilities: rtpCapabilities });
 
@@ -16,11 +16,13 @@ export const createReceiveTransport = async ({ rtpCapabilities, peerId, peerIpTo
     return error ? errback() : callback();
   });
   recvTransport.on('connectionstatechange', async (state) => {
+    // eslint-disable-next-line no-console
     console.log(`transport ${recvTransport.id} connectionstatechange ${state}`);
     // for this simple sample code, assume that transports being
     // closed is an error (we never close these transports except when
     // we leave the room)
     if (state === 'closed' || state === 'failed' || state === 'disconnected') {
+      // eslint-disable-next-line no-console
       console.log('transport closed ... leaving the room and resetting');
     }
   });
