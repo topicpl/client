@@ -1,5 +1,4 @@
 /* eslint-disable no-console */
-// eslint-disable-next-line import/no-extraneous-dependencies
 import io from 'socket.io-client';
 import appConfig from '../../appConfig';
 import { setCreds, getCreds } from './tokenService';
