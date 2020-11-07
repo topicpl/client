@@ -35,10 +35,10 @@ const Room = ({ roomName, handleLogout, nextRoomHandler, isConnecting }) => {
       .then((stream) => {
         userVideo.current.srcObject = stream;
 
-
+        onJoinClick();
         stream.onremovetrack = () => console.warn('Stream ended');
       });
-  });
+  }, []);
 
   const mountVideo = (consumer) => {
     console.warn('mountVideo -> consumer', consumer);
@@ -85,7 +85,6 @@ const Room = ({ roomName, handleLogout, nextRoomHandler, isConnecting }) => {
         )}
       </ParticipantsWrapper> */}
       <div style={{ display: 'flex', flexDirection: 'column', marginTop: '20px' }}>
-        <button onClick={onJoinClick} disabled={isConnected}>Join</button>
         <div>
           currentParticipant:
           <div>
