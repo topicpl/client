@@ -1,17 +1,12 @@
 import { useState } from 'react';
-import { syncParticipants } from '../pages/TestPage/my-signaling';
+import { getParticipants } from '../services/participantsService';
 
 
-const useSyncParticipants = ({ peerId }) => {
+const useSyncParticipants = () => {
   const [participantsIds, setParticipantsIds] = useState(null);
 
   const syncRequest = () => {
-    syncParticipants({ peerId })
-      .then((res) => {
-        const ids = Object.keys(res.peers);
-        setParticipantsIds(ids);
-      })
-      .catch(console.error);
+    setParticipantsIds(getParticipants());
   };
 
   const syncInit = () => {

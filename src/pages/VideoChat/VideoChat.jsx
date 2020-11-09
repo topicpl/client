@@ -37,7 +37,6 @@ const VideoChat = () => {
         setRoomParam(room.uniqueName);
         history.push({ search: `?room=${room.uniqueName}` });
         setRoomID(room);
-      //  setToken(res.data.token);
       })
       .catch(console.error)
       .finally(() => setIsConnecting(false));
@@ -54,33 +53,32 @@ const VideoChat = () => {
       action: 'click',
       label: category,
     });
-    setRoomID(roomParam);
-    // setIsConnecting(true);
-    // const { id, token } = getCreds();
-    // if (!token || !id) return setIsConnecting(false);
-    // axios
-    //   .post(`${appConfig.serverUrl}/api/connect`, { category, roomParam, token, id })
-    //   .then((res) => {
-    //     history.push({ search: `?room=${res.data.roomID}` });
-    //     setRoomID(res.data.roomID);
-    //   })
-    //   .catch(() => {
-    //     setIsConnecting(false);
-    //     connect();
-    //   })
-    //   .finally(() => setIsConnecting(false));
+     setIsConnecting(true);
+     const { id, token } = getCreds();
+     if (!token || !id) return setIsConnecting(false);
+     axios
+       .post(`${appConfig.serverUrl}/api/connect`, { category, roomParam, token, id })
+       .then((res) => {
+         history.push({ search: `?room=${res.data.roomID}` });
+         setRoomID(res.data.roomID);
+       })
+       .catch(() => {
+         setIsConnecting(false);
+         connect();
+       })
+       .finally(() => setIsConnecting(false));
   };
 
   const handleLogout = () => {
     history.push({ search: '' });
-    // setToken(null);
+    setToken(null);
   };
 
   let render;
-  if (/* token */1 && roomID) {
+  if (roomID) {
     render = (
       <Room
-        roomName={roomID}
+        roomID={roomID}
         handleLogout={handleLogout}
         nextRoomHandler={nextRoomHandler}
         isConnecting={isConnecting}

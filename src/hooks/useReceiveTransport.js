@@ -4,24 +4,23 @@ import * as mySignaling from '../pages/TestPage/my-signaling';
 
 const sleep = (delayTime) => new Promise((resolve) => setTimeout(() => resolve(), delayTime));
 
-const useReceiveRoomTransport = ({ peerId, rtpCapabilities, mountVideo }) => {
+const useReceiveRoomTransport = ({ peerID, rtpCapabilities, mountVideo }) => {
   const [recvTransport, setRecvTransport] = useState(null);
 
-  const receiveTrack = async (peerIdToReceive) => {
+  const receiveTrack = async (peerIDToReceive) => {
     if (!recvTransport) {
-      const recvTransportData = await createReceiveTransport({ rtpCapabilities, peerId, peerIpToReceive: peerIdToReceive });
+      const recvTransportData = await createReceiveTransport({ rtpCapabilities, peerID, peerIpToReceive: peerIDToReceive });
       setRecvTransport(recvTransportData);
     }
-
-    const consumerParameters = await mySignaling.receiveTrack({ peerId, mediaPeerId: peerId, mediaTag: 'cam-video', rtpCapabilities })
+    const consumerParameters = await mySignaling.receiveTrack({ peerID, mediapeerID: peerID, mediaTag: 'cam-video', rtpCapabilities })
       .catch(console.error);
-    const consumer = await recvTransport.consume({ ...consumerParameters, appData: { peerId: peerIdToReceive, mediaTag: 'cam-video' } });
+    const consumer = await recvTransport.consume({ ...consumerParameters, appData: { peerID: peerIDToReceive, mediaTag: 'cam-video' } });
 
 
-    const consumerParametersAudio = await mySignaling.receiveTrack({ peerId, mediaPeerId: peerId, mediaTag: 'cam-audio', rtpCapabilities })
+    const consumerParametersAudio = await mySignaling.receiveTrack({ peerID, mediapeerID: peerID, mediaTag: 'cam-audio', rtpCapabilities })
       .catch(console.error);
 
-    const consumerAudio = await recvTransport.consume({ ...consumerParametersAudio, appData: { peerId: peerIdToReceive, mediaTag: 'cam-audio' } });
+    const consumerAudio = await recvTransport.consume({ ...consumerParametersAudio, appData: { peerID: peerIDToReceive, mediaTag: 'cam-audio' } });
     while (recvTransport.connectionState !== 'connected') {
       // eslint-disable-next-line no-await-in-loop
       await sleep(100);

@@ -24,11 +24,9 @@ const ParticipantsWrapper = styled.div`
     if (totalParticipants < 1) return 'repeat(2, 1fr);';
   }}
 `;
-const peerId = `${Math.random().toString()}-participant`;
-
-const Room = ({ roomName, handleLogout, nextRoomHandler, isConnecting }) => {
-  console.log('Room -> roomName', roomName);
+const Room = ({ roomID, handleLogout, nextRoomHandler, isConnecting }) => {
   const userVideo = useRef();
+  const peerID = getCreds().id;
 
   useEffect(() => {
     navigator.mediaDevices.getUserMedia({ audio: true, video: true })
@@ -55,13 +53,13 @@ const Room = ({ roomName, handleLogout, nextRoomHandler, isConnecting }) => {
   };
 
 
-  const { joinRoom, rtpCapabilities, isConnected } = useRoomJoin({ peerId, roomName });
-  const { receiveTrack } = useReceiveTransport({ peerId, rtpCapabilities, mountVideo });
-  const { syncInit, participantsIds } = useSyncParticipants({ peerId });
+  const { joinRoom, rtpCapabilities } = useRoomJoin({ peerID, roomID });
+  const { receiveTrack } = useReceiveTransport({ peerID, rtpCapabilities, mountVideo });
+  const { syncInit, participantsIds } = useSyncParticipants();
 
   const onJoinClick = async () => {
     await joinRoom();
-    await syncInit();
+    syncInit();
   };
 
   // const totalParticipants = participants.length + 1;
@@ -91,7 +89,7 @@ const Room = ({ roomName, handleLogout, nextRoomHandler, isConnecting }) => {
             <h1 style={{ color: 'red', padding: '20px', fontSize: '30px', zIndex: 10 }}>
               <span>
                 my participant id:
-                <input style={{ padding: '10px', width: '400px' }} value={peerId} readOnly />
+                <input style={{ padding: '10px', width: '400px' }} value={peerID} readOnly />
               </span>
             </h1>
           </div>
@@ -102,7 +100,7 @@ const Room = ({ roomName, handleLogout, nextRoomHandler, isConnecting }) => {
             participantsIds && participantsIds.map((id) => (
               <div className={{ display: 'flex' }} key={id}>
                 <span>{id}</span>
-                <button disabled={id === peerId} onClick={() => receiveTrack(id)}>connect</button>
+                <button disabled={id === peerID} onClick={() => receiveTrack(id)}>connect</button>
               </div>
             ))
           }

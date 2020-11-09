@@ -2,12 +2,17 @@
 import io from 'socket.io-client';
 import appConfig from '../../appConfig';
 import { setCreds, getCreds } from './tokenService';
+import {setParticipants} from './participantsService';
+
 
 let socket;
 if (appConfig.isDev) socket = io('http://localhost:3000');
 else {
   socket = io('https://thetopic.pl', { path: '/api/socket.io', secure: true });
 }
+socket.on('syncParticipants', (p) => {
+  setParticipants(p);
+});
 
 socket.on('setToken', (token) => {
   setCreds(socket.id, token);
@@ -34,3 +39,4 @@ export function emit(event, data) {
     data,
   });
 }
+

@@ -2,17 +2,17 @@
 import { Device } from 'mediasoup-client';
 import * as mySignaling from './my-signaling';
 
-export const createReceiveTransport = async ({ rtpCapabilities, peerId }) => {
+export const createReceiveTransport = async ({ rtpCapabilities, peerID }) => {
   const device = new Device();
   await device.load({ routerRtpCapabilities: rtpCapabilities });
 
-  const { transportOptions } = await mySignaling.createTransport({ direction: 'recv', peerId });
+  const { transportOptions } = await mySignaling.createTransport({ direction: 'recv', peerID });
 
 
   const recvTransport = device.createRecvTransport(transportOptions);
 
   recvTransport.on('connect', async ({ dtlsParameters }, callback, errback) => {
-    const { error } = await mySignaling.connectTransport({ transportId: transportOptions.id, dtlsParameters, peerId });
+    const { error } = await mySignaling.connectTransport({ transportId: transportOptions.id, dtlsParameters, peerID });
     return error ? errback() : callback();
   });
   recvTransport.on('connectionstatechange', async (state) => {
